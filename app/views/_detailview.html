@@ -1,0 +1,63 @@
+<div class="form-wrap">
+	<div class="container wraper-margin-top-minus">
+		<div class="row row-margin">
+		<div class="col-sm-3 col-xs-12"></div>
+		<div class="col-sm-5 col-xs-12 signup-form-container">
+			
+			<h3 class="align-txt">Working Hour</h3>
+			<div class="border btom-mrgn"></div>
+			<form name="editview" class="form-horizontal loginform" role="form" novalidate="true" ng-submit="editview.$valid && editview.editView()">
+				<div class="form-group">
+					<div class="col-sm-6"> 
+						<label class="control-label" for="dayin">Day In:</label>
+						<input type="text" class="form-control" ng-model="user.dayin" name="dayin"  placeholder="Enter DayIn Time" >
+					</div>
+					<div class="col-sm-6">
+						<label class="control-label" for="dayput">Day Out:</label>
+						<input type="text" class="form-control" ng-model="user.dayout" name="dayout"  placeholder="Enter DayOut Time">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-6">
+						<label class="control-label" for="lunchin">LunchIn:</label>
+						<input type="email" class="form-control" ng-model="user.lunchin" name="lunchin"  placeholder="Enter LunchIn Time">					
+					</div>
+					<div class="col-sm-6">
+						<label class="control-label" for="lunchout">LunchOut:</label>
+						<input type="text" class="form-control" ng-model="user.lunchout" name="lunchout"  placeholder="Enter Contact">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-6">
+						<label class="control-label" for="nightin">NightIn:</label>
+						<input type="text" class="form-control" name="nightin" ng-model="user.nightin"  placeholder="Enter NightIn Time">
+					</div>	
+					<div class="col-sm-6">
+						<label class="control-label" for="nightout">NightOut:</label>
+						<input type="text" class="form-control" name="nightout" ng-model="user.nightout"  placeholder="Enter NightOut Time">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="control-label" for="description">Description*:</label>
+						<textarea class="form-control" ng-model="user.description"  name="description" required="" placeholder="Enter Description"></textarea>
+						<div ng-cloak ng-show="editview.$submitted || editview.description.$touched">
+							<span ng-show="editview.description.$error.required">Fill Your Work Descritpion</span>
+						</div>
+					</div>
+				</div>
+				<div class="border btom-mrgn"></div>
+				  <div class="form-group">
+					<div class="col-sm-offset-0">
+						<button type="button" class="btn btn-default divider" ng-click="reset()">Reset</button>
+						<button type="submit" class="btn btn-primary divider">Submit</button>
+						 <a href="signup">  Back To Home Page </a>
+					</div>	
+				</div>
+			</form>
+		</div>	
+		<div class="col-sm-4 col-xs-12">
+		</div>	
+		</div>
+	</div>
+</div>

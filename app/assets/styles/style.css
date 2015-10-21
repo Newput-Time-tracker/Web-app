@@ -1,0 +1,51 @@
+body {
+  font-family: 'Open Sans'; }
+
+.wrapper .navbar {
+  background-color: #F1F1F1;
+  border: 1px solid #F1F1F1;
+  border-radius: 0px;
+  box-shadow: 0 0 5px 0;
+  margin: 0px;
+  padding: 0px; }
+  .wrapper .navbar h2 {
+    margin: 0px;
+    padding: 25px; }
+
+.wrapper .container {
+  padding: 35px; }
+
+footer .copyright {
+  background-color: #f1f1f1;
+  box-shadow: 0 1px 3px -1px;
+  padding: 35px;
+  text-align: center; }
+
+.form-wrap .login-form {
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px 0;
+  padding: 50px; }
+
+.section {
+  padding: 30px; }
+
+input .ng-dirty.ng-invalid {
+  border-color: red; }
+
+.signup-form-container {
+  border: 1px solid #fff;
+  border-radius: 8px;
+  box-shadow: -1px -7px 31px -7px;
+  padding: 21px; }
+
+.border .btom-mrgn {
+  border: solid 0.7px #ededed;
+  margin: 10px; }
+
+.divider {
+  margin: 10px;
+  height: auto;
+  display: inline-block; }
+
+.align-txt {
+  text-align: center; }

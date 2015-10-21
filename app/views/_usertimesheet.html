@@ -1,0 +1,73 @@
+<div class="row">
+	<div class="col-sm-offset-9 welcome-title">
+		<div class="col-sm-7 icon"> Welcome John! </div>
+		<div class ="col-sm-2"><img src="assets/images/settings.png"></div>
+		<div class="col-sm-2"><img src="assets/images/logout_user.png"></div>
+	</div>
+</div>
+<div class="row timesheet-container">
+	<div class="col-sm-4 drop-down">
+		<div class="col-sm-4">
+			<select class="form-control">
+		    <option value=1>1st week</option>
+		    <option value=2>2nd week</option>
+		  </select>
+		</div>
+		<div class="col-sm-3">
+			<select class="form-control">
+		    <option value=jan>Jan</option>
+		    <option value=feb>Feb</option>
+		  </select>
+		</div>
+	  <div class="col-sm-4">
+	  		<select class="form-control">
+		    <option value=2015>2015</option>
+		    <option value=2014>2014</option>
+		  </select>
+	  </div>
+	</div>
+	<div class="col-sm-4"><center><h3>Time Sheet</h3></center></div>
+	<div class="col-sm-4 timesheet-option">
+		<div class="col-sm-7">Export timesheet.</div>
+		<div class="col-sm-5">Email me.</div>
+	</div>
+</div>
+<div class="tt-table">
+	<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Morning In</th>
+            <th>Lunch In</th>
+            <th>Lunch Out</th>
+            <th>Leaving Time</th>
+            <th>Night In</th>
+            <th>Night Out</th>
+            <th>Total Hrs</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+	    	<tr data-ng-repeat="t in getTimes">
+	      <td>{{t}}</td>
+	      <td>Monday</td>
+	      <td>09:00</td>
+	      <td>12:30</td>
+	      <td>13:00</td>
+	      <td>18:30</td>
+	      <td>22:00</td>
+	      <td>23:30</td>
+	      <td>10:30</td>
+	      <td>Working on ui</td>
+	      <td>Edit | Copy</td>
+	    </tr>
+     	<tr>
+	      <td colspan="10" class="col-span">Total Hrs.</td>
+	      <td>00:00 hrs</td>
+	    </tr>
+	    <span ng-show="getTimes.length == 0" class="message">No records to display!</span>
+    </tbody>
+  </table>
+</div>

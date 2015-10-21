@@ -1,0 +1,30 @@
+{
+  "name": "Time tracker app",
+  "version": "0.0.1",
+  "authors": [
+    "newput"
+  ],
+  "description": "Time tracker",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "open-sans-fontface": "~1.4.2",
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "jquery": "~2.1.4"
+  },
+  "private": true,
+  "resolutions": {
+    "jquery": ">= 1.9.1"
+  }
+}
