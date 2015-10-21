@@ -2,8 +2,8 @@
 <html ng-app="myApp">
 <head>
 	<title>Angular app</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<base href="/app/">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="assets/styles/style.css"/>
 	<link rel="stylesheet" type="text/css" href="../bower_components/open-sans-fontface/open-sans.css"/>
@@ -13,21 +13,24 @@
 	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="../bower_components/angular/angular.js"></script>
 	<script src="../bower_components/angular-route/angular-route.min.js"></script>
-	
-	
+
+    <script src="assets/js/ui-bootstrap-tpls-0.12.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="../bower_components/ngTimepicker/src/css/ngTimepicker.css">
+	<script src="../bower_components/ngTimepicker/src/js/ngTimepicker.min.js"></script>
+
 </head>
 <body>
 	<div class="wrapper">
 		<header>
 			<nav id="myNavbar" class="navbar navbar-default navbar-inverse" role="navigation">
-	   		<h2>Time Tracker</h2>
+	   			<h2>Time Tracker</h2>
 			</nav>
 		</header>
 		<div class="container" ng-view></div>
 		<footer>
 			<div class="copyright"><h4>@Copyright 2015</h4></div>
 		</footer>
-</div>
+	</div>
 
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/loginController.js"></script>
@@ -35,6 +38,9 @@
 <script src="scripts/controllers/signUpController.js"></script>
 <script src="scripts/controllers/detailViewController.js"></script>
 <script src="scripts/services/userServices.js"></script>
+<script src="scripts/controllers/userTimesheetController.js"></script>
+
+
 
 </body>
 </html>

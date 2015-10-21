@@ -1,10 +1,10 @@
-var app = angular.module('myApp', ['ngRoute']);
+var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jkuri.timepicker']);
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
 	$routeProvider.
 	when('/', {
-		templateUrl: 'views/_login.html',
-		controller: 'loginController',
-		controllerAs:'login'
+		templateUrl: 'views/_usertimesheet.html',
+		controller: 'userTimesheetController',
+		controllerAs: 'timesheet'
 	}).
 	when('/forgetpassword', {
 		templateUrl: 'views/_forgotpassword.html',
@@ -21,6 +21,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 	     controller: 'detailViewController',
 		 controllerAs: 'detail'
 	}).
+  when('/usertimesheet',{
+  	templateUrl: 'views/_usertimesheet.html',
+		controller: 'userTimesheetController',
+		controllerAs: 'timesheet'
+  }).
 	otherwise({redirectTo: '/'});
 	$locationProvider.html5Mode(true);
 }]);

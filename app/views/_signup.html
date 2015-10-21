@@ -10,14 +10,14 @@
 				<div class="form-group">
 					<div class="col-sm-6"> 
 						<label class="control-label" for="firstname">First Name*:</label>
-						<input type="text" class="form-control" ng-model="user.firstname" name="firstname" required="" placeholder="Enter First Name" >
+						<input type="text" class="form-control" ng-model="user.firstname" name="firstname" ng-required="true" placeholder="Enter First Name" >
 						<div class="error-message" ng-show="signup.$submitted || signup.firstname.$touched">
 							<div class="error-message" ng-show="signup.firstname.$error.required">Tell us your First name.</div>
 						</div> 
 					</div>
 					<div class="col-sm-6">
 						<label class="control-label" for="lastname">Last Name*:</label>
-						<input type="text" class="form-control" ng-model="user.lastname" name="lastname" required="" placeholder="Enter Last Name">
+						<input type="text" class="form-control" ng-model="user.lastname" name="lastname"  ng-required="true" placeholder="Enter Last Name">
 						<div  class="error-message" ng-show="signup.$submitted || signup.lastname.$touched">
 							<div class="error-message" ng-show="signup.lastname.$error.required">Tell us your Last name.</div>
 						</div>
@@ -26,7 +26,7 @@
 				<div class="form-group">
 					<div class="col-sm-12">
 					<label class="control-label" for="email">Email*:</label>
-					<input type="email" class="form-control" ng-model="user.email" name="email" required="" placeholder="Enter email">
+					<input type="email" class="form-control" ng-model="user.email" name="email" ng-required="true"  placeholder="Enter email">
 					<div ng-show="signup.$submitted || signup.email.$touched">
 						<span class="error-message" ng-show="signup.email.$error.required">Tell us your email.</span>
 						<span class="error-message" ng-show="signup.email.$error.email">This is not a valid email.</span>
@@ -36,7 +36,7 @@
 				<div class="form-group">
 					<div class="col-sm-6">
 					<label class="control-label" for="contact">Contact*:</label>
-					<input type="number" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-model="user.contact" name="contact" required=""  placeholder="Enter Contact">
+					<input type="number" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-required="true" ng-model="user.contact" name="contact"   placeholder="Enter Contact">
 					<div ng-show="signup.$submitted || signup.contact.$touched">
 						<span class="error-message" ng-show="signup.contact.$error.required">Tell us your contact.</span>
 						<span class="error-message" ng-show="signup.contact.$error.number">This is not a valid contact no.</span>
@@ -50,31 +50,39 @@
 				<div class="form-group">
 					<div class="col-sm-6">
 						<label class="control-label" for="dateofbirth">Date Of Birth*:</label>
-						 <input type="text" name="dateofbirthday" ng-model="dateofbirth" id=dob  placeholder="Enter Date Of Birth">
+		                <input type="text" class="form-control" name="dateofbirth" datepicker-popup="{{format}}" ng-model="user.dateofbirth" is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close" />
+		                <div ng-show="signup.$submitted || signup.dateofbirth.$touched" >
+							<span class="error-message" ng-show="signup.dateofbirth.$error.required">Tell us Your Birthday</span>
+						</div>
 					</div>	
 					<div class="col-sm-6">
 						<label class="control-label" for="dateofjoining">Date of Joining*:</label>
-						 <input type="text" name="dateofjoining" ng-model="dateofjoining" id=doj  placeholder="Enter Date Of Joining">
+						 <input type="text" class="form-control" datepicker-popup="{{format}}" ng-change="copareDate(signup.dateofbirth)"  name="dateofjoining"  ng-model="user.dateofjoining"  is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close"  />							 
+						<div ng-show="signup.$submitted || signup.dateofjoining.$touched" >
+							<span class="error-message" ng-show="signup.dateofjoining.$error.required">Tell us Your Joining Date</span>
+						</div>
 					</div>
+					<span class="error-message">{{errorMessage}}</span>
 				</div>
+				
 				<div class="form-group">
 					<div class="col-sm-6">
 						<label class="control-label" for="password">Password*:</label>
-						<input type="password" class="form-control" ng-model="user.password" id="password" name="password" required="" placeholder="Enter password">
+						<input type="password" class="form-control" ng-required="true" ng-model="user.password" id="password" name="password"  placeholder="Enter password">
 						<div ng-show="signup.$submitted || signup.password.$touched" >
-							<span ng-show="signup.password.$error.required">Tell us Your Password</span>
+							<span  class="error-message" ng-show="signup.password.$error.required">Tell us Your Password</span>
 						</div>
 					</div>
 					<div class="col-sm-6">
 						<label class="control-label" for="confirmpassword">Confirm Password*:</label>
-						<input type="password" class="form-control"  ng-model="user.confirmpassword" id="confirmpassword" name="confirmpassword" required="" pw-check="user.password" placeholder="Enter password">
+						<input type="password" class="form-control" ng-required="true" ng-model="user.confirmpassword" id="confirmpassword" name="confirmpassword"  pw-check="user.password" placeholder="Enter password">
 						<div ng-show="signup.$submitted || signup.password.$touched || signup.password.$dirty">
-							<span ng-show="signup.confirmpassword.$error.required">Tell us Your Confirm Password</span>
-							<span ng-show="signup.confirmpassword.$error.pwCheck">Password are not equal!</span>
+							<span  class="error-message" ng-show="signup.confirmpassword.$error.required">Tell us Your Confirm Password</span>
+							<span class="error-message" ng-show="signup.confirmpassword.$error.pwCheck">Password are not equal!</span>
 						</div>						
 					</div>
 				</div>
-				<div class="border btom-mrgn"></div>
+				<div class="border btom-mrgn"></div
 				  <div class="form-group">
 					<div class="col-sm-offset-0">
 						<button type="button" class="btn btn-default divider" ng-click="reset()">Reset</button>

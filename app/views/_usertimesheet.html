@@ -1,58 +1,59 @@
 <div class="row">
-	<div class="col-sm-offset-9 welcome-title">
-		<div class="col-sm-7 icon"> Welcome John! </div>
-		<div class ="col-sm-2"><img src="assets/images/settings.png"></div>
-		<div class="col-sm-2"><img src="assets/images/logout_user.png"></div>
+	<div class="col-sm-offset-8 welcome-title">
+		<div class="col-sm-7 col-xs-8 icon"> Welcome John! </div>
+		<div class ="col-sm-2 col-xs-1"><img title="Settings" src="assets/images/settings.png"></div>
+		<div class="col-sm-2 col-xs-1"><img title = "Logout" src="assets/images/logout_user.png"></div>
 	</div>
 </div>
 <div class="row timesheet-container">
-	<div class="col-sm-4 drop-down">
-		<div class="col-sm-4">
-			<select class="form-control">
-		    <option value=1>1st week</option>
-		    <option value=2>2nd week</option>
-		  </select>
+	<div class="col-sm-12"><center><h2>Time Sheet of {{SelectedMonth}}<sub>{{weeksDateStr}}</sub></h2></center></div>
+	<div class="row">
+		<div class="col-sm-offset-2 col-xs-offset-2">
+			<div class="col-sm-3 col-xs-3">
+				<select class="form-control" ng-change="timesheet.weekUpdate()" ng-model ="timesheet.weekDay" ng-options="week.key for week in weeksOptions.weeks">
+					<options>-- Weeks --</options>
+			  </select>
+			</div>
+			<div class="col-sm-3 col-xs-3">
+				<select class="form-control" ng-model = "timesheet.curMonths"
+				ng-options="value.id as value.label for value in timesheet.monthsOptions" ng-change="timesheet.monthUpdate()">
+					<options>-- Months --</options>
+			  </select>
+
+			</div>
+		  <div class="col-sm-3 col-xs-3">
+		  		<select class="form-control" ng-model = "timesheet.curYear"
+					ng-options="yearValue.value as yearValue.label for yearValue in timesheet.yearOptions" ng-change="timesheet.yearUpdate()">
+						<options>-- Year --</options>
+				  </select>
+		  </div>
 		</div>
-		<div class="col-sm-3">
-			<select class="form-control">
-		    <option value=jan>Jan</option>
-		    <option value=feb>Feb</option>
-		  </select>
+		<div class="col-sm-offset-8 help-icons">
+			<div class="col-sm-1 col-xs-1"><a href="#" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a></div>
+			<div class="col-sm-1 col-xs-1"><a href="#" title="Email timesheet"><span class="glyphicon glyphicon-envelope"></span></a></div>
 		</div>
-	  <div class="col-sm-4">
-	  		<select class="form-control">
-		    <option value=2015>2015</option>
-		    <option value=2014>2014</option>
-		  </select>
-	  </div>
-	</div>
-	<div class="col-sm-4"><center><h3>Time Sheet</h3></center></div>
-	<div class="col-sm-4 timesheet-option">
-		<div class="col-sm-7">Export timesheet.</div>
-		<div class="col-sm-5">Email me.</div>
-	</div>
 </div>
 <div class="tt-table">
-	<table class="table">
+	<table class="table table-bordered">
     <thead>
         <tr>
-            <th>Date</th>
-            <th>Day</th>
-            <th>Morning In</th>
-            <th>Lunch In</th>
-            <th>Lunch Out</th>
-            <th>Leaving Time</th>
-            <th>Night In</th>
-            <th>Night Out</th>
-            <th>Total Hrs</th>
-            <th>Description</th>
-            <th>Action</th>
+          <th>Date</th>
+          <th class="hidden-xs ">Day</th>
+          <th>Day In</th>
+          <th>Lunch In</th>
+          <th>Lunch Out</th>
+          <th>Day Out</th>
+          <th>Night In</th>
+          <th>Night Out</th>
+          <th>Total Hrs</th>
+          <th>Description</th>
+          <th>Action</th>
         </tr>
     </thead>
     <tbody>
-	    	<tr data-ng-repeat="t in getTimes">
+	    	<tr data-ng-repeat="t in timesheetArr">
 	      <td>{{t}}</td>
-	      <td>Monday</td>
+	      <td class="hidden-xs">Monday</td>
 	      <td>09:00</td>
 	      <td>12:30</td>
 	      <td>13:00</td>
@@ -61,13 +62,13 @@
 	      <td>23:30</td>
 	      <td>10:30</td>
 	      <td>Working on ui</td>
-	      <td>Edit | Copy</td>
+	      <td> <a href ="/detailview"><img class="img" src="assets/images/edit.png"/> | <img src="assets/images/Clipboard.png" class="img"/></a></td>
 	    </tr>
      	<tr>
 	      <td colspan="10" class="col-span">Total Hrs.</td>
 	      <td>00:00 hrs</td>
 	    </tr>
-	    <span ng-show="getTimes.length == 0" class="message">No records to display!</span>
+	    <span ng-show="timesheetArr.length == 0" class="message">No data available for this selection!</span>
     </tbody>
   </table>
 </div>

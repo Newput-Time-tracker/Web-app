@@ -21,10 +21,20 @@ footer .copyright {
   padding: 35px;
   text-align: center; }
 
-.form-wrap .login-form {
+.form-wrap {
   border-radius: 5px;
   box-shadow: 3px 3px 10px 0;
-  padding: 50px; }
+  margin-top: 45px;
+  padding: 25px; }
+  .form-wrap h2 {
+    margin: 0px; }
+  .form-wrap .login-form {
+    padding: 25px 0px; }
+  .form-wrap.forgot {
+    height: 200px; }
+
+.align-text {
+  text-align: left; }
 
 .section {
   padding: 30px; }
@@ -35,8 +45,60 @@ input .ng-dirty.ng-invalid {
 .signup-form-container {
   border: 1px solid #fff;
   border-radius: 8px;
-  box-shadow: -1px -7px 31px -7px;
+  box-shadow: 1px -2px 22px -7px;
   padding: 21px; }
+
+.timesheet-container h3 {
+  margin: 0px;
+  padding: 0px; }
+
+.tt-table {
+  padding: 12px; }
+  .tt-table table {
+    width: 98%; }
+
+table tbody tr:nth-child(odd) {
+  background-color: #def; }
+
+table tbody tr:nth-child(even) {
+  background-color: #fff; }
+
+.container {
+  min-height: 520px; }
+
+.welcome-title .icon {
+  text-align: right; }
+
+.message {
+  color: #99C240; }
+
+.col-span {
+  text-align: right; }
+
+.help-icons div {
+  margin-top: 8px; }
+
+.seperator {
+  margin-top: -15px;
+  text-align: left;
+  margin-left: 97px; }
+  .seperator span {
+    display: inline-block;
+    position: relative; }
+  .seperator span:before {
+    margin-right: 15px;
+    right: 100%; }
+  .seperator span:after {
+    left: 100%;
+    margin-left: 15px; }
+  .seperator span:before,
+  .seperator span:after {
+    background: #757171;
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 80px; }
 
 .border .btom-mrgn {
   border: solid 0.7px #ededed;
@@ -49,3 +111,32 @@ input .ng-dirty.ng-invalid {
 
 .align-txt {
   text-align: center; }
+
+.error-message {
+  color: #ff0000; }
+
+.col-sm-12 .input-group {
+  margin-bottom: 10px; }
+
+@media screen and (max-width: 360px) {
+  .form-group .input-group .work-description {
+    width: 160px; } }
+
+@media screen and (min-width: 767px) {
+  .form-group .input-group .work-description {
+    width: 280px; } }
+
+@media screen and (min-width: 1024px) {
+  .form-group .input-group .work-description {
+    width: 490px; } }
+    
+.img {
+  width: 15px; }
+
+.forgot-btn-container {
+  margin-top: 26px;
+  margin-left: -67px; }
+
+.input-email input {
+  height: 31px;
+  margin-top: 3px; }

@@ -1,13 +1,13 @@
 <div class="row">
 	<div class="col-sm-3"></div>
 	<div class="form-wrap col-sm-6">
-		<h2><center>Login Panel</center></h2>
+		<h2>Sign In</h2>
 		<form name="loginform" class="login-form" novalidate="true" ng-submit = "loginform.$valid && login.verifyUser()">
 		  <div class="form-group row" >
 		  	<div class="col-sm-12">
 			    <label for="email">Email address:</label>
 			    <input type="email" name= "email" class="form-control" id="email" ng-model="user.email" required>
-			    <span class ="error" ng-cloak>
+			    <span class ="error-message" ng-cloak>
 			    	<span ng-show="submitted && loginform.email.$error.required">Please enter email.</span>
 			    	<span ng-show="loginform.email.$error.email && loginform.email.$dirty">Please enter correct email.</span>
 			    </span>
@@ -18,20 +18,20 @@
 		  	<div class="col-sm-12">
 			    <label for="pwd">Password:</label>
 			    <input type="password" ng-model="user.password" name="password" class="form-control" id="pwd" required>
-			    <span class ="error" ng-cloak>
+			    <span class ="error-message" ng-cloak>
 		    		<span ng-show="(submitted && loginform.password.$error.required) || (loginform.email.$dirty && loginform.password.$invalid)">Please enter password.</span>
 			  	</span>
 		  	</div>
 		  </div>
 		  <div class ="col-sm-offset-0">
-		  	<button type="submit" class="btn btn-default btn-primary" ng-click = "submitted=true" >Sign In</button>
-		  	<span class="forget-link"><a href="forgetpassword">Forget password ?</a></span>
+			  	<button type="submit" class="btn btn-default btn-primary" ng-click = "submitted=true" >Sign In</button>
+			  	<span class="forget-link"><a href="forgetpassword">Forget password ?</a></span>
 		  </div>
 		</form>
-		<div class="section">
-			<span><center>Or</center></span>
-			<div><center><a href="signup">Create Account</a></center></div>
+		<div class="seperator">
+			<span>Or</span>
 		</div>
+		<div class="align-text"><a href="signup">Create Account</a></div>
 	</div>
 	<div class="col-sm-1"></div>
 </div>

@@ -21,7 +21,8 @@
     "open-sans-fontface": "~1.4.2",
     "angular": "~1.4.7",
     "angular-route": "~1.4.7",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
   },
   "private": true,
   "resolutions": {
