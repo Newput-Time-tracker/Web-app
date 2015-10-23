@@ -1,29 +1,29 @@
 <div class="row">
 	<div class="col-sm-offset-8 welcome-title">
-		<div class="col-sm-7 col-xs-8 icon"> Welcome John! </div>
+		<div class="col-sm-7 col-xs-8 icon"> Welcome {{employees.firstname}}! </div>
 		<div class ="col-sm-2 col-xs-1"><img title="Settings" src="assets/images/settings.png"></div>
 		<div class="col-sm-2 col-xs-1"><img title = "Logout" src="assets/images/logout_user.png"></div>
 	</div>
 </div>
 <div class="row timesheet-container">
-	<div class="col-sm-12"><center><h2>Time Sheet of {{SelectedMonth}}<sub>{{weeksDateStr}}</sub></h2></center></div>
+	<div class="col-sm-12"><center><h2>Time Sheet of {{selectedMonth}}<sub>{{weeksDateStr}}</sub></h2></center></div>
 	<div class="row">
 		<div class="col-sm-offset-2 col-xs-offset-2">
 			<div class="col-sm-3 col-xs-3">
-				<select class="form-control" ng-change="timesheet.weekUpdate()" ng-model ="timesheet.weekDay" ng-options="week.key for week in weeksOptions.weeks">
+				<select class="form-control" ng-change="timesheet.weekUpdate()" ng-model ="weekDay" ng-options="week.key for week in weeksOptions.weeks">
 					<options>-- Weeks --</options>
 			  </select>
 			</div>
 			<div class="col-sm-3 col-xs-3">
-				<select class="form-control" ng-model = "timesheet.curMonths"
-				ng-options="value.id as value.label for value in timesheet.monthsOptions" ng-change="timesheet.monthUpdate()">
+				<select class="form-control" ng-model = "monthsOptions.currentmonth.value"
+				ng-options="monthValue.value as monthValue.label for monthValue in monthsOptions" ng-change="timesheet.monthUpdate()">
 					<options>-- Months --</options>
 			  </select>
 
 			</div>
 		  <div class="col-sm-3 col-xs-3">
-		  		<select class="form-control" ng-model = "timesheet.curYear"
-					ng-options="yearValue.value as yearValue.label for yearValue in timesheet.yearOptions" ng-change="timesheet.yearUpdate()">
+		  		<select class="form-control" ng-model = "yearOptions.current.value"
+					ng-options="yearValue.value as yearValue.label for yearValue in yearOptions" ng-change="timesheet.yearUpdate()">
 						<options>-- Year --</options>
 				  </select>
 		  </div>

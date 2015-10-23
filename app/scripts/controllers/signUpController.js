@@ -1,4 +1,4 @@
-app.controller('signUpController', ['$scope', 'signupUser', function($scope, signupUser){	
+app.controller('signUpController', ['$scope', 'userServices', function($scope, userServices){	
 	$scope.errorMessage = null;
 	this.userSignUp = function(user) {
 		var userReg = $scope.user;
@@ -58,37 +58,9 @@ app.controller('signUpController', ['$scope', 'signupUser', function($scope, sig
 	resetForm = function(){
 	    $scope.errorMessage = null;
 	};	
-}]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-   this.scope = $scope;
-    // Set up the default scope value.
-    this.scope.errorMessage = null;
-
-
+	//user signup
 	this.userSignUp = function(user) {
-		console.log($scope.user);
-		this.dateOfBirth =  document.getElementById("datetimepicker").value;
-		 this.dateOfJoining =  document.getElementById("datetimepicker1").value;
-	    
-	   if(!this.dateOfBirth || !this.dateOfJoining) {
-	   	 this.scope.errorMessage = "Please Select Both Date.";
-	   	 return;
-	   } 
-	    
-		var dataPromise = signupUser.postUserSignUp($scope.user);
+		var dataPromise = userServices.userSignUpService($scope.user);
 		dataPromise.then(function(response) {
 			$scope.user = response;  
 		},function(error) {
@@ -97,20 +69,5 @@ app.controller('signUpController', ['$scope', 'signupUser', function($scope, sig
 		
 		 this.resetForm();
 	};
-	resetForm = function(){alert('sdsd');
-	            this.scope.errorMessage = null;
-	            this.dateOfBirth = "";
-	            this.dateOfJoining = "";
-	};
-
-	$scope.datepickerOptions = {
-					format: 'yyyy-mm-dd',
-					language: 'fr',
-					startDate: "2015-01-01",
-					endDate: "2015-10-31",
-					autoclose: true,
-					weekStart: 0
-		};
-		
-	$('#datetimepicker').datetimepicker();
-    $('#datetimepicker1').datetimepicker();*/
+	
+}]);

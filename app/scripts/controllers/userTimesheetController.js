@@ -1,11 +1,14 @@
-app.controller('userTimesheetController', ['$scope', function($scope){
+app.controller('userTimesheetController', ['$scope', 'userServices', function($scope, userServices){
 	var currentDate = new Date();
 	var currentMonth = currentDate.getMonth(); // it gives 0 based result.
 	var currentYear = currentDate.getFullYear();
+	var monthList = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 	$scope.weeksOptions = [];
 	$scope.curYear = currentYear ;
+	$scope.newCurrentYear = '';
 	$scope.timesheetData = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 	$scope.timesheetArr = $scope.timesheetData;
+
 	// get weeks by date in a month
 	function getWeeksInMonth(month, year){
 		var weeks=[],
@@ -43,66 +46,11 @@ app.controller('userTimesheetController', ['$scope', function($scope){
 		return num+suffix;
 	}
 
-	
-	//get Months
-	this.monthsOptions = [
-    {'id': 0, 'label': 'January'},
-		{'id': 1, 'label': 'Febuary'},
-		{'id': 2, 'label': 'March'},
-		{'id': 3, 'label': 'April'},
-		{'id': 4, 'label': 'MAy'},
-		{'id': 5, 'label': 'June'},
-		{'id': 6, 'label': 'July'},
-		{'id': 7, 'label': 'Augst'},
-		{'id': 8, 'label': 'September'},
-		{'id': 9, 'label': 'October'},
-		{'id': 10, 'label': 'November'}
-  ];
-  var indexMonth = parseInt(currentMonth);
-	this.curMonths = this.monthsOptions[indexMonth].id;
-	var monthInfo = this.monthsOptions[indexMonth].label;
-	$scope.SelectedMonth = monthInfo;
-
-	this.monthUpdate = function(){
-		var indexMonth = parseInt(this.curMonths);
-		var monthInfo = this.monthsOptions[indexMonth].label;
-		$scope.SelectedMonth = monthInfo;
-		var nweeks = getWeeksInMonth(this.curMonths, this.curYear);
-		$scope.weeksOptions.weeks = nweeks;
-		this.weekDay = $scope.weeksOptions.weeks[0];
-		$scope.weeksDateStr = '';
-		$scope.timesheetArr = $scope.timesheetData;
-	}
-
-	this.yearUpdate = function(){
-		var yearInfo = this.curYear;
-		var nweeks = getWeeksInMonth(this.curMonths, yearInfo);
-		$scope.weeksOptions.weeks = nweeks;
-		this.weekDay = $scope.weeksOptions.weeks[0];
-		$scope.weeksDateStr = '';
-	}
-
-	// get Year
-	this.yearOptions = [
-    {'value': 2014, 'label': '2014'},
-		{'value': 2015, 'label': '2015'}
-  ];
-  var indexYear = parseInt(currentYear);
-  this.curYear = indexYear;
- //  var indexYear = parseInt(currentYear);
-	// this.curYear = this.yearOptions[2015].value;
-
-	if (currentMonth!= '' && currentYear!='') {
-		var nweeks = getWeeksInMonth(currentMonth, currentYear);
-		$scope.weeksOptions.weeks = nweeks;
-		this.weekDay = $scope.weeksOptions.weeks[0];
-	}
-
 	this.weekUpdate = function(){
 		$scope.timesheetArr = [];
-		if(this.weekDay.start && this.weekDay.end){
-			var startDate = this.weekDay.start;
-			var endDate = this.weekDay.end;
+		if($scope.weekDay.start && $scope.weekDay.end){
+			var startDate = $scope.weekDay.start;
+			var endDate = $scope.weekDay.end;
 			$scope.weeksDateStr = weekSuffix(startDate) +' to '+weekSuffix(endDate);
 
 			for(var i = startDate, j = 0; i <= endDate; j++ ) {
@@ -119,6 +67,84 @@ app.controller('userTimesheetController', ['$scope', function($scope){
 				$scope.timesheetArr = $scope.timesheetData;
 		}
 	}
+	function initializeWeek(newCurrentMonth, newCurrentYear){
+		var nweeks = getWeeksInMonth(newCurrentMonth, newCurrentYear);
+		$scope.weeksOptions.weeks = nweeks;
+		$scope.weekDay = $scope.weeksOptions.weeks[0];
 
+
+	}
+	// Initialize the week options 
+
+	if (currentMonth!= '' && currentYear!='') {
+		 initializeWeek(currentMonth, currentYear);
+	}
+
+	// Generate month options
+	function generateMonthSelectBox(start, current, selectedYear){
+		var i = 0;
+		var obj = {};
+		var selectOptions = [];
+		if(startYear == selectedYear) {
+			i = start;
+			obj = {'value': start, 'label': monthList[start]};
+			current = 11;
+		} else if(selectedYear == currentYear) {
+			obj = {'value': current, 'label': monthList[current]};
+
+		}else {
+			i = 0;
+			current = 11;
+			obj = {'value': i, 'label': monthList[i]};
+		}
+		for(i; i <= current; i++){
+			selectOptions.push({'value': i, 'label': monthList[i]});
+		}
+		selectOptions.currentmonth = obj;
+		$scope.selectedMonth = obj.label;
+		return selectOptions;
+	}
+
+	// Generate year options
+
+	function generateYearSelectBox(start, current){
+		var selectOptions = [];
+		for(var i = current; i >= start; i--) {
+			selectOptions.push({'value': i, 'label': i});
+		}
+		selectOptions.current = {'value': current, 'label': current};
+		return selectOptions;
+	}
+
+	// Calling of service to set the user data object after login.
+	$scope.employees = userServices.getProperty();
+
+	//Restrict the month and year to date of joining
+	var doj = parseInt($scope.employees.doj);
+	var dojYear = new Date(doj);
+	var startYear= dojYear.getFullYear();
+	$scope.yearOptions = generateYearSelectBox(startYear, currentYear);
+	var startMonth = dojYear.getMonth();
+	$scope.monthsOptions = generateMonthSelectBox(startMonth-1, currentMonth, currentYear);
 	
+	// Update year 
+	this.yearUpdate = function(){
+		var newCurrentYear = $scope.yearOptions.current.value; 
+		$scope.monthsOptions = generateMonthSelectBox(startMonth-1, currentMonth, newCurrentYear);
+		$scope.weeksDateStr = '';
+		initializeWeek(currentMonth, newCurrentYear);
+
+	}
+
+	// Update Month
+
+	this.monthUpdate = function(){
+		var newCurrentMonth = $scope.monthsOptions.currentmonth.value;
+		var newCurrentYear = $scope.yearOptions.current.value;
+		$scope.selectedMonth = monthList[newCurrentMonth];
+		initializeWeek(newCurrentMonth, newCurrentYear);
+		$scope.weeksDateStr = '';
+	}
+	
+
 }]);

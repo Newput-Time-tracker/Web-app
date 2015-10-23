@@ -1,10 +1,10 @@
-var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jkuri.timepicker']);
+var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask']);
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
 	$routeProvider.
 	when('/', {
-		templateUrl: 'views/_usertimesheet.html',
-		controller: 'userTimesheetController',
-		controllerAs: 'timesheet'
+		templateUrl: 'views/_login.html',
+		controller: 'loginController',
+		controllerAs: 'login'
 	}).
 	when('/forgetpassword', {
 		templateUrl: 'views/_forgotpassword.html',

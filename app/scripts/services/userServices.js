@@ -1,25 +1,13 @@
-app.factory("signupUser", function($http){
+
+app.factory("userServices", ['$http', '$q', function($http, $q){
+	var userJsonData = [];
 	return {
-		
-		postUserSignUp: function(user) {console.log(user);
-				/*
-					var deferred = $q.defer();
-									return $http.post('https://api.github.com/users/haroldrv?')
-									.then(function (response) {
-										// promise is fulfilled
-										deferred.resolve(response.data);
-										// promise is returned
-										return deferred.promise;
-									}, function (response) {
-										// the following line rejects the promise 
-										deferred.reject(response);
-										// promise is returned
-										return deferred.promise;
-									});		*/
-									
-									
-				
-		}		
-	};
+		authUser: function(){
+			userJsonData = ({firstname:"Varsha", lastname:"Tyagi", doj: '1382812200000'});
+			return userJsonData;
+		},
+		getProperty: function() {
+      return userJsonData;
+    }
 	
-});
+}]);

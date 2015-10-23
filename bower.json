@@ -22,7 +22,8 @@
     "angular": "~1.4.7",
     "angular-route": "~1.4.7",
     "jquery": "~2.1.4",
-    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
+    "ngMask": "angular-mask#~3.0.16"
   },
   "private": true,
   "resolutions": {

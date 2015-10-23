@@ -1,5 +1,9 @@
-app.controller('loginController', ['$scope', function($scope){
+app.controller('loginController', ['$scope', '$location', 'userServices', function($scope, $location, userServices){
 	this.verifyUser = function() {
-		console.log('here');
+		$scope.employees = userServices.authUser();
+		$location.path('/usertimesheet');
+	};
+	this.toLocation = function(loc){
+		$location.path('/'+loc);
 	}
 }]);
