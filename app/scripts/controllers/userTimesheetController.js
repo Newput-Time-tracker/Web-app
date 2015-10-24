@@ -145,6 +145,20 @@ app.controller('userTimesheetController', ['$scope', 'userServices', function($s
 		initializeWeek(newCurrentMonth, newCurrentYear);
 		$scope.weeksDateStr = '';
 	}
+
+	//email excel sheet
+
+	 $scope.emailme = function(){
+	 	var userObj = {};
+	 	userObj.dataobj = {'empId': '62', 'month': 'October', 'year': '2015' };
+	 	userObj.header = {'token': '3321EEAE282680B4173FCE770865E293','Content-Type':'application/javascript'};
+	 	var emailPromise = userServices.emailme(userObj);
+	 	emailPromise.then(function(res){
+				$scope.detail = res;
+			}, function(error){
+				console.log(error)
+		});
+	}
 	
 
 }]);
