@@ -7,6 +7,13 @@ app.controller('signUpController', ['$scope', 'userServices', function($scope, u
 			$scope.errorMessage = "Opps ! Age should be 18 above you can't Register";
 			return ;
 		}
+		var dataPromise = userServices.registerUser($scope.user);
+				dataPromise.then(function(response) {
+					$scope.user = response;  console.log('service rseult'+response);
+				},function(error) {
+					//$scope.status = error;  
+					$scope.errorMessage = error;
+		});
 		resetForm();
 
 	};
@@ -58,16 +65,5 @@ app.controller('signUpController', ['$scope', 'userServices', function($scope, u
 	resetForm = function(){
 	    $scope.errorMessage = null;
 	};	
-	//user signup
-	this.userSignUp = function(user) {
-		var dataPromise = userServices.userSignUpService($scope.user);
-		dataPromise.then(function(response) {
-			$scope.user = response;  
-		},function(error) {
-			$scope.status = error;  
-		});
-		
-		 this.resetForm();
-	};
 	
 }]);

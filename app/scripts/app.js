@@ -1,5 +1,7 @@
 var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask']);
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+app.config(['$routeProvider', '$locationProvider','$httpProvider', function($routeProvider, $locationProvider, $httpProvider){
+	$httpProvider.defaults.useXDomain = true;
+	delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	$routeProvider.
 	when('/', {
 		templateUrl: 'views/_login.html',
