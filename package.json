@@ -1,8 +1,17 @@
 {
-  "name": "angular-app",
-  "version": "1.0.0",
-  "description": "",
+  "name": "time-tracker",
+  "version": "0.1",
+  "description": "web app",
+  "license": "UNLICENSED",
+  "private": true,
+  
   "main": "index.js",
+  
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/Newput-Time-tracker/Web-app"
+  },
+  
   "dependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
@@ -13,13 +22,15 @@
     "process-nextick-args": "^1.0.3"
   },
   "devDependencies": {
-    "gulp-imagemin": "^2.3.0",
+	"gulp-imagemin": "^2.3.0",
     "gulp-minify-css": "^1.2.1",
     "karma-bower": "^1.0.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"preinstall": "echo here it comes!",
+	"postinstall": "echo there it goes!",
+	"build": ""
+	"start": "node index.js",
+	"test": "tap test/*.js"
+  }
 }
