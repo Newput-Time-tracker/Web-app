@@ -23,7 +23,8 @@
     "angular-route": "~1.4.7",
     "jquery": "~2.1.4",
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
-    "ngMask": "angular-mask#~3.0.16"
+    "ngMask": "angular-mask#~3.0.16",
+    "angular-cookies": "~1.4.7"
   },
   "private": true,
   "resolutions": {
