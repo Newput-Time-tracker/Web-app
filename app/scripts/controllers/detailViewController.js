@@ -1,4 +1,4 @@
-app.controller('detailViewController', ['$scope', function($scope){	
+app.controller('detailViewController', ['$scope','userServices', function($scope,userServices){	
 	$scope.errorMessage = null;
     var getWorkDayHours1 = function (timeIn, timeOut) {
 		var timeIn= timeIn.split(":");
@@ -42,6 +42,11 @@ app.controller('detailViewController', ['$scope', function($scope){
 		var minutesSecond = parseInt(timeOutarray[0])*60;
 		var totalSecondMin = parseInt(minutesSecond) + parseInt(timeOutarray[1]);
 		
+		
+		if(parseInt(totalSecondMin)<parseInt(totalFirstMin)) {
+			$scope.errorMessage ="End Time should be greater than Start Time!";
+			return;
+		}
 		var totalTimeInMinutes	= parseInt(totalSecondMin)-parseInt(totalFirstMin);
 		return totalTimeInMinutes ;
 	};
@@ -51,26 +56,34 @@ app.controller('detailViewController', ['$scope', function($scope){
 			$scope.errorMessage ="Please insert valid time!";
 			return;
 		}
-		totalworkingHour = $scope.getTotoalhours($scope.timesheet);
+		//totalworkingHour = $scope.getTotoalhours($scope.timesheet);
+		//console.log(totalworkingHours);
 		
+		var dataPromise = userServices.saveDetailTimeSheet($scope.timesheet);
+				dataPromise.then(function(response) {
+					$scope.timesheet = response;  console.log('Detail Service rseult'+response);
+				},function(error) {
+					//$scope.status = error;  
+					$scope.errorMessage = error;
+				});	
 	};
 	
 	$scope.getTotoalhours = function(timesheet) {
-		$scope.dayWork = null;
+		$scope.dayWork = "null";
 		$scope.resetMessage();
 		var dayTime = lunchTime = nightTime = "0";
- 		if($scope.timesheet.dayin!= undefined && $scope.timesheet.dayout!= undefined) {	
- 			dayTime = getWorkDayHours($scope.timesheet.dayin,$scope.timesheet.dayout);				
+ 		if($scope.timesheet.in!= undefined && $scope.timesheet.out!= undefined) {	
+ 			dayTime = getWorkDayHours($scope.timesheet.in,$scope.timesheet.out);				
  		}
-		if($scope.timesheet.lunchin!= undefined && $scope.timesheet.lunchout!= undefined) {
-			lunchTime = getWorkDayHours($scope.timesheet.lunchin,$scope.timesheet.lunchout);
+		if($scope.timesheet.lunchIn!= undefined && $scope.timesheet.lunchOut!= undefined) {
+			lunchTime = getWorkDayHours($scope.timesheet.lunchIn,$scope.timesheet.lunchOut);
 		}
-		if($scope.timesheet.nightin!= undefined && $scope.timesheet.nightout!= undefined) {
-			nightTime = getWorkDayHours($scope.timesheet.nightin,$scope.timesheet.nightout);
+		if($scope.timesheet.nightIn!= undefined && $scope.timesheet.nightOut!= undefined) {
+			nightTime = getWorkDayHours($scope.timesheet.nightIn,$scope.timesheet.nightOut);
 	    }		
-	 	$scope.isInvalid($scope.timesheet.dayin,$scope.timesheet.dayout);
-	 	$scope.isInvalid($scope.timesheet.lunchin,$scope.timesheet.lunchout);
-	 	$scope.isInvalid($scope.timesheet.nightin,$scope.timesheet.nightout);
+	 	$scope.isInvalid($scope.timesheet.in,$scope.timesheet.out);
+	 	$scope.isInvalid($scope.timesheet.lunchIn,$scope.timesheet.lunchOut);
+	 	$scope.isInvalid($scope.timesheet.nightIn,$scope.timesheet.nightOut);
 		var reminDayTime = parseFloat(dayTime)-parseFloat(lunchTime);
 		var totalWorkMinutes = parseFloat(reminDayTime)+parseFloat(nightTime);
 	    var hours = parseInt(Math.floor(parseInt(totalWorkMinutes)) / 60);          
