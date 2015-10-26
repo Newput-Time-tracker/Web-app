@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask']);
+var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCookies']);
 app.config(['$routeProvider', '$locationProvider','$httpProvider', function($routeProvider, $locationProvider, $httpProvider){
 	$httpProvider.defaults.useXDomain = true;
 	delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -8,6 +8,11 @@ app.config(['$routeProvider', '$locationProvider','$httpProvider', function($rou
 		controller: 'loginController',
 		controllerAs: 'login'
 	}).
+	when('/verifyuser', {
+    templateUrl: 'views/_verifyuser.html',
+    controller: 'verifyUserController',
+    controllerAs: 'verify'
+  }).
 	when('/forgetpassword', {
 		templateUrl: 'views/_forgotpassword.html',
 		controller: 'forgotPasswordController',

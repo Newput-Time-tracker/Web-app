@@ -1,4 +1,8 @@
-app.controller('userTimesheetController', ['$scope', 'userServices', function($scope, userServices){
+app.controller('userTimesheetController', ['$scope', '$location', 'UserService', function($scope, $location, UserService){
+	var token = UserService.getAccessToken();
+	if(!token) {
+	  $location.path('/verifyuser');
+	}
 	var currentDate = new Date();
 	var currentMonth = currentDate.getMonth(); // it gives 0 based result.
 	var currentYear = currentDate.getFullYear();
@@ -66,7 +70,7 @@ app.controller('userTimesheetController', ['$scope', 'userServices', function($s
 				$scope.weeksDateStr = '';
 				$scope.timesheetArr = $scope.timesheetData;
 		}
-	}
+	};
 	function initializeWeek(newCurrentMonth, newCurrentYear){
 		var nweeks = getWeeksInMonth(newCurrentMonth, newCurrentYear);
 		$scope.weeksOptions.weeks = nweeks;
@@ -117,7 +121,7 @@ app.controller('userTimesheetController', ['$scope', 'userServices', function($s
 	}
 
 	// Calling of service to set the user data object after login.
-	$scope.employees = userServices.getProperty();
+	$scope.employees = UserService.getProperty();
 
 	//Restrict the month and year to date of joining
 	var doj = parseInt($scope.employees.doj);
@@ -133,8 +137,7 @@ app.controller('userTimesheetController', ['$scope', 'userServices', function($s
 		$scope.monthsOptions = generateMonthSelectBox(startMonth-1, currentMonth, newCurrentYear);
 		$scope.weeksDateStr = '';
 		initializeWeek(currentMonth, newCurrentYear);
-
-	}
+	};
 
 	// Update Month
 
@@ -144,7 +147,7 @@ app.controller('userTimesheetController', ['$scope', 'userServices', function($s
 		$scope.selectedMonth = monthList[newCurrentMonth];
 		initializeWeek(newCurrentMonth, newCurrentYear);
 		$scope.weeksDateStr = '';
-	}
+	};
 
 	//email excel sheet
 
@@ -152,13 +155,13 @@ app.controller('userTimesheetController', ['$scope', 'userServices', function($s
 	 	var userObj = {};
 	 	userObj.dataobj = {'empId': '62', 'month': 'October', 'year': '2015' };
 	 	userObj.header = {'token': '3321EEAE282680B4173FCE770865E293','Content-Type':'application/javascript'};
-	 	var emailPromise = userServices.emailme(userObj);
+	 	var emailPromise = UserService.emailme(userObj);
 	 	emailPromise.then(function(res){
 				$scope.detail = res;
 			}, function(error){
-				console.log(error)
+				
 		});
-	}
+	};
 	
 
 }]);
