@@ -1,11 +1,10 @@
-
-app.factory("userServices", ['$http', '$q', function($http, $q){
+app.factory("UserService", ['$http', '$q', function($http, $q){
 	var userJsonData = [];
 	return {
 	authUser: function(user){
 			var q = $q.defer();
-  		$http({ 
-				method: 'POST', 
+  		$http({
+				method: 'POST',
 				url: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee/login',
         data: user
 			}).success(function(response){
@@ -26,8 +25,8 @@ app.factory("userServices", ['$http', '$q', function($http, $q){
 
     emailme: function(userObj){
   		var q = $q.defer();
-  		$http({ 
-				method: 'POST', 
+  		$http({
+				method: 'POST',
 				url: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee/mailExcelSheet',
         data: userObj.dataobj,
         headers : userObj.header
@@ -40,11 +39,11 @@ app.factory("userServices", ['$http', '$q', function($http, $q){
 			});
 			return q.promise;
   	},
-  	
+
   	registerUser: function(userObj) {
 		var q = $q.defer();
-		$http({ 
-			method: 'POST', 
+		$http({
+			method: 'POST',
 			url: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee/register',
 	      	data: userObj,
 	      	crossDomain:true,
@@ -63,8 +62,8 @@ app.factory("userServices", ['$http', '$q', function($http, $q){
 	},
 	forgotPassword: function(email) {
 		var q = $q.defer();
-		$http({ 
-			method: 'POST', 
+		$http({
+			method: 'POST',
 			url: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee/register',
 	      	data: email,
 	      	crossDomain:true,
@@ -83,5 +82,5 @@ app.factory("userServices", ['$http', '$q', function($http, $q){
  	}
 
   };
-	
+
 }]);

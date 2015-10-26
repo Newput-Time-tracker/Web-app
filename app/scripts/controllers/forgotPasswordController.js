@@ -1,10 +1,12 @@
-app.controller('forgotPasswordController',['$scope', function() {
-	this.fetchPwd = function() {	
-		var dataPromise = userServices.forgotPassword($scope.email);
-		dataPromise.then(function(response) {
-			$scope.email = response;  console.log('service rseult'+response);
-		},function(error) {
-			//$scope.status = error;  
-		$scope.errorMessage = error;
-	});
+app.controller('forgotPasswordController', ['$scope', 'UserService',
+function($scope, UserService) {
+  this.fetchPwd = function() {
+    var dataPromise = UserService.forgotPassword($scope.email);
+    dataPromise.then(function(response) {
+      $scope.email = response;
+    }, function(error) {
+      $scope.errorMessage = error;
+    });
+  };
 }]);
+
