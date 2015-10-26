@@ -1,4 +1,4 @@
-app.factory("UserService", ['$http', '$q', 'appSettings', function($http, $q, appSettings) {
+app.factory("UserService", ['$http', '$q', 'appSettings', '$cookies, function($http, $q, appSettings, $cookies) {
 var userJsonData = [];
 return {
   authUser: function(user) {
@@ -96,6 +96,17 @@ return {
       q.reject(response);
     });
     return q.promise;
+  },
+  
+  getProperty: function() {
+      return userJsonData;
+    },
+  setAccessToken: function(){
+    $cookies.accessToken = userJsonData.token;
+  },
+  getAccessToken: function(){
+    var accessToken = $cookies.accessToken;
+    return accessToken;      
   }
 };
   

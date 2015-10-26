@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask']);
+var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCookies']);
 
 app.config(['$routeProvider', '$locationProvider','$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
  
@@ -34,7 +34,7 @@ app.config(['$routeProvider', '$locationProvider','$httpProvider', function($rou
       otherwise({redirectTo: '/'});
       $locationProvider.html5Mode(true);
 }]);
-  
+
 app.constant('appSettings', {  
   /*--------- localhost ---------------*/
 
