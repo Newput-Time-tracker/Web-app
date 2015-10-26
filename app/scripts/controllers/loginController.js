@@ -1,6 +1,6 @@
-app.controller('loginController', ['$scope', '$location', 'UserService', function($scope, $location, userService){
+app.controller('loginController', ['$scope', '$location', 'UserService', function($scope, $location, UserService){
 	this.verifyUser = function() {
-		var employeesPromise = userService.authUser($scope.user);
+		var employeesPromise = UserService.authUser($scope.user);
 		userService.setAccessToken(); // set access token 
 		// below code not in use until api is not available (testing purpose).
 		// employeesPromise.then(function(res){
