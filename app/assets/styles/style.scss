@@ -1,6 +1,6 @@
 @import "variable.scss";
 body {
-  font-family: 'Open Sans';
+font-family: 'Open Sans';
 }
 .wrapper {
   .navbar {
@@ -10,14 +10,14 @@ body {
     box-shadow: 0 0 5px 0;
     margin: 0px;
     padding: 0px;
-
+    
     h2 {
       margin: 0px;
       padding: 25px;
     }
   }
   .container {
-     padding: 35px;
+    padding: 35px;
   }
 }
 footer {
@@ -46,13 +46,13 @@ footer {
 .section {
   padding: 30px;
 }
- input {
-   .ng-dirty {
+input {
+  .ng-dirty {
     &.ng-invalid {
       border-color: red;
     }
-   }
- }
+  }
+}
 .signup-form-container {
   border: 1px solid #fff;
   border-radius: 8px;
@@ -73,7 +73,7 @@ footer {
 }
 table {
   tbody{
-     tr:nth-child(odd) {
+    tr:nth-child(odd) {
       background-color: #def;
     }
     tr:nth-child(even) {
@@ -85,8 +85,8 @@ table {
   min-height: 520px;
 }
 .welcome-title {
-  .icon {
-    text-align: right;
+.icon {
+  text-align: right;
   }
 }
 .message {
@@ -156,32 +156,29 @@ table {
 }
 
 @media screen and (max-width: 360px) {
- .form-group {
-   .input-group {
-     .work-description {
-       width:160px;
-       
-     }
-     }
-   }
- }  
+  .form-group {
+    .input-group {
+      .work-description {
+        width:160px;   
+      }
+    }
+  }
+}  
  @media screen and (min-width: 767px) {
- .form-group {
-   .input-group {
-     .work-description {
-       width:280px;
-       
-     }
-     }
-   }
+  .form-group {
+    .input-group {
+      .work-description {
+        width:280px;   
+      }
+    }
+  }
  }  
   @media screen and (min-width: 1024px) {
- .form-group {
-   .input-group {
-     .work-description {
-       width:490px;
-       
-     }
+   .form-group {
+     .input-group {
+       .work-description {
+         width:490px;     
+       }
      }
    }
  } 
