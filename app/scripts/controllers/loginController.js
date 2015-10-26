@@ -4,11 +4,11 @@ app.controller('loginController', ['$scope', '$location', 'userServices', functi
 		employeesPromise.then(function(res){
 				$scope.employees = res;
 			}, function(error){
-				console.log(error)
+				console.log(error);
 		});
 		$location.path('/usertimesheet');
 	};
 	this.toLocation = function(loc){
 		$location.path('/'+loc);
-	}
+	};
 }]);

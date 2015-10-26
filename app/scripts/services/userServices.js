@@ -72,16 +72,35 @@ app.factory("userServices", ['$http', '$q', function($http, $q){
 	      	headers : {
 		    	 'Content-Type': 'application/x-www-form-urlencoded'
 			    }
-			}).success(function(response){
+		}).success(function(response){
 				console.log(response);
 				q.resolve(response);
-			}).
+		}).
 			error(function(response){
 				q.reject(response);
-			});
-			return q.promise;
- 	}
-
+		});
+		return q.promise;
+ 	},
+  	saveDetailTimeSheet: function(timeSheet) {
+		var q = $q.defer();
+		$http({ 
+			method: 'POST', 
+			url: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee/timeEntry',
+	      	data: timeSheet,
+	      	crossDomain:true,
+	      	withCredentials: true,
+	      	headers : {
+		    	 'Content-Type': 'application/x-www-form-urlencoded'
+		    }
+		}).success(function(response){
+			console.log(response);
+			q.resolve(response);
+		}).
+		error(function(response){
+			q.reject(response);
+		});
+		return q.promise;
+	}
   };
 	
 }]);
