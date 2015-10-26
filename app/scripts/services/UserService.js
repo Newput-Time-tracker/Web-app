@@ -1,4 +1,4 @@
-app.factory("UserService", ['$http', '$q', 'appSettings', '$cookies, function($http, $q, appSettings, $cookies) {
+app.factory("UserService", ['$http', '$q', 'appSettings', '$cookies', function($http, $q, appSettings, $cookies) {
 var userJsonData = [];
 return {
   authUser: function(user) {
