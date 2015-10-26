@@ -1,4 +1,4 @@
-app.controller('detailViewController', ['$scope', 'userService', function($scope,userService) {	
+app.controller('detailViewController', ['$scope', 'UserService', function($scope,UserService) {	
   $scope.errorMessage = null;
   var getWorkDayHours = function (timeIn, timeOut) {	
     var timeInarray = timeIn.toString().split(":");
@@ -23,7 +23,7 @@ app.controller('detailViewController', ['$scope', 'userService', function($scope
       return;
     }
     //totalworkingHour = $scope.getTotoalhours($scope.timesheet);
-    var dataPromise = userServices.saveDetailTimeSheet($scope.timesheet);
+    var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet);
     dataPromise.then(function(response) {
       $scope.timesheet = response;
     },function(error) {

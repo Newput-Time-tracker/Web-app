@@ -1,4 +1,4 @@
-app.controller('signUpController', ['$scope', 'userService', function($scope, userService) {	
+app.controller('signUpController', ['$scope', 'UserService', function($scope, UserService) {	
   $scope.errorMessage = null;
   this.userSignUp = function(user) {
     var userReg = $scope.user;
@@ -7,7 +7,7 @@ app.controller('signUpController', ['$scope', 'userService', function($scope, us
       $scope.errorMessage = "Opps ! Age should be 18 above you can't Register";
       return ;
     }
-    var dataPromise = userServices.registerUser($scope.user);
+    var dataPromise = UserService.registerUser($scope.user);
     dataPromise.then(function(response) {
       $scope.user = response;
     },function(error) {

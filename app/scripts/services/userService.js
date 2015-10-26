@@ -1,4 +1,4 @@
-app.factory("userService", ['$http', '$q', function($http, $q) {
+app.factory("UserService", ['$http', '$q', function($http, $q) {
 var userJsonData = [];
 return {
   authUser: function(user) {
@@ -98,5 +98,5 @@ return {
     return q.promise;
   }
 };
-	
+  
 }]);
