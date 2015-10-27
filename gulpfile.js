@@ -26,7 +26,7 @@ var applicationJsArr = ['app/scripts/app.js',
 'app/scripts/controllers/verifyController.js'
 ];
 
-var srcArr = ['app/index.html', 'app/favicon.ico'];
+var srcArr = ['app/index.html', 'app/favicon.ico', 'app/404.html'];
 
 var vendorCss = ['bower_components/bootstrap/dist/css/bootstrap.min.css',
 'bower_components/open-sans-fontface/open-sans.css'];
@@ -49,7 +49,6 @@ gulp.task('applicationCss', function() {
 //Compress vendor css
 gulp.task('compressVendorCss', function() {
   return gulp.src(vendorCss)
-    .pipe(minifyCss())
     .pipe(concat('vendor.min.css'))
     .pipe(gulp.dest(buildCssPath));
 });
@@ -65,7 +64,7 @@ gulp.task('compressVendorJs', function() {
 gulp.task('applicationJs', function() {
   return gulp.src(applicationJsArr)
    .pipe(uglify())
-   .pipe(concat('application.js'))
+   .pipe(concat('application.min.js'))
    .pipe(gulp.dest(buildJsPath));
 });
 
@@ -91,9 +90,10 @@ gulp.task('movedSource', function() {
 gulp.task('moveFiles', ['copyimage', 'copyPartials', 'movedSource']);
 
 // default task to compress , concat the vendor files
-gulp.task('VendorFiles', ['compressVendorCss', 'compressVendorJs']);
+gulp.task('vendorFiles', ['compressVendorCss', 'compressVendorJs']);
 
 // default task to compress , concat the application files
-gulp.task('VendorFiles', ['generateDevCss', 'applicationCss', 'applicationJs']);
+gulp.task('applicationrFiles', ['generateDevCss', 'applicationCss', 'applicationJs']);
 
-
+// default task to run
+gulp.task('defaultRun', ['moveFiles', 'vendorFiles', 'applicationrFiles']);
