@@ -1,14 +1,12 @@
 {
-  "name": "Time tracker app",
-  "version": "0.0.1",
-  "authors": [
-    "newput"
-  ],
-  "description": "Time tracker",
-  "main": "index.html",
-  "moduleType": [],
-  "license": "MIT",
-  "homepage": "index.html",
+  "name": "time-tracker",
+  "description": "web app",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Newput-Time-tracker/Web-app"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
@@ -26,7 +24,6 @@
     "ngMask": "angular-mask#~3.0.16",
     "angular-cookies": "~1.4.7"
   },
-  "private": true,
   "resolutions": {
     "jquery": ">= 1.9.1"
   }
