@@ -1,67 +1,80 @@
 <div class="row row-margin">
-		<div class="col-sm-3 col-xs-12"> </div>
-		<div class=" form-wrap col-sm-6 col-xs-12">
-			<h3>TimeSheet</h3>
-			<form  name="detailview" role="form" novalidate="true" ng-submit="detailview.$valid && detail.saveTimesheet()">
-				<div class="form-group">
-					<div class="col-sm-12">
-				   		<label for="">Day</label>
-					    <div class="input-group">
-					        <input type="text" name="dayin" ng-model="timesheet.dayin" class="form-control"  placeholder="Start" mask='99:99' ng-change="getTotoalhours()">
-					    	<div class="input-group-addon">To</div>
-					      	<input type="text" name="dayout" ng-model="timesheet.dayout" class="form-control"  placeholder="End" mask='99:99' ng-change="getTotoalhours()">				      
-					    </div>
-					    <span ng-show="(detailview.$submitted && detailview.dayin.$invalid) || (detailview.dayin.$dirty && detailview.dayin.$invalid)"> Please enter correct time format.
-					    </span>
-				    </div>
-			    </div>
-		    	<div class="form-group">
-		    		<div class="col-sm-12">
-				   		<label  for="">Lunch</label>
-					    <div class="input-group">
-					        <input type="text" name="lunchin" ng-model="timesheet.lunchin" class="form-control" placeholder="Start" mask='99:99' ng-change="getTotoalhours()">
-					    	<div class="input-group-addon">To</div>
-					      	<input type="text" name="lunchout" ng-model="timesheet.lunchout" class="form-control"  placeholder="End" mask='99:99' ng-change="getTotoalhours()">
-					    </div>
-				    </div>
-			    </div>
-			    <div class="form-group">
-			    	<div class="col-sm-12">
-				   		<label  for="">Night</label>
-					    <div class="input-group">
-					        <input type="text" name="nightin" ng-model="timesheet.nightin" class="form-control" placeholder="Start" mask='99:99' ng-change="getTotoalhours()">
-					    	<div class="input-group-addon">To</div>
-					      	<input type="text" name="nightout" ng-model="timesheet.nightout" class="form-control"  placeholder="End" mask='99:99'  ng-change="getTotoalhours()">		      
-					    </div>
-				    </div>
-			    </div>
-			     <div class="form-group">
-			     	<div class="col-sm-12">
-					    <div class="input-group">
-					    <label  for="totalhours">Total Hours</label>
-					     <button type="button" name="totalhours" id="totalhours" class="btn btn-deafult">{{dayWork}}:hrs</button>   	      
-					    </div>
-				    </div>
-			    </div>
-			     <div class="form-group">
-			     	<div class="col-sm-12">
-				   		<label  for="workdesc">Work Desc.</label>
-					    <div class="input-group">
-					        <textarea name="workdesc" class="work-description" id ="workdesc" ng-model="timesheet.workdesc" > </textarea>   	      
-					    </div>
-				    </div>
-			    </div>
-			    <span class="error-message">{{errorMessage}}</span>
-			    <div class="form-group">
-			    	<div class="col-sm-12">	
-					    <div class="input-group">
-					      <button type="button" class="btn btn-default divider" ng-click="reset()">Reset</button>
-					      <button type="submit" class="btn btn-primary divider">Save</button>   
-					      <a href="signup">  Back To Home Page </a> 
-					    </div>
-				    </div>
-			    </div>
-			</form>
-		</div>	
-		<div class="col-sm-1 col-xs-12"> </div>			
+  <div class="col-sm-3 col-xs-12"></div>
+  <div class=" form-wrap col-sm-6 col-xs-12">
+    <h3>TimeSheet</h3>
+    <form  name="detailview" role="form" novalidate="true" ng-submit="detailview.$valid && detail.saveTimesheet()">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label for="">Day</label>
+          <div class="input-group">
+            <input type="text" name="dayin" ng-model="timesheet.in" class="form-control"  placeholder="Start" mask='99:99' ng-change="getTotoalhours()">
+            <div class="input-group-addon">
+              To
+            </div>
+            <input type="text" name="dayout" ng-model="timesheet.out" class="form-control"  placeholder="End" mask='99:99' ng-change="getTotoalhours()">
+          </div>
+          <span ng-show="((detailview.$submitted && detailview.dayin.$invalid) || (detailview.dayin.$dirty && detailview.dayin.$invalid)) || ((detailview.$submitted && detailview.dayout.$invalid) || (detailview.dayout.$dirty && detailview.dayout.$invalid)) "> Please enter correct time format. </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label  for="">Lunch</label>
+          <div class="input-group">
+            <input type="text" name="lunchin" ng-model="timesheet.lunchIn" class="form-control" placeholder="Start" mask='99:99' ng-change="getTotoalhours()">
+            <div class="input-group-addon">
+              To
+            </div>
+            <input type="text" name="lunchout" ng-model="timesheet.lunchOut" class="form-control"  placeholder="End" mask='99:99' ng-change="getTotoalhours()">
+          </div>
+          <span ng-show="((detailview.$submitted && detailview.lunchin.$invalid) || (detailview.lunchin.$dirty && detailview.lunchin.$invalid)) || ((detailview.$submitted && detailview.lunchout.$invalid) || (detailview.lunchout.$dirty && detailview.lunchout.$invalid)) "> Please enter correct time format. </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label  for="">Night</label>
+          <div class="input-group">
+            <input type="text" name="nightin" ng-model="timesheet.nightIn" class="form-control" placeholder="Start" mask='99:99' ng-change="getTotoalhours()">
+            <div class="input-group-addon">
+              To
+            </div>
+            <input type="text" name="nightout" ng-model="timesheet.nightOut" class="form-control"  placeholder="End" mask='99:99'  ng-change="getTotoalhours()">
+          </div>
+          <span ng-show="((detailview.$submitted && detailview.nightin.$invalid) || (detailview.nightin.$dirty && detailview.nightin.$invalid)) || ((detailview.$submitted && detailview.nightout.$invalid) || (detailview.nightout.$dirty && detailview.nightout.$invalid)) "> Please enter correct time format. </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <div class="input-group">
+            <label  for="totalhours">Total Hours</label>
+            <button type="button" name="totalhours" id="totalhours" class="btn btn-deafult">
+              {{dayWork}}:hrs
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label  for="workdesc">Work Desc.</label>
+          <div class="input-group">
+            <textarea name="workdesc" class="work-description" id ="workdesc" ng-model="timesheet.workDesc" > </textarea>
+          </div>
+        </div>
+      </div>
+      <span class="error-message">{{errorMessage}}</span>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <div class="input-group">
+            <button type="button" class="btn btn-default divider" ng-click="reset()">
+              Reset
+            </button>
+            <button type="submit" class="btn btn-primary divider">
+              Save
+            </button>
+            <a href="signup"> Back To Home Page </a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-1 col-xs-12"></div>
 </div>
