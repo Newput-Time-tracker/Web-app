@@ -1,5 +1,5 @@
 // Include gulp
-var gulp = require('gulp'); 
+var gulp = require('gulp');
 
 // Include Our Plugins
 var sass = require('gulp-sass');
@@ -11,13 +11,13 @@ var uglify = require('gulp-uglify');
 
 var buildCssPath = 'build/assets/styles';
 var buildJsPath = 'build/assets/js';
-var vendorJsArr = ['bower_components/jquery/dist/jquery.min.js', 
-'bower_components/bootstrap/dist/js/bootstrap.min.js', 
+var vendorJsArr = ['bower_components/jquery/dist/jquery.min.js',
+'bower_components/bootstrap/dist/js/bootstrap.min.js',
 'bower_components/angular-route/angular-route.min.js',
-'bower_components/angular/angular.min.js', 'bower_components/angular-cookies/angular-cookies.min.js', 
+'bower_components/angular/angular.min.js', 'bower_components/angular-cookies/angular-cookies.min.js',
 'bower_components/ngMask/dist/ngMask.min.js'];
 
-var applicationJsArr = ['app/scripts/app.js', 
+var applicationJsArr = ['app/scripts/app.js',
 'app/scripts/services/userService.js',
 'app/scripts/controllers/loginController.js',
 'app/scripts/controllers/signUpController.js',
@@ -26,7 +26,9 @@ var applicationJsArr = ['app/scripts/app.js',
 'app/scripts/controllers/verifyController.js'
 ];
 
-var vendorCss = ['bower_components/bootstrap/dist/css/bootstrap.min.css', 
+var srcArr = ['app/index.html', 'app/favicon.ico'];
+
+var vendorCss = ['bower_components/bootstrap/dist/css/bootstrap.min.css',
 'bower_components/open-sans-fontface/open-sans.css'];
 
 // Task only for development environment
@@ -36,18 +38,26 @@ gulp.task('generateDevCss', function() {
     .pipe(gulp.dest('app/assets/styles'));
 });
 
+// Compile, concat, and minify Our Sass
+gulp.task('applicationCss', function() {
+  return gulp.src('app/assets/styles/*.css')
+    .pipe(minifyCss())
+    .pipe(concat('application.min.css'))
+    .pipe(gulp.dest(buildCssPath));
+ });
+
 //Compress vendor css
 gulp.task('compressVendorCss', function() {
   return gulp.src(vendorCss)
     .pipe(minifyCss())
-    .pipe(concat('vendor.css'))
+    .pipe(concat('vendor.min.css'))
     .pipe(gulp.dest(buildCssPath));
 });
 
 // Compile, concat, and minify vendor js files
-gulp.task('minifyjs', function() {
+gulp.task('compressVendorJs', function() {
   return gulp.src(vendorJsArr)
-    .pipe(concat('vendor.js'))
+    .pipe(concat('vendor.min.js'))
     .pipe(gulp.dest(buildJsPath));
 });
 
@@ -65,27 +75,25 @@ gulp.task('copyimage', function() {
     .pipe(gulp.dest('build/assets/images'));
 });
 
-//copy index.html pages
-gulp.task('copyHtmlPage', function() {
-  return gulp.src('app/*.html')
-    .pipe(gulp.dest('build'));
-});
-
 //copy partials to build
 gulp.task('copyPartials', function() {
   return gulp.src('app/views/*.html')
     .pipe(gulp.dest('build/views'));
 });
 
-//copy favicon.ico
-gulp.task('favicon', function() {
-  return gulp.src('app/*.ico')
+//copy favicon.ico and index.html
+gulp.task('movedSource', function() {
+  return gulp.src(srcArr)
     .pipe(gulp.dest('build'));
 });
 
-// Compile, concat, and minify Our Sass
-gulp.task('minifycss', function() {
-  return gulp.src('app/assets/styles/*.css')
-    .pipe(minifyCss())
-    .pipe(gulp.dest(buildCssPath));
- });
+// default task to move the files
+gulp.task('moveFiles', ['copyimage', 'copyPartials', 'movedSource']);
+
+// default task to compress , concat the vendor files
+gulp.task('VendorFiles', ['compressVendorCss', 'compressVendorJs']);
+
+// default task to compress , concat the application files
+gulp.task('VendorFiles', ['generateDevCss', 'applicationCss']);
+
+
