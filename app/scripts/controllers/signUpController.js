@@ -1,5 +1,5 @@
-app.controller('signUpController', ['$scope', 'UserService',
-function($scope, UserService) {
+app.controller('signUpController', ['$scope', '$location', '$timeout', 'UserService',
+function($scope, $location, $timeout, UserService) {
   $scope.errorMessage = null;
   this.userSignUp = function(user) {
     var userReg = $scope.user;
@@ -10,13 +10,21 @@ function($scope, UserService) {
     }
     var dataPromise = UserService.registerUser($scope.user);
     dataPromise.then(function(response) {
-      $scope.user = response;
+        if(response.success!=true) {
+           $scope.errorMessage = response.error;
+        }
+        else if(response.success==true) {
+           $scope.errorMessage = "Register Successfully Please Check Your Mail For Email Verification  ";
+          // $timeout(function(){
+           //   $location.path('/');
+           //}, 1000);
+        }
     }, function(error) {
       $scope.errorMessage = error;
     });
     resetForm();
   };
-  $scope.copareDate = function(user) {
+  $scope.compareDate = function(user) {
     var dob = $scope.user.dob;
     var doj = $scope.user.doj;
     resetForm();
