@@ -1,12 +1,12 @@
 var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCookies']);
 
 app.config(['$routeProvider', '$locationProvider','$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
- 
+
   $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
   $routeProvider.
-    when('/', {
+    when('/login', {
       templateUrl: 'views/_login.html',
       controller: 'loginController',
       controllerAs: 'login'
@@ -31,14 +31,15 @@ app.config(['$routeProvider', '$locationProvider','$httpProvider', function($rou
       controller: 'userTimesheetController',
       controllerAs: 'timesheet'
     }).
-      otherwise({redirectTo: '/'});
-      $locationProvider.html5Mode(true);
+    otherwise({redirectTo: '/login'});
+
+    $locationProvider.html5Mode(true);
 }]);
 
-app.constant('appSettings', {  
+app.constant('appSettings', {
   /*--------- localhost ---------------*/
 
-  serverBaseUrl: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee'  
+  serverBaseUrl: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee'
 
 
 });
@@ -53,7 +54,7 @@ app.directive('pwCheck', function() {
       ngModel.$validators.pwCheck = function(modelValue) {
         return modelValue == scope.otherModelValue;
       };
-      
+
       scope.$watch('otherModelValue', function() {
         ngModel.$validate();
       });
