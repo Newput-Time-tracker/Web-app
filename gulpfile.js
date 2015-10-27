@@ -62,7 +62,7 @@ gulp.task('compressVendorJs', function() {
 });
 
 //compile, concat and minify appication js files
-gulp.task('applicationjs', function() {
+gulp.task('applicationJs', function() {
   return gulp.src(applicationJsArr)
    .pipe(uglify())
    .pipe(concat('application.js'))
@@ -94,6 +94,6 @@ gulp.task('moveFiles', ['copyimage', 'copyPartials', 'movedSource']);
 gulp.task('VendorFiles', ['compressVendorCss', 'compressVendorJs']);
 
 // default task to compress , concat the application files
-gulp.task('VendorFiles', ['generateDevCss', 'applicationCss']);
+gulp.task('VendorFiles', ['generateDevCss', 'applicationCss', 'applicationJs']);
 
 
