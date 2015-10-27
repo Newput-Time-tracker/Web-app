@@ -1,3 +1,4 @@
-app.controller('verifyUserController', ['$scope', 'UserService', function($scope, UserService){
-  
+app.controller('verifyUserController', ['$scope', 'UserService',
+function($scope, UserService) {
+
 }]);
