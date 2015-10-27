@@ -1,7 +1,3 @@
-# Web-app
-Web application of time tracker
-
-
 # Time Tracker Web app
 
 An angular app to use the time tracker feature.
