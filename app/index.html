@@ -1,56 +1,43 @@
-<!Doctype HTML>
+<!DOCTYPE html>
 <html ng-app="myApp">
-  <head>
-    <title>Angular app</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/app/">
+<head>
+	<title>Angular app</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<base href="/app/">
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/styles/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../bower_components/open-sans-fontface/open-sans.css"/>
 
-    <!-- un comment in build folder
-
-    <!-- CSS assets
-    <link rel="stylesheet" type="text/css" href="/assets/styles/vendor.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/styles/application.min.css"/>
-
-    <!-- JS assets
-    <script src="/assets/js/vendor.min.js"></script>
-    <script src="/assets/js/application.min.js"></script -->
-
-    <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/styles/style.css"/>
-    <link rel="stylesheet" type="text/css" href="../bower_components/open-sans-fontface/open-sans.css"/>
-
-    <!-- scripts files bower components -->
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/angular-route/angular-route.min.js"></script>
-    <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script src="../bower_components/ngMask/dist/ngMask.min.js"></script>
-    <script src="assets/js/ui-bootstrap-tpls-0.12.1.js"></script>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <nav id="myNavbar" class="navbar navbar-default navbar-inverse" role="navigation">
-          <h2>Time Tracker</h2>
-        </nav>
-      </header>
-      <div class="container" ng-view></div>
-      <footer>
-        <div class="copyright">
-          <h4>@Copyright 2015</h4>
-        </div>
-      </footer>
-    </div>
-
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/loginController.js"></script>
-    <script src="scripts/controllers/forgotPasswordController.js"></script>
-    <script src="scripts/controllers/signUpController.js"></script>
-    <script src="scripts/controllers/detailViewController.js"></script>
-    <script src="scripts/services/UserService.js"></script>
-    <script src="scripts/controllers/userTimesheetController.js"></script>
-    <script src="scripts/controllers/verifyUserController.js"></script>
-
-  </body>
+	<!-- scripts files bower components -->
+	<script src="../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../bower_components/angular/angular.js"></script>
+	<script src="../bower_components/angular-route/angular-route.min.js"></script>
+	<script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
+	<script src="../bower_components/ngMask/dist/ngMask.min.js"></script>
+  <script src="assets/js/ui-bootstrap-tpls-0.12.1.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<nav id="myNavbar" class="navbar navbar-default navbar-inverse" role="navigation">
+	   			<h2>Time Tracker</h2>
+			</nav>
+		</header>
+		<div class="container" ng-view></div>
+		<footer>
+			<div class="copyright"><h4>@Copyright 2015</h4></div>
+		</footer>
+	</div>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/loginController.js"></script>
+  <script src="scripts/controllers/forgotPasswordController.js"></script>
+  <script src="scripts/controllers/signUpController.js"></script>
+  <script src="scripts/controllers/detailViewController.js"></script>
+  <script src="scripts/services/UserService.js"></script>
+  <script src="scripts/controllers/userTimesheetController.js"></script>
+  <script src="scripts/controllers/verifyUserController.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/httpProvider.js"></script>
+</body>
 </html>

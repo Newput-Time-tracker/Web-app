@@ -1,11 +1,11 @@
-@import "variable.scss";
+@import "variable";
 body {
   font-family: 'Open Sans';
 }
 .wrapper {
   .navbar {
-    background-color: #F1F1F1;
-    border: 1px solid #F1F1F1;
+    background-color: $default;
+    border: 1px solid $default;
     border-radius: 0px;
     box-shadow: 0 0 5px 0;
     margin: 0px;
@@ -133,7 +133,7 @@ table {
     border:solid 0.7px #ededed;
     margin: 10px;
   }
-}  
+}
 .divider {
   margin:10px;
   height:auto;
@@ -141,18 +141,18 @@ table {
 }
 .align-text {
   margin-top: 10px;
-  text-align:center; 
+  text-align:center;
 }
 
 .error-message {
-  color: #ff0000; 
+  color: #ff0000;
 }
 
 .col-sm-12 {
   .input-group {
     margin-bottom: 10px;
   }
-  
+
 }
 
 @media screen and (max-width: 360px) {
@@ -160,32 +160,32 @@ table {
    .input-group {
      .work-description {
        width:160px;
-       
+
      }
      }
    }
- }  
+ }
  @media screen and (min-width: 767px) {
  .form-group {
    .input-group {
      .work-description {
        width:280px;
-       
+
      }
      }
    }
- }  
+ }
   @media screen and (min-width: 1024px) {
  .form-group {
    .input-group {
      .work-description {
        width:490px;
-       
+
      }
      }
    }
- } 
-     
+ }
+
 .img {
   width: 15px;
 }
@@ -212,5 +212,5 @@ table {
 .center-link {
   clear: both;
   padding: 12px;
-  text-align: center;    
+  text-align: center;
 }

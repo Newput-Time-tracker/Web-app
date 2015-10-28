@@ -1,8 +1,14 @@
 app.controller('userTimesheetController', ['$scope', '$location', 'UserService',
 function($scope, $location, UserService) {
-  var token = UserService.getAccessToken();
+  $scope.employees = null;
+  var token = UserService.getAccessToken(); console.log(token);
   if (!token) {
     $location.path('/verifyuser');
+  }
+  // fetch login's userdata from service
+  var userObj = UserService.getProperty();
+  if (userObj.success && userObj.data[0]) {
+    $scope.employees = userObj.data[0];
   }
   var currentDate = new Date();
   var currentMonth = currentDate.getMonth();
@@ -150,21 +156,18 @@ function($scope, $location, UserService) {
     return selectOptions;
   }
 
-  // Calling of service to set the user data object after login.
-  $scope.employees = UserService.getProperty();
-
   //Restrict the month and year to date of joining
   var doj = parseInt($scope.employees.doj);
   var dojYear = new Date(doj);
   var startYear = dojYear.getFullYear();
   $scope.yearOptions = generateYearSelectBox(startYear, currentYear);
   var startMonth = dojYear.getMonth();
-  $scope.monthsOptions = generateMonthSelectBox(startMonth - 1, currentMonth, currentYear);
+  $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, currentYear);
 
   // Update year
   this.yearUpdate = function() {
     var newCurrentYear = $scope.yearOptions.current.value;
-    $scope.monthsOptions = generateMonthSelectBox(startMonth - 1, currentMonth, newCurrentYear);
+    $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
     initializeWeek(currentMonth, newCurrentYear);
   };

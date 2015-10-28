@@ -5,21 +5,21 @@ function($http, $q, appSettings, $cookies) {
     authUser : function(user) {
       var q = $q.defer();
       $http({
-        method : 'POST',
+       method : 'POST',
         url : appSettings.serverBaseUrl + '/login',
-        data : user
+        data : user,
+        crossDomain : true,
+        withCredentials : true,
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded'
+        }
       }).success(function(response) {
+        userJsonData = response;
         q.resolve(response);
       }).error(function(response) {
         q.reject(response);
       });
       return q.promise;
-      //userJsonData = ({firstname:"Varsha", lastname:"Tyagi", doj: '1382812200000'});
-      //return userJsonData;
-    },
-
-    getProperty : function() {
-      return userJsonData;
     },
 
     emailme : function(userObj) {
@@ -93,16 +93,18 @@ function($http, $q, appSettings, $cookies) {
       });
       return q.promise;
     },
-
     getProperty : function() {
       return userJsonData;
     },
-    setAccessToken : function() {
-      $cookies.accessToken = userJsonData.token;
+    setAccessToken : function(token, userObj) {
+      $cookies.put('accessToken', token);
+      $cookies.put('UserObj', userObj);
     },
     getAccessToken : function() {
-      var accessToken = $cookies.accessToken;
-      return accessToken;
+      var accessToken = $cookies.get('accessToken');
+      var UserObj = $cookies.get('UserObj');
+      var cookieObj = {'token': accessToken, 'userObj': UserObj} ;
+      return cookieObj;
     }
   };
 

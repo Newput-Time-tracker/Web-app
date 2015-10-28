@@ -1,41 +1,58 @@
 <div class="row">
-	<div class="col-sm-offset-8 welcome-title">
-		<div class="col-sm-7 col-xs-8 icon"> Welcome {{employees.firstname}}! </div>
-		<div class ="col-sm-2 col-xs-1"><img title="Settings" src="assets/images/settings.png"></div>
-		<div class="col-sm-2 col-xs-1"><img title = "Logout" src="assets/images/logout_user.png"></div>
-	</div>
+  <div class="col-sm-offset-8 welcome-title">
+    <div class="col-sm-7 col-xs-8 icon">
+      Welcome {{employees.firstName}}!
+    </div>
+    <div class ="col-sm-2 col-xs-1"><img title="Settings" src="assets/images/settings.png">
+    </div>
+    <div class="col-sm-2 col-xs-1"><img title = "Logout" src="assets/images/logout_user.png">
+    </div>
+  </div>
 </div>
 <div class="row timesheet-container">
-	<div class="col-sm-12"><center><h2>Time Sheet of {{selectedMonth}}<sub>{{weeksDateStr}}</sub></h2></center></div>
-	<div class="row">
-		<div class="col-sm-offset-2 col-xs-offset-2">
-			<div class="col-sm-3 col-xs-3">
-				<select class="form-control" ng-change="timesheet.weekUpdate()" ng-model ="weekDay" ng-options="week.key for week in weeksOptions.weeks">
-					<options>-- Weeks --</options>
-			  </select>
-			</div>
-			<div class="col-sm-3 col-xs-3">
-				<select class="form-control" ng-model = "monthsOptions.currentmonth.value"
-				ng-options="monthValue.value as monthValue.label for monthValue in monthsOptions" ng-change="timesheet.monthUpdate()">
-					<options>-- Months --</options>
-			  </select>
-
-			</div>
-		  <div class="col-sm-3 col-xs-3">
-		  		<select class="form-control" ng-model = "yearOptions.current.value"
-					ng-options="yearValue.value as yearValue.label for yearValue in yearOptions" ng-change="timesheet.yearUpdate()">
-						<options>-- Year --</options>
-				  </select>
-		  </div>
-		</div>
-		<div class="col-sm-offset-8 help-icons">
-			<div class="col-sm-1 col-xs-1"><a href="#" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a></div>
-			<div class="col-sm-1 col-xs-1"><a href="#" ng-click="emailme()" title="Email timesheet"><span class="glyphicon glyphicon-envelope"></span></a></div>
-		</div>
-</div>
-<div class="tt-table">
-	<table class="table table-bordered">
-    <thead>
+  <div class="col-sm-12">
+    <center>
+      <h2>Time Sheet of {{selectedMonth}}<sub>{{weeksDateStr}}</sub></h2>
+    </center>
+  </div>
+  <div class="row">
+    <div class="col-sm-offset-2 col-xs-offset-2">
+      <div class="col-sm-3 col-xs-3">
+        <select class="form-control" ng-change="timesheet.weekUpdate()" ng-model ="weekDay" ng-options="week.key for week in weeksOptions.weeks">
+          <options>
+            -- Weeks --
+          </options>
+        </select>
+      </div>
+      <div class="col-sm-3 col-xs-3">
+        <select class="form-control" ng-model = "monthsOptions.currentmonth.value"
+        ng-options="monthValue.value as monthValue.label for monthValue in monthsOptions" ng-change="timesheet.monthUpdate()">
+          <options>
+            -- Months --
+          </options>
+        </select>
+      </div>
+      <div class="col-sm-3 col-xs-3">
+        <select class="form-control" ng-model = "yearOptions.current.value"
+        ng-options="yearValue.value as yearValue.label for yearValue in yearOptions" ng-change="timesheet.yearUpdate()">
+          <options>
+            -- Year --
+          </options>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-offset-8 help-icons">
+      <div class="col-sm-1 col-xs-1">
+        <a href="#" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a>
+      </div>
+      <div class="col-sm-1 col-xs-1">
+        <a href="#" ng-click="emailme()" title="Email timesheet"><span class="glyphicon glyphicon-envelope"></span></a>
+      </div>
+    </div>
+  </div>
+  <div class="tt-table">
+    <table class="table table-bordered">
+      <thead>
         <tr>
           <th>Date</th>
           <th class="hidden-xs ">Day</th>
@@ -49,26 +66,26 @@
           <th>Description</th>
           <th>Action</th>
         </tr>
-    </thead>
-    <tbody>
-	    	<tr data-ng-repeat="t in timesheetArr">
-	      <td>{{t}}</td>
-	      <td class="hidden-xs">Monday</td>
-	      <td>09:00</td>
-	      <td>12:30</td>
-	      <td>13:00</td>
-	      <td>18:30</td>
-	      <td>22:00</td>
-	      <td>23:30</td>
-	      <td>10:30</td>
-	      <td>Working on ui</td>
-	      <td> <a href ="/detailview"><img class="img" src="assets/images/edit.png"/> | <img src="assets/images/Clipboard.png" class="img"/></a></td>
-	    </tr>
-     	<tr>
-	      <td colspan="10" class="col-span">Total Hrs.</td>
-	      <td>00:00 hrs</td>
-	    </tr>
-	    <span ng-show="timesheetArr.length == 0" class="message">No data available for this selection!</span>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="t in timesheetArr">
+          <td>{{t}}</td>
+          <td class="hidden-xs">Monday</td>
+          <td>09:00</td>
+          <td>12:30</td>
+          <td>13:00</td>
+          <td>18:30</td>
+          <td>22:00</td>
+          <td>23:30</td>
+          <td>10:30</td>
+          <td>Working on ui</td>
+          <td><a href ="/detailview"><img class="img" src="assets/images/edit.png"/> | <img src="assets/images/Clipboard.png" class="img"/></a></td>
+        </tr>
+        <tr>
+          <td colspan="10" class="col-span">Total Hrs.</td>
+          <td>00:00 hrs</td>
+        </tr>
+        <span ng-show="timesheetArr.length == 0" class="message">No data available for this selection!</span>
+      </tbody>
+    </table>
+  </div>
