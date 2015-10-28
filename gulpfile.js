@@ -18,17 +18,22 @@ var vendorScripts = [
   'bower_components/angular-route/angular-route.min.js',
   'bower_components/angular-cookies/angular-cookies.min.js',
   'bower_components/ngMask/dist/ngMask.min.js',
+  'app/assets/js/ui-bootstrap-tpls-0.12.1.js'
 ];
 
 // application files
 var applicationScripts = [
   'app/scripts/app.js',
+  'app/scripts/httpRequest.js',
+  'app/scripts/services/httpProvider.js',
   'app/scripts/services/userService.js',
+  'app/scripts/services/AuthService.js',
   'app/scripts/controllers/loginController.js',
   'app/scripts/controllers/signUpController.js',
   'app/scripts/controllers/userTimesheetController.js',
   'app/scripts/controllers/detalViewController.js',
-  'app/scripts/controllers/verifyController.js'
+  'app/scripts/controllers/verifyController.js',
+  'app/scripts/controllers/forgotPasswordController.js'
 ];
 
 var srcArr = ['app/index.html', 'app/favicon.ico', 'app/404.html'];
@@ -92,8 +97,14 @@ gulp.task('copyFiles', function() {
     .pipe(gulp.dest('build'));
 });
 
+//copy web fonts into build
+gulp.task('copyFonts', function() {
+  return gulp.src('bower_components/open-sans-fontface/fonts/*/*')
+    .pipe(gulp.dest('build/assets/styles/fonts/'));
+});
+
 // task to copy all files into build directory
-gulp.task('copyAppFiles', ['copyImage', 'copyPartials', 'copyFiles']);
+gulp.task('copyAppFiles', ['copyImage', 'copyPartials', 'copyFiles', 'copyFonts']);
 
 // task to prepare all vendor assets
 gulp.task('prepareVendorAssets', ['prepareVendorStyles', 'prepareVendorScripts']);
