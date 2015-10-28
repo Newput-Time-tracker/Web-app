@@ -1,5 +1,10 @@
 app.controller('loginController', ['$scope', '$location', 'UserService',
 function($scope, $location, UserService) {
+  // check cookie exist or not
+  var cookieObj = UserService.getAccessToken();
+  if(cookieObj) {
+    $location.path('/usertimesheet');
+  }
   this.verifyUser = function() {
     var employeesPromise = UserService.authUser($scope.user);
     employeesPromise.then(function(res){
