@@ -6,7 +6,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
        method : 'POST',
-        url : appSettings.serverBaseUrl + '/login',
+        url : appSettings.SERVER_BASE_URL + '/login',
         data : user,
         crossDomain : true,
         withCredentials : true,
@@ -22,13 +22,18 @@ function($http, $q, appSettings, $cookies) {
       return q.promise;
     },
 
-    emailme : function(userObj) {
+    emailme : function() {
+      var data = {'empId': '142', 'month': 'oct', 'year': '2015'};
       var q = $q.defer();
       $http({
-        method : 'POST',
-        url : appSettings.serverBaseUrl + '/mailExcelSheet',
-        data : userObj.dataobj,
-        headers : userObj.header
+       method : 'POST',
+        url : appSettings.SERVER_BASE_URL + '/mailExcelSheet',
+        data : data,
+        crossDomain : true,
+        withCredentials : true,
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded'
+        }
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -41,7 +46,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.serverBaseUrl + '/register',
+        url : appSettings.SERVER_BASE_URL + '/register',
         data : userObj,
         crossDomain : true,
         withCredentials : true,
@@ -60,7 +65,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.serverBaseUrl + '/register',
+        url : appSettings.SERVER_BASE_URL + '/register',
         data : email,
         crossDomain : true,
         withCredentials : true,
@@ -79,7 +84,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.serverBaseUrl + '/timeEntry',
+        url : appSettings.SERVER_BASE_URL + '/timeEntry',
         data : timeSheet,
         crossDomain : true,
         withCredentials : true,
@@ -96,22 +101,32 @@ function($http, $q, appSettings, $cookies) {
     getProperty : function() {
       return userJsonData;
     },
-    setAccessToken : function(token, userObj) {
-      var now = new Date();
-      now.setDate(now.getDate() + 365); // set the cookie for 1 year from now.
-      $cookies.put('accessToken', JSON.stringify(token), {expires: now});
-      $cookies.put('UserObj', JSON.stringify(userObj), {expires: now});
+    timesheetData: function() {
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '0A20DA1F443E975129BF3E2D2FD44113'};
+      var q = $q.defer();
+      $http({
+        method : 'POST',
+        url : appSettings.SERVER_BASE_URL + '/monthlyExcel',
+        crossDomain : true,
+        withCredentials : true,
+        data: emp,
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded'
+        }
+      }).success(function(response) {
+        q.resolve(response);
+      }).error(function(response) {
+        q.reject(response);
+      });
+      return q.promise;
     },
-    getAccessToken : function() {
-      var accessToken = $cookies.get('accessToken');
-      var UserObj = $cookies.get('UserObj');
-      if (accessToken && UserObj) {
-        var cookieObj = {'token': JSON.parse(accessToken), 'userObj': JSON.parse(UserObj)} ;
-      } else {
-        var cookieObj = null;
-      }
-      return cookieObj;
+    endSession: function(){
+      var cookies = $cookies.getAll();
+      angular.forEach(cookies, function (v, k) {
+          $cookies.remove(k);
+      });
+      return true;
     }
   };
-
 }]);
+
