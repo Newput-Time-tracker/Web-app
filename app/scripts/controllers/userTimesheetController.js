@@ -1,20 +1,6 @@
 app.controller('userTimesheetController', ['$scope', '$location', 'UserService',
 function($scope, $location, UserService) {
   $scope.employees = null;
-  var cookieObj = UserService.getAccessToken();
-  if (cookieObj) {
-    $scope.employees = cookieObj.userObj;
-  } else {
-    // fetch login's userdata from service
-    var userObj = UserService.getProperty();
-    if (userObj) {
-      if (userObj.success && userObj.data[0]) {
-        $scope.employees = userObj.data[0];
-      }
-    } else {
-      $location.path('/login');
-    }
-  }
   var currentDate = new Date();
   var currentMonth = currentDate.getMonth();
   // it gives 0 based result.
@@ -162,13 +148,28 @@ function($scope, $location, UserService) {
   }
 
   //Restrict the month and year to date of joining
-  var doj = parseInt($scope.employees.doj);
-  var dojYear = new Date(doj);
-  var startYear = dojYear.getFullYear();
-  $scope.yearOptions = generateYearSelectBox(startYear, currentYear);
-  var startMonth = dojYear.getMonth();
-  $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, currentYear);
-
+  var cookieObj = UserService.getAccessToken();
+  if (cookieObj) {
+    $scope.employees = cookieObj.userObj;
+  } else {
+    // fetch login's userdata from service
+    var userObj = UserService.getProperty();
+    if (userObj != '') {
+      if (userObj.success && userObj.data[0]) {
+        $scope.employees = userObj.data[0];
+      }
+    } else {
+      $location.path('/login');
+    }
+  }
+  if ($scope.employees != null) {
+    var doj = parseInt($scope.employees.doj);
+    var dojYear = new Date(doj);
+    var startYear = dojYear.getFullYear();
+    $scope.yearOptions = generateYearSelectBox(startYear, currentYear);
+    var startMonth = dojYear.getMonth();
+    $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, currentYear);
+  }
   // Update year
   this.yearUpdate = function() {
     var newCurrentYear = $scope.yearOptions.current.value;
