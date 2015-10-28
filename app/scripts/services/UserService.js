@@ -97,13 +97,19 @@ function($http, $q, appSettings, $cookies) {
       return userJsonData;
     },
     setAccessToken : function(token, userObj) {
-      $cookies.put('accessToken', token);
-      $cookies.put('UserObj', userObj);
+      var now = new Date();
+      now.setDate(now.getDate() + 365); // set the cookie for 1 year from now.
+      $cookies.put('accessToken', JSON.stringify(token), {expires: now});
+      $cookies.put('UserObj', JSON.stringify(userObj), {expires: now});
     },
     getAccessToken : function() {
       var accessToken = $cookies.get('accessToken');
       var UserObj = $cookies.get('UserObj');
-      var cookieObj = {'token': accessToken, 'userObj': UserObj} ;
+      if (accessToken && UserObj) {
+        var cookieObj = {'token': JSON.parse(accessToken), 'userObj': JSON.parse(UserObj)} ;
+      } else {
+        var cookieObj = null;
+      }
       return cookieObj;
     }
   };
