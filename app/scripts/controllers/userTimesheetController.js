@@ -2,15 +2,22 @@ app.controller('userTimesheetController', ['$scope', '$location', 'UserService',
 function($scope, $location, UserService, AuthService) {
   $scope.employees = null;
   $scope.token = null;
-  var token = UserService.getAccessToken(); console.log(token);
-  if (!token) {
-    $location.path('/verifyuser');
+  var cookieObj = AuthService.getAccessToken();
+  if (cookieObj != null) {
+    $scope.token = cookieObj.token;
+    $scope.employees = cookieObj.userObj;
+  } else {
+    // fetch login's userdata from service
+    var userObj = UserService.getProperty();
+    if(userObj) {
+      if (userObj.success && userObj.data[0]) {
+        $scope.employees = userObj.data[0];
+      }
+    } else {
+        $location.path('/login');
+    }
   }
-  // fetch login's userdata from service
-  var userObj = UserService.getProperty();
-  if (userObj.success && userObj.data[0]) {
-    $scope.employees = userObj.data[0];
-  }
+
   var currentDate = new Date();
   var currentMonth = currentDate.getMonth();
   // it gives 0 based result.

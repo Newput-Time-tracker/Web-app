@@ -64,17 +64,3 @@ app.directive('pwCheck', function() {
   };
 });
 
-app.directive('dateFormat', function() {
-  return {
-    restrict: 'AE',
-    link: function(scope, attrs) {
-      attrs.$observe('key', function(value) {
-        console.log('key=', value);
-      });
-      var date = attrs.dateentry; console.log(attrs.dateentry);
-      var d = new Date(date);
-      var n = d.getDate();
-      return n;
-    }
-  };
-});
