@@ -5,6 +5,7 @@ app.config(['$routeProvider', '$locationProvider','$httpProvider', function($rou
   $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
+
   $routeProvider.
     when('/login', {
       templateUrl: 'views/_login.html',
@@ -38,8 +39,9 @@ app.config(['$routeProvider', '$locationProvider','$httpProvider', function($rou
 
 app.constant('appSettings', {
   /*--------- localhost ---------------*/
-
-  serverBaseUrl: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee'
+  SERVER_BASE_URL: 'http://tt-rahul-backend.herokuapp.com/Tracker/rest/employee',
+  //SERVER_BASE_URL: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee',
+  EXPIRY_TIME : 365
 
 
 });
@@ -58,6 +60,21 @@ app.directive('pwCheck', function() {
       scope.$watch('otherModelValue', function() {
         ngModel.$validate();
       });
+    }
+  };
+});
+
+app.directive('dateFormat', function() {
+  return {
+    restrict: 'AE',
+    link: function(scope, attrs) {
+      attrs.$observe('key', function(value) {
+        console.log('key=', value);
+      });
+      var date = attrs.dateentry; console.log(attrs.dateentry);
+      var d = new Date(date);
+      var n = d.getDate();
+      return n;
     }
   };
 });
