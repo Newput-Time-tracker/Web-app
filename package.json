@@ -19,6 +19,7 @@
     "gulp-uglify": "^1.4.2"
   },
   "devDependencies": {
+    "eslint": "^1.7.3",
     "karma-bower": "^1.0.1"
   },
   "scripts": {
