@@ -1,87 +1,105 @@
-// Include gulp
-var gulp = require('gulp'); 
-
-// Include Our Plugins
+// include node modules
+var gulp = require('gulp');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
-var path = 'app/assets/';
-var buildCssPath = 'build/css';
-var buildJsPath = 'build/js';
-var components = 'bower_components/' ; 
-var pathArr = [components+'jquery/dist/jquery.min.js', 
-components+'bootstrap/dist/js/bootstrap.min.js', 
-components+'angular-route/angular-route.min.js', components+'angular/angular.min.js'];
-var appjs = 'app/scripts/';
 
-// Compile, concat, and minify Our Sass
+// vendor files
+var vendorCSS = [
+  'bower_components/open-sans-fontface/open-sans.css',
+  'bower_components/bootstrap/dist/css/bootstrap.min.css'
+];
 
-gulp.task('minifycss', function() {
-  return gulp.src(path+'styles/**/*.scss')
-  .pipe(concat('.min.css'))
-	  .pipe(minifyCss({
-		  	relativeTo: '../bower_components',
-	    processImport: true
-	  }))
-	  .pipe(gulp.dest(buildCssPath));
+var vendorScripts = [
+  'bower_components/jquery/dist/jquery.min.js',
+  'bower_components/bootstrap/dist/js/bootstrap.min.js',
+  'bower_components/angular/angular.min.js',
+  'bower_components/angular-route/angular-route.min.js',
+  'bower_components/angular-cookies/angular-cookies.min.js',
+  'bower_components/ngMask/dist/ngMask.min.js',
+];
+
+// application files
+var applicationScripts = [
+  'app/scripts/app.js',
+  'app/scripts/services/userService.js',
+  'app/scripts/controllers/loginController.js',
+  'app/scripts/controllers/signUpController.js',
+  'app/scripts/controllers/userTimesheetController.js',
+  'app/scripts/controllers/detalViewController.js',
+  'app/scripts/controllers/verifyController.js'
+];
+
+var srcArr = ['app/index.html', 'app/favicon.ico', 'app/404.html'];
+
+// build assets
+var buildCssPath = 'build/assets/styles';
+var buildJsPath = 'build/assets/js';
+
+// compile all SCSS files into their CSS versions
+gulp.task('compileStyles', function() {
+  return gulp.src('app/assets/styles/**/*.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('app/assets/styles'));
 });
 
+// minify all CSS files and merge into single minified CSS file
+gulp.task('prepareAppStyles', function() {
+  return gulp.src('app/assets/styles/*.css')
+    .pipe(minifyCss())
+    .pipe(concat('application.min.css'))
+    .pipe(gulp.dest(buildCssPath));
+ });
 
-gulp.task('tempTask', function() {
-  return gulp.src(path+'styles/**/*.scss')
-  .pipe(sass())
-  .pipe(gulp.dest(path+'styles'));
+// minify and merge all app JS into single JS file
+gulp.task('prepareAppScripts', function() {
+  return gulp.src(applicationScripts)
+   .pipe(uglify())
+   .pipe(concat('application.min.js'))
+   .pipe(gulp.dest(buildJsPath));
 });
 
-gulp.task('compressVendorCss', function() {
-  return gulp.src(components+'bootstrap/dist/css/bootstrap.min.css')
-  .pipe(rename('vendor.min.css'))
-  .pipe(gulp.dest(buildCssPath));
+// merge all vendor CSS into single CSS file
+gulp.task('prepareVendorStyles', function() {
+  return gulp.src(vendorCSS)
+    .pipe(concat('vendor.min.css'))
+    .pipe(gulp.dest(buildCssPath));
 });
 
-// Compile, concat, and minify Our js
-
-gulp.task('minifyjs', function() {
-  return gulp.src(pathArr)
-	  .pipe(uglify())
-	  .pipe(concat('vendor.js'))
-	  .pipe(gulp.dest(buildJsPath));
+// merge all vendor JS into single JS file
+gulp.task('prepareVendorScripts', function() {
+  return gulp.src(vendorScripts)
+    .pipe(concat('vendor.min.js'))
+    .pipe(gulp.dest(buildJsPath));
 });
 
-//compile appication js
-
-gulp.task('applicationjs', function() {
-	return gulp.src(appjs+'app.js')
-	 .pipe(addsrc.append(appjs+'services/*.js'))
-	 .pipe(addsrc.append(appjs+'controllers/*.js'))
-	 .pipe(uglify())
-	 .pipe(concat('application.js'))
-	 .pipe(gulp.dest(build+'js'));
+// copy images into build directory
+gulp.task('copyImage', function() {
+  return gulp.src('app/assets/images/*.{png, jpg, jpeg}')
+    .pipe(gulp.dest('build/assets/images'));
 });
 
-// copy images .pipe(changed(imgDst))
-gulp.task('copyimage', function() {
-  var imgSrc = path+'images/**/*',
-      imgDst = build+'images';
-  gulp.src(imgSrc)
-    //.pipe(imagemin())
-    .pipe(gulp.dest(imgDst));
+//copy partials into build directory
+gulp.task('copyPartials', function() {
+  return gulp.src('app/views/*.html')
+    .pipe(gulp.dest('build/views'));
 });
 
-//copy index.html page
-
-gulp.task('copyindexpage', function() {
-   return gulp.src('app/*.html')
-     //.pipe(minifyHTML())
-     .pipe(gulp.dest('build'));
-	
+//copy app level files into build directory
+gulp.task('copyFiles', function() {
+  return gulp.src(srcArr)
+    .pipe(gulp.dest('build'));
 });
 
-gulp.task('copyviewfiles', function() {
-   return gulp.src('app/views/*.html')
-     //.pipe(minifyHTML())
-     .pipe(gulp.dest(build+'views'));
-	
-});
+// task to copy all files into build directory
+gulp.task('copyAppFiles', ['copyImage', 'copyPartials', 'copyFiles']);
+
+// task to prepare all vendor assets
+gulp.task('prepareVendorAssets', ['prepareVendorStyles', 'prepareVendorScripts']);
+
+// task to preapre all app level assets
+gulp.task('prepareAppAssets', ['compileStyles', 'prepareAppStyles', 'prepareAppScripts']);
+
+// task to build the app
+gulp.task('buildApp', ['copyAppFiles', 'prepareVendorAssets', 'prepareAppAssets']);
