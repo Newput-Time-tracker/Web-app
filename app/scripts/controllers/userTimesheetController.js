@@ -70,7 +70,6 @@ function($scope, $location, UserService) {
   // time sheet
   $scope.showTimesheet = function() {
     var totalMins = 0;
-
     var monthlyData = UserService.timesheetData();
     monthlyData.then(function(res){
       if (res.success) {
@@ -96,9 +95,7 @@ function($scope, $location, UserService) {
     });
   };
   function calculatetime(timesheetData){
-
     var totalMins = 0;
-
     for(var i = 0; i < timesheetData.length; i++){
       var hours = timesheetData[i].totalHour;
       var perDayMins = fromatHours(hours);
@@ -115,6 +112,7 @@ function($scope, $location, UserService) {
       var startDate = $scope.weekDay.start;
       var endDate = $scope.weekDay.end;
       $scope.weeksDateStr = weekSuffix(startDate) + ' to ' + weekSuffix(endDate);
+
       var i = 0;
       for (var j = 0; j <= timesheetArr.length; j++) {
         if((timesheetArr[j] != undefined) && (timesheetArr[j].day >= startDate) && (timesheetArr[j].day <= endDate)) {
