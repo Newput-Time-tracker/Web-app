@@ -126,7 +126,7 @@ table {
   }
 }
 .error-message {
-  color: #ff0000;
+  color: $error;
 }
 .border {
   .btom-mrgn {
@@ -213,4 +213,7 @@ table {
   clear: both;
   padding: 12px;
   text-align: center;
+}
+.success-message {
+  color: $success;
 }
