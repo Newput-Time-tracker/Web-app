@@ -81,6 +81,9 @@ function($http, $q, appSettings, $cookies) {
     },
 
     saveDetailTimeSheet : function(timeSheet) {
+      timeSheet.empId = '12';
+      timeSheet.token = '3B7B86D5FCF448C9AC1FF6AA4C78B99B';
+      timeSheet.workDate = '29-10-2015';
       var q = $q.defer();
       $http({
         method : 'POST',
@@ -102,7 +105,7 @@ function($http, $q, appSettings, $cookies) {
       return userJsonData;
     },
     timesheetData: function() {
-      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '0A20DA1F443E975129BF3E2D2FD44113'};
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '3B7B86D5FCF448C9AC1FF6AA4C78B99B'};
       var q = $q.defer();
       $http({
         method : 'POST',

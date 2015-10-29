@@ -10,7 +10,12 @@ function($scope, UserService) {
     }
     var dataPromise = UserService.registerUser($scope.user);
     dataPromise.then(function(response) {
-      $scope.user = response;
+      if(response.success){
+        $scope.errorMessage = "Registered Successfully !";
+      }
+      else {
+         $scope.errorMessage = response.error;
+      }
     }, function(error) {
       $scope.errorMessage = error;
     });
