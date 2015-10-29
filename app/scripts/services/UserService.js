@@ -96,22 +96,25 @@ function($http, $q, appSettings, $cookies) {
     getProperty : function() {
       return userJsonData;
     },
-    setAccessToken : function(token, userObj) {
-      var now = new Date();
-      now.setDate(now.getDate() + 365); // set the cookie for 1 year from now.
-      $cookies.put('accessToken', JSON.stringify(token), {expires: now});
-      $cookies.put('UserObj', JSON.stringify(userObj), {expires: now});
-    },
-    getAccessToken : function() {
-      var accessToken = $cookies.get('accessToken');
-      var UserObj = $cookies.get('UserObj');
-      if (accessToken && UserObj) {
-        var cookieObj = {'token': JSON.parse(accessToken), 'userObj': JSON.parse(UserObj)} ;
-      } else {
-        var cookieObj = null;
-      }
-      return cookieObj;
-    }
+    timesheetData: function() {
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '3B7B86D5FCF448C9AC1FF6AA4C78B99B'};
+      var q = $q.defer();
+      $http({
+        method : 'POST',
+        url : appSettings.SERVER_BASE_URL + '/monthlyExcel',
+        crossDomain : true,
+        withCredentials : true,
+        data: emp,
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded'
+        }
+      }).success(function(response) {
+        q.resolve(response);
+      }).error(function(response) {
+        q.reject(response);
+      });
+      return q.promise;
+  }
   };
 
 }]);

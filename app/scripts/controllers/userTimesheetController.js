@@ -9,8 +9,8 @@ function($scope, $location, UserService) {
   $scope.weeksOptions = [];
   $scope.curYear = currentYear;
   $scope.newCurrentYear = '';
-  $scope.timesheetData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-  $scope.timesheetArr = $scope.timesheetData;
+  var timesheetArr = {};
+  $scope.timesheetData = {};
 
   // get weeks by date in a month
   function getWeeksInMonth(month, year) {
@@ -57,27 +57,75 @@ function($scope, $location, UserService) {
     return num + suffix;
   }
 
-
+  function formateDate(date) {
+    var dDate = moment(date, ["DD-MM-YYYY"]);
+    dDate = dDate.date();
+    return dDate;
+  }
+  function fromatHours(hours){
+    var splitHrs = hours.split(':');
+    var perDayMins = parseInt((splitHrs[0]*60)) + parseInt(splitHrs[1]);
+    return perDayMins;
+  }
+  // time sheet
+  $scope.showTimesheet = function() {
+    var totalMins = 0;
+    var monthlyData = UserService.timesheetData();
+    monthlyData.then(function(res){
+      if (res.success) {
+        timesheetArr = res.data;
+        if (timesheetArr.length > 0) {
+          for(var i = 0; i < timesheetArr.length; i++) {
+            var date = timesheetArr[i].workDate;
+            date = formateDate(date);
+            timesheetArr[i].day = date ;
+            var hours = timesheetArr[i].totalHour;
+            var perDayMins = fromatHours(hours);
+            totalMins = parseInt(perDayMins) + parseInt(totalMins);
+          }
+          var perHrs = parseInt(totalMins / 60);
+          var perMins = parseInt(totalMins % 60);
+          totalMins = perHrs+':'+perMins+' hrs';
+          timesheetArr.totalHours = totalMins;
+          $scope.timesheetData = timesheetArr;
+        }
+      }
+    }, function(error){
+      console.log(error);
+    });
+  };
+  function calculatetime(timesheetData){
+    var totalMins = 0;
+    for(var i = 0; i < timesheetData.length; i++){
+      var hours = timesheetData[i].totalHour;
+      var perDayMins = fromatHours(hours);
+      totalMins = parseInt(perDayMins) + parseInt(totalMins);
+      var perHrs = parseInt(totalMins / 60);
+      var perMins = parseInt(totalMins % 60);
+      totalMins = perHrs+':'+perMins+' hrs';
+    }
+    return totalMins;
+  }
   this.weekUpdate = function() {
-    $scope.timesheetArr = [];
+    $scope.timesheetData = {};
+
     if ($scope.weekDay.start && $scope.weekDay.end) {
       var startDate = $scope.weekDay.start;
       var endDate = $scope.weekDay.end;
       $scope.weeksDateStr = weekSuffix(startDate) + ' to ' + weekSuffix(endDate);
-
-      for (var i = startDate,
-          j = 0; i <= endDate; j++) {
-        if ($scope.timesheetData[i]) {
-          $scope.timesheetArr[j] = $scope.timesheetData[i];
+      var i = 0;
+      for (var j = 0; j <= timesheetArr.length; j++) {
+        if((timesheetArr[j] != undefined) && (timesheetArr[j].day >= startDate) && (timesheetArr[j].day <= endDate)) {
+          $scope.timesheetData[i] = timesheetArr[j];
           i++;
-        } else {
-          break;
         }
-
+        $scope.timesheetData.length = i;
       }
+      var totalHours = calculatetime($scope.timesheetData);
+      $scope.timesheetData.totalHours = totalHours;
     } else {
       $scope.weeksDateStr = '';
-      $scope.timesheetArr = $scope.timesheetData;
+      $scope.timesheetData = timesheetArr;
     }
   };
   function initializeWeek(newCurrentMonth, newCurrentYear) {
