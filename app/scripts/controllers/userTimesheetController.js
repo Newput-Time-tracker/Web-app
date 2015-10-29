@@ -84,9 +84,24 @@ function($scope, $location, UserService, AuthService) {
     var perDayMins = parseInt((splitHrs[0]*60)) + parseInt(splitHrs[1]);
     return perDayMins;
   }
+
+
+  function calculatetime(timesheetData){
+    var totalMins = 0;
+    for(var i = 0; i < timesheetData.length; i++){
+      var hours = timesheetData[i].totalHour;
+      var perDayMins = fromatHours(hours);
+      totalMins = parseInt(perDayMins) + parseInt(totalMins);
+    }
+    var perHrs = parseInt(totalMins / 60);
+    var perMins = parseInt(totalMins % 60);
+    totalMins = perHrs+':'+perMins;
+    return totalMins;
+  }
+
   // time sheet
   $scope.showTimesheet = function() {
-    var totalMins = 0;
+    var totalhrs = 0;
     var monthlyData = UserService.timesheetData();
     monthlyData.then(function(res){
       if (res.success) {
@@ -96,14 +111,9 @@ function($scope, $location, UserService, AuthService) {
             var date = timesheetArr[i].workDate;
             date = formateDate(date);
             timesheetArr[i].day = date ;
-            var hours = timesheetArr[i].totalHour;
-            var perDayMins = fromatHours(hours);
-            totalMins = parseInt(perDayMins) + parseInt(totalMins);
           }
-          var perHrs = parseInt(totalMins / 60);
-          var perMins = parseInt(totalMins % 60);
-          totalMins = perHrs+':'+perMins+' hrs';
-          timesheetArr.totalHours = totalMins;
+          totalhrs = calculatetime(timesheetArr);
+          timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
         }
       }
@@ -112,18 +122,6 @@ function($scope, $location, UserService, AuthService) {
     });
   };
 
-  function calculatetime(timesheetData){
-    var totalMins = 0;
-    for(var i = 0; i < timesheetData.length; i++){
-      var hours = timesheetData[i].totalHour;
-      var perDayMins = fromatHours(hours);
-      totalMins = parseInt(perDayMins) + parseInt(totalMins);
-      var perHrs = parseInt(totalMins / 60);
-      var perMins = parseInt(totalMins % 60);
-      totalMins = perHrs+':'+perMins+' hrs';
-    }
-    return totalMins;
-  }
   this.weekUpdate = function() {
     $scope.timesheetData = {};
     if ($scope.weekDay.start && $scope.weekDay.end) {
