@@ -28,7 +28,7 @@ function($scope, $location, $timeout, UserService) {
       var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet);
       dataPromise.then(function(response) {
         if(response.success) {
-          $scope.errorMessage = "Successfully Saved!";
+          $scope.successMessage = "Successfully Saved!";
           $timeout( function() {
             $location.path("/usertimesheet");
           }, 3000);

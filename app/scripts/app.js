@@ -32,6 +32,11 @@ app.config(['$routeProvider', '$locationProvider','$httpProvider', function($rou
       controller: 'userTimesheetController',
       controllerAs: 'timesheet'
     }).
+    when('/verifyuser', {
+      templateUrl: 'views/_verifyuser.html',
+      controller: 'verifyUserController',
+      controllerAs: 'verify'
+    }).
     otherwise({redirectTo: '/login'});
 
     $locationProvider.html5Mode(true);
