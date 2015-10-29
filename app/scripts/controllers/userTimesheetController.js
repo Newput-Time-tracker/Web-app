@@ -1,6 +1,23 @@
-app.controller('userTimesheetController', ['$scope', '$location', 'UserService',
-function($scope, $location, UserService) {
+app.controller('userTimesheetController', ['$scope', '$location', 'UserService', 'AuthService',
+function($scope, $location, UserService, AuthService) {
   $scope.employees = null;
+  $scope.token = null;
+  var cookieObj = AuthService.getAccessToken();
+  if (cookieObj != null) {
+    $scope.token = cookieObj.token;
+    $scope.employees = cookieObj.userObj;
+  } else {
+    // fetch login's userdata from service
+    var userObj = UserService.getProperty();
+    if(userObj) {
+      if (userObj.success && userObj.data[0]) {
+        $scope.employees = userObj.data[0];
+      }
+    } else {
+        $location.path('/login');
+    }
+  }
+
   var currentDate = new Date();
   var currentMonth = currentDate.getMonth();
   // it gives 0 based result.
@@ -12,13 +29,13 @@ function($scope, $location, UserService) {
   var timesheetArr = {};
   $scope.timesheetData = {};
 
+
   // get weeks by date in a month
   function getWeeksInMonth(month, year) {
     var weeks = [],
-        firstDate = new Date(year, month, 1),
-        lastDate = new Date(year, month + 1, 0),
-        numDays = lastDate.getDate();
-
+    firstDate = new Date(year, month, 1),
+    lastDate = new Date(year, month + 1, 0),
+    numDays = lastDate.getDate();
     var start = 1;
     var end = 7 - firstDate.getDay();
     weeks.push({
@@ -94,6 +111,7 @@ function($scope, $location, UserService) {
       console.log(error);
     });
   };
+
   function calculatetime(timesheetData){
     var totalMins = 0;
     for(var i = 0; i < timesheetData.length; i++){
@@ -112,7 +130,6 @@ function($scope, $location, UserService) {
       var startDate = $scope.weekDay.start;
       var endDate = $scope.weekDay.end;
       $scope.weeksDateStr = weekSuffix(startDate) + ' to ' + weekSuffix(endDate);
-
       var i = 0;
       for (var j = 0; j <= timesheetArr.length; j++) {
         if((timesheetArr[j] != undefined) && (timesheetArr[j].day >= startDate) && (timesheetArr[j].day <= endDate)) {
@@ -175,6 +192,7 @@ function($scope, $location, UserService) {
     }
     selectOptions.currentmonth = obj;
     $scope.selectedMonth = obj.label;
+    $scope.showTimesheet();
     return selectOptions;
   }
 
@@ -195,16 +213,20 @@ function($scope, $location, UserService) {
     return selectOptions;
   }
 
+
   //Restrict the month and year to date of joining
-  var cookieObj = UserService.getAccessToken();
+
+  var cookieObj = AuthService.getAccessToken();
   if (cookieObj) {
     $scope.employees = cookieObj.userObj;
+    $scope.token = cookieObj.token;
   } else {
     // fetch login's userdata from service
     var userObj = UserService.getProperty();
     if (userObj != '') {
       if (userObj.success && userObj.data[0]) {
         $scope.employees = userObj.data[0];
+        $scope.token = userObj.data[1];
       }
     } else {
       $location.path('/login');
@@ -239,22 +261,26 @@ function($scope, $location, UserService) {
   //email excel sheet
 
   $scope.emailme = function() {
-    var userObj = {};
-    userObj.dataobj = {
-      'empId' : '62',
-      'month' : 'October',
-      'year' : '2015'
-    };
-    userObj.header = {
-      'token' : '3321EEAE282680B4173FCE770865E293',
-      'Content-Type' : 'application/javascript'
-    };
-    var emailPromise = UserService.emailme(userObj);
-    emailPromise.then(function(res) {
-      $scope.detail = res;
-    }, function(error) {
-
-    });
+    if ($scope.employees != null) {
+      var month = $scope.monthsOptions.currentmonth.label;
+      var year = $scope.yearOptions.current.value;
+      //var emailTimesheetObj = {empId: ($scope.employees.id).toString(), month: month, year: year.toString() };
+      var emailPromise = UserService.emailme();
+      console.log(emailPromise);
+    }
+    // var emailPromise = UserService.emailme(userObj);
+    // emailPromise.then(function(res) {
+    // $scope.detail = res;
+    // }, function(error) {
+    //
+    // });
+  };
+  // logout user
+  $scope.logout = function() {
+    var status = UserService.endSession();
+    if (status) {
+      $location.path('/login');
+    }
   };
 
 }]);
