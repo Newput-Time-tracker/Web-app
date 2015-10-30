@@ -1,12 +1,12 @@
-app.factory("AuthService", ['$http', '$q', 'appSettings', '$cookies',
-function($http, $q, appSettings, $cookies) {
+app.factory("AuthService", ['$http', '$q', 'CONFIG', '$cookies',
+function($http, $q, CONFIG, $cookies) {
   return {
     setAccessToken : function(token, userObj) {
       var expiry = null ;
       if(token.expire)
         expire = expiry;
       else
-        expire = appSettings.EXPIRY_TIME;
+        expire = CONFIG.SESSION_COOKIE.EXPIRY;
       var now = new Date();
       now.setDate(now.getDate() + expire); // set the cookie for 1 year from now.
       $cookies.put('accessToken', JSON.stringify(token), {expires: now});
@@ -27,7 +27,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/verify',
+        url : CONFIG.API_URL + '/verify',
         data : user,
         crossDomain : true,
         withCredentials : true,

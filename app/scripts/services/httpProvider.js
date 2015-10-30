@@ -1,10 +1,5 @@
 app.config(['$httpProvider',
 function($httpProvider) {
-  /**
-   * The workhorse; converts an object to x-www-form-urlencoded serialization.
-   * @param {Object} obj
-   * @return {String}
-   */
   var toParam = function(obj) {
     var query = '',
         name,

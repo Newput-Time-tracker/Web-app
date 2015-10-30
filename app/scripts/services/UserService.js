@@ -1,12 +1,12 @@
-app.factory("UserService", ['$http', '$q', 'appSettings', '$cookies',
-function($http, $q, appSettings, $cookies) {
+app.factory("UserService", ['$http', '$q', 'CONFIG', '$cookies',
+function($http, $q, CONFIG, $cookies) {
   var userJsonData = [];
   return {
     authUser : function(user) {
       var q = $q.defer();
       $http({
        method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/login',
+        url : CONFIG.API_URL + '/login',
         data : user,
         crossDomain : true,
         withCredentials : true,
@@ -27,7 +27,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
        method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/mailExcelSheet',
+        url : CONFIG.API_URL + '/mailExcelSheet',
         data : data,
         crossDomain : true,
         withCredentials : true,
@@ -46,7 +46,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/register',
+        url : CONFIG.API_URL + '/register',
         data : userObj,
         crossDomain : true,
         withCredentials : true,
@@ -66,7 +66,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/forgotPwd',
+        url : CONFIG.API_URL + '/forgotPwd',
         data : email,
         crossDomain : true,
         withCredentials : true,
@@ -88,7 +88,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/timeEntry',
+        url : CONFIG.API_URL + '/timeEntry',
         data : timeSheet,
         crossDomain : true,
         withCredentials : true,
@@ -110,7 +110,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/monthlyExcel',
+        url : CONFIG.API_URL + '/monthlyExcel',
         crossDomain : true,
         withCredentials : true,
         data: emp,
@@ -136,7 +136,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/pwdVerify',
+        url : CONFIG.API_URL +  '/pwdVerify',
         crossDomain : true,
         withCredentials : true,
         data: reset,
