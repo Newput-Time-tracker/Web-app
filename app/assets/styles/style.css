@@ -32,6 +32,8 @@ footer .copyright {
     padding: 25px 0px; }
   .form-wrap.forgot {
     height: 200px; }
+  .form-wrap.confirm {
+    height: 350px; }
 
 .section {
   padding: 30px; }
@@ -151,3 +153,9 @@ table tbody tr:nth-child(even) {
   clear: both;
   padding: 12px;
   text-align: center; }
+
+.success-message {
+  color: #3CB371; }
+
+.confirm-btn-container {
+  margin-top: 24px; }

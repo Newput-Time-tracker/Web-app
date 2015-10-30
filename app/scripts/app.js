@@ -37,6 +37,11 @@ app.config(['$routeProvider', '$locationProvider','$httpProvider', function($rou
       controller: 'verifyUserController',
       controllerAs: 'verify'
     }).
+    when('/resetpassword', {
+      templateUrl: 'views/_resetpassword.html',
+      controller: 'forgotPasswordController',
+      controllerAs: 'forgotPwd'
+    }).
     otherwise({redirectTo: '/login'});
 
     $locationProvider.html5Mode(true);
