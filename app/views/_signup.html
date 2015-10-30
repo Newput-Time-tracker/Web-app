@@ -6,7 +6,7 @@
     <form name="signup" class="form-horizontal loginform" role="form" novalidate="true" ng-submit="signup.$valid && signUp.userSignUp()">
       <div class="form-group">
         <div class="col-sm-6">
-          <label class="control-label" for="firstname">First Name*:</label>
+          <label class="control-label" for="firstname">First Name:*</label>
           <input type="text" class="form-control" ng-model="user.firstName" name="firstname" ng-required="true" placeholder="Enter First Name" >
           <div ng-show="signup.$submitted || signup.firstname.$touched">
             <div ng-cloak class="error-message" ng-show="signup.firstname.$error.required">
@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <label class="control-label" for="lastname">Last Name*:</label>
+          <label class="control-label" for="lastname">Last Name:*</label>
           <input type="text" class="form-control" ng-model="user.lastName" name="lastname"  ng-required="true" placeholder="Enter Last Name">
           <div ng-show="signup.$submitted || signup.lastname.$touched">
             <div ng-cloak class="error-message" ng-show="signup.lastname.$error.required">
@@ -26,7 +26,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-          <label class="control-label" for="email">Email*:</label>
+          <label class="control-label" for="email">Email:*</label>
           <input type="email" class="form-control" ng-model="user.email" name="email" ng-required="true"  placeholder="Enter email">
           <div ng-show="signup.$submitted || signup.email.$touched">
             <span ng-cloak class="error-message" ng-show="signup.email.$error.required">Tell us your email.</span>
@@ -36,7 +36,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-6">
-          <label class="control-label" for="contact">Contact*:</label>
+          <label class="control-label" for="contact">Contact:*</label>
           <input type="number" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-required="true" ng-model="user.contact" name="contact"   placeholder="Enter Contact">
           <div ng-show="signup.$submitted || signup.contact.$touched ">
             <span ng-cloak class="error-message" ng-show="signup.contact.$error.required">Tell us your contact.</span>
@@ -51,14 +51,14 @@
       </div>
       <div class="form-group">
         <div class="col-sm-6">
-          <label class="control-label" for="dateofbirth">Date Of Birth*:</label>
+          <label class="control-label" for="dateofbirth">Date Of Birth:*</label>
           <input type="text" class="form-control" name="dateofbirth" datepicker-popup="{{format}}" ng-model="user.dob" is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close" />
           <div ng-show="signup.$submitted || signup.dateofbirth.$touched" >
             <span ng-cloak class="error-message" ng-show="signup.dateofbirth.$error.required">Tell us Your Birthday</span>
           </div>
         </div>
         <div class="col-sm-6">
-          <label class="control-label" for="dateofjoining">Date of Joining*:</label>
+          <label class="control-label" for="dateofjoining">Date of Joining:*</label>
           <input type="text" class="form-control" datepicker-popup="{{format}}" ng-change="copareDate(signup.dateofbirth)"  name="dateofjoining"  ng-model="user.doj"  is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close"  />
           <div ng-show="signup.$submitted || signup.dateofjoining.$touched" >
             <span ng-cloak class="error-message" ng-show="signup.dateofjoining.$error.required">Tell us Your Joining Date</span>
@@ -68,18 +68,18 @@
 
       <div class="form-group">
         <div class="col-sm-6">
-          <label class="control-label" for="password">Password*:</label>
+          <label class="control-label" for="password">Password:*</label>
           <input type="password" class="form-control" ng-required="true" ng-model="user.password" id="password" name="password"  placeholder="Enter password">
           <div ng-show="signup.$submitted || signup.password.$touched" >
             <span ng-cloak class="error-message" ng-show="signup.password.$error.required">Tell us Your Password</span>
           </div>
         </div>
         <div class="col-sm-6">
-          <label class="control-label" for="confirmpassword">Confirm Password*:</label>
+          <label class="control-label" for="confirmpassword">Confirm Password:*</label>
           <input type="password" class="form-control" ng-required="true" ng-model="user.confirmpassword" id="confirmpassword" name="confirmpassword"  pw-check="user.password" placeholder="Enter password">
           <div ng-show="signup.$submitted || signup.password.$touched || signup.password.$dirty">
             <span  ng-cloak class="error-message" ng-show="signup.confirmpassword.$error.required">Tell us Your Confirm Password</span>
-            <span ng-cloak class="error-message" ng-show="signup.confirmpassword.$error.pwCheck">Password are not equal!</span>
+            <span ng-cloak class="error-message" ng-show="signup.confirmpassword.$error.pwCheck">Password and Confirm password are not equal!</span>
           </div>
         </div>
       </div>
