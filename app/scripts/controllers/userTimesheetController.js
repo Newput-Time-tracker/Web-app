@@ -310,6 +310,7 @@ function($scope, $location, UserService, AuthService) {
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
     initializeWeek(currentMonth, newCurrentYear);
+    $scope.showTimesheet();
   };
 
   // Update Month
@@ -331,14 +332,17 @@ function($scope, $location, UserService, AuthService) {
       var year = $scope.yearOptions.current.value;
       //var emailTimesheetObj = {empId: ($scope.employees.id).toString(), month: month, year: year.toString() };
       var emailPromise = UserService.emailme();
-      console.log(emailPromise);
+      var emailPromise = UserService.emailme(userObj);
+      emailPromise.then(function(res) {
+        $scope.message = res.data;
+        if ($scope.message.length > 0) {
+          $scope.message = $scope.message[0].msg;
+        }
+      }, function(error) {
+        console.log(error);
+      });
     }
-    // var emailPromise = UserService.emailme(userObj);
-    // emailPromise.then(function(res) {
-    // $scope.detail = res;
-    // }, function(error) {
-    //
-    // });
+
   };
   // logout user
   $scope.logout = function() {

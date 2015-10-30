@@ -23,7 +23,7 @@ function($http, $q, appSettings, $cookies) {
     },
 
     emailme : function() {
-      var data = {'empId': '142', 'month': 'oct', 'year': '2015'};
+      var data = {'empId': '12', 'month': 'oct', 'year': '2015', 'token': '0C06857BF7071093C36F0E09C4C65F38'};
       var q = $q.defer();
       $http({
        method : 'POST',
@@ -105,7 +105,7 @@ function($http, $q, appSettings, $cookies) {
       return userJsonData;
     },
     timesheetData: function() {
-      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': 'EE0B714C04C6718A951AF2ED8FE1CFBA'};
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '0C06857BF7071093C36F0E09C4C65F38'};
       var q = $q.defer();
       $http({
         method : 'POST',
