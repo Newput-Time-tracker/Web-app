@@ -15,8 +15,8 @@ function($scope, $location, $timeout, UserService) {
   };
   this.resetPassword = function() {
     $scope.param = $location.search();
-    //$scope.resetpwd.empId = $scope.param.ID;
-   // $scope.resetpwd.pToken = $scope.param.PT;
+    $scope.resetpwd.empId = $scope.param.ID;
+    $scope.resetpwd.pToken = $scope.param.PT;
     var dataPromise = UserService.resetPassword($scope.resetpwd);
     dataPromise.then(function(response) {
      if(response.success) {

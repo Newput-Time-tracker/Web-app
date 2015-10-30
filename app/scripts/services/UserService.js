@@ -62,6 +62,7 @@ function($http, $q, appSettings, $cookies) {
     },
 
     forgotPassword : function(email) {
+      var email = {'email' : email};
       var q = $q.defer();
       $http({
         method : 'POST',
@@ -131,13 +132,14 @@ function($http, $q, appSettings, $cookies) {
       return true;
     },
     resetPassword: function (resetPassword) {
+      var reset = {'empId' : resetPassword.empId, 'pToken' : resetPassword.pToken, 'newPassword' : resetPassword.password};
       var q = $q.defer();
       $http({
         method : 'POST',
         url : appSettings.SERVER_BASE_URL + '/pwdVerify',
         crossDomain : true,
         withCredentials : true,
-        data: resetPassword,
+        data: reset,
         headers : {
           'Content-Type' : 'application/x-www-form-urlencoded'
         }
