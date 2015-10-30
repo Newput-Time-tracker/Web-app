@@ -1,0 +1,25 @@
+scss_files: 'app/assets/styles/*.scss'
+
+linters:
+  # Allow #ffffff in addition to #fff.
+  HexLength:
+    enabled: false
+  # Allow #FFFFFF in addition to #ffffff.
+  HexNotation:
+    enabled: false
+  # Allow id selectors.
+  IdSelector:
+    enabled: false
+  # Allow qualifiying elements (table.foo in addition to .foo).
+  QualifyingElement:
+    enabled: false
+  # Do not enforce shorthand - "0px 5px 0px 5px" vs "0px 5px"
+  Shorthand:
+    enabled: false
+  NestingDepth:
+    max_depth: 4
+  SelectorDepth:
+    max_depth: 4
+  # Disable for now - it's a new check that we may bring back later.
+  ColorVariable:
+    enabled: false
