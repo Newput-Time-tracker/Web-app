@@ -20,7 +20,7 @@ function($scope, $location, UserService, AuthService) {
         }
       }
     }, function(error){
-      console.log(error);
+      console.log('Something went wrong !');
     });
   };
   this.toLocation = function(loc) {

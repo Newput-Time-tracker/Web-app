@@ -28,6 +28,8 @@ function($scope, $location, UserService, AuthService) {
   $scope.newCurrentYear = '';
   var timesheetArr = {};
   $scope.timesheetData = {};
+  var dayArr = [] ; // store the day corresponding to the timesheet
+  var weekList = ['Sunday', 'Monday','Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
 
 
   // get weeks by date in a month
@@ -74,10 +76,15 @@ function($scope, $location, UserService, AuthService) {
     return num + suffix;
   }
 
-  function formateDate(date) {
-    var dDate = moment(date, ["DD-MM-YYYY"]);
-    dDate = dDate.date();
-    return dDate;
+  function formateDate(date, flag) {
+    var momentObj = moment(date, ["DD-MM-YYYY"]);
+    if (flag == 1)
+      var dDay = momentObj.date();
+    else if (flag == 2) {
+      var dDay = momentObj.day();
+      dDay = weekList[dDay];
+    }
+    return dDay;
   }
   function fromatHours(hours){
     var splitHrs = hours.split(':');
@@ -98,20 +105,72 @@ function($scope, $location, UserService, AuthService) {
     totalMins = perHrs+':'+perMins;
     return totalMins;
   }
+  function populateTimesheet(res){
+    var localDS = {};
+    var workDate = null ;
+    var dDate = null;
+    var dDay = null;
+    var status = false;
+    var monthIndex = $scope.monthsOptions.currentmonth.value;
+    var yearIndex = $scope.yearOptions.current.value;
+    //TODO: why added +1 in month index
+    var lastDate = new Date(yearIndex, monthIndex+1, 0);
+    var days = lastDate.getDate();
+    var monthlyTimesheet = [];
+    for(var index = 1, j = 0; index <= days; index++) {
+      if (res[j] != undefined) {
+        workDate = res[j].workDate;
+        dDate = formateDate(workDate, 1);
+        dDay = formateDate(workDate, 2);
+        localDS = res[j];
+        localDS.length = 1;
+        localDS.day = dDate;
+        localDS.dayName = dDay;
+        status = false;
+      } else {
+        status = true;
+      }
 
+      if ((localDS.length > 0) || status){
+        if(localDS.day == index) {
+          monthlyTimesheet.push(localDS);
+          j++;
+          localDS = {};
+          localDS.length = 0;
+        } else {
+          workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
+          dDate = formateDate(workDate, 1);
+          dDay = formateDate(workDate, 2);
+          monthlyTimesheet.push({'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
+          'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate,
+          'workDesc': ''});
+        }
+      }
+    }
+    monthlyTimesheet.length = days;
+    return monthlyTimesheet;
+  }
+
+  function manageTimeSheet(emptyTimesheet, dayArr){
+    for(var index = 0; index < emptyTimesheet.length; index++) {
+      if(dayArr.indexOf(index) != -1) {
+        var key = dayArr.indexOf(index);
+        emptyTimesheet[index] = timesheetArr[key];
+      }
+    }
+    timesheetArr = {};
+    timesheetArr = emptyTimesheet;
+  }
   // time sheet
   $scope.showTimesheet = function() {
     var totalhrs = 0;
+    timesheetArr = {};
+    $scope.timesheetData = {};
     var monthlyData = UserService.timesheetData();
     monthlyData.then(function(res){
       if (res.success) {
-        timesheetArr = res.data;
-        if (timesheetArr.length > 0) {
-          for(var i = 0; i < timesheetArr.length; i++) {
-            var date = timesheetArr[i].workDate;
-            date = formateDate(date);
-            timesheetArr[i].day = date ;
-          }
+        if (res.data.length > 0) {
+          timesheetArr = populateTimesheet(res.data);
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
@@ -128,8 +187,9 @@ function($scope, $location, UserService, AuthService) {
       var startDate = $scope.weekDay.start;
       var endDate = $scope.weekDay.end;
       $scope.weeksDateStr = weekSuffix(startDate) + ' to ' + weekSuffix(endDate);
+
       var i = 0;
-      for (var j = 0; j <= timesheetArr.length; j++) {
+      for (var j = 0; j < timesheetArr.length; j++) {
         if((timesheetArr[j] != undefined) && (timesheetArr[j].day >= startDate) && (timesheetArr[j].day <= endDate)) {
           $scope.timesheetData[i] = timesheetArr[j];
           i++;
@@ -161,13 +221,19 @@ function($scope, $location, UserService, AuthService) {
     var i = 0;
     var obj = {};
     var selectOptions = [];
-    if (startYear == selectedYear) {
+    if ((startYear == selectedYear) && (selectedYear != currentYear)) {
       i = start;
       obj = {
         'value' : start,
         'label' : monthList[start]
       };
       current = 11;
+    } else if ((startYear == selectedYear) && (selectedYear == currentYear)) {
+      i = start;
+      obj = {
+        'value' : current,
+        'label' : monthList[current]
+      };
     } else if (selectedYear == currentYear) {
       obj = {
         'value' : current,
@@ -254,6 +320,7 @@ function($scope, $location, UserService, AuthService) {
     $scope.selectedMonth = monthList[newCurrentMonth];
     initializeWeek(newCurrentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
+    $scope.showTimesheet();
   };
 
   //email excel sheet
