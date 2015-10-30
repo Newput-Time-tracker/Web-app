@@ -4,6 +4,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
+var inject = require('gulp-inject');
 
 // vendor files
 var vendorCSS = [
@@ -22,12 +23,15 @@ var vendorScripts = [
 ];
 
 // application files
+var applicationCSS = [ 'app/assets/styles/style.scss' ];
+
 var applicationScripts = [
   'app/scripts/app.js',
-  'app/scripts/httpRequest.js',
+  'app/scripts/services/httpRequest.js',
   'app/scripts/services/httpProvider.js',
   'app/scripts/services/userService.js',
   'app/scripts/services/AuthService.js',
+  'app/scripts/directives/formFieldDirectives.js',
   'app/scripts/controllers/loginController.js',
   'app/scripts/controllers/signUpController.js',
   'app/scripts/controllers/userTimesheetController.js',
@@ -36,15 +40,29 @@ var applicationScripts = [
   'app/scripts/controllers/forgotPasswordController.js'
 ];
 
-var srcArr = ['app/index.html', 'app/favicon.ico', 'app/404.html'];
-
 // build assets
-var buildCssPath = 'build/assets/styles';
-var buildJsPath = 'build/assets/js';
+var buildCssPath = 'public/assets/styles';
+var buildJsPath = 'public/assets/js';
+
+// helper functions
+var cssTransformFn = function(filepath, file, index, length, targetFile) {
+  var path = filepath.replace('/bower_components', 'vendors')
+  .replace('/app/assets/styles','dev_css')
+  .replace('/public/assets/styles','css');
+  return '<link rel="stylesheet" href="' + path + '">';
+};
+
+var jsTransformFn = function(filepath, file, index, length, targetFile) {
+  var path = filepath.replace('/bower_components', 'vendors')
+  .replace('/app/assets/js', 'dev_js')
+  .replace('/app/scripts', 'scripts')
+  .replace('/public/assets/js','js');;
+  return '<script src="' + path + '"></script>';
+};
 
 // compile all SCSS files into their CSS versions
 gulp.task('compileStyles', function() {
-  return gulp.src('app/assets/styles/**/*.scss')
+  return gulp.src(applicationCSS)
     .pipe(sass())
     .pipe(gulp.dest('app/assets/styles'));
 });
@@ -79,32 +97,33 @@ gulp.task('prepareVendorScripts', function() {
     .pipe(gulp.dest(buildJsPath));
 });
 
-// copy images into build directory
-gulp.task('copyImage', function() {
-  return gulp.src('app/assets/images/*.{png, jpg, jpeg}')
-    .pipe(gulp.dest('build/assets/images'));
-});
-
-//copy partials into build directory
-gulp.task('copyPartials', function() {
-  return gulp.src('app/views/*.html')
-    .pipe(gulp.dest('build/views'));
-});
-
-//copy app level files into build directory
-gulp.task('copyFiles', function() {
-  return gulp.src(srcArr)
-    .pipe(gulp.dest('build'));
-});
-
-//copy web fonts into build
+//copy web fonts into public
 gulp.task('copyFonts', function() {
-  return gulp.src('bower_components/open-sans-fontface/fonts/*/*')
-    .pipe(gulp.dest('build/assets/styles/fonts/'));
+  return gulp.src(['bower_components/open-sans-fontface/fonts/*/*', 'bower_components/bootstrap/fonts/*' ])
+    .pipe(gulp.dest('public/assets/styles/fonts/'));
 });
 
-// task to copy all files into build directory
-gulp.task('copyAppFiles', ['copyImage', 'copyPartials', 'copyFiles', 'copyFonts']);
+// prepare the header of index.html file
+gulp.task('prepareDevIndex', function () {
+  var scripts = vendorScripts.concat(applicationScripts);
+  var css = vendorCSS.concat(['app/assets/styles/*.css']);
+  var target = gulp.src('app/index.html');
+  return target
+  .pipe(inject(gulp.src(css, { read: false}), {transform: cssTransformFn}))
+  .pipe(inject(gulp.src(scripts, { read: false}), {transform: jsTransformFn}))
+  .pipe(gulp.dest('app'));
+});
+
+// prepare the header of index.html file
+gulp.task('prepareProdIndex', ['prepareVendorAssets', 'prepareAppAssets'], function () {
+  var css = [buildCssPath + '/vendor.min.css', buildCssPath + '/application.min.css'];
+  var scripts = [buildJsPath + '/vendor.min.js', buildJsPath + '/application.min.js'];
+  var target = gulp.src('app/index.html');
+  return target
+  .pipe(inject(gulp.src(css, { read: false}), {transform: cssTransformFn}))
+  .pipe(inject(gulp.src(scripts, { read: false}), {transform: jsTransformFn}))
+  .pipe(gulp.dest('app'));
+});
 
 // task to prepare all vendor assets
 gulp.task('prepareVendorAssets', ['prepareVendorStyles', 'prepareVendorScripts']);
@@ -112,5 +131,8 @@ gulp.task('prepareVendorAssets', ['prepareVendorStyles', 'prepareVendorScripts']
 // task to preapre all app level assets
 gulp.task('prepareAppAssets', ['compileStyles', 'prepareAppStyles', 'prepareAppScripts']);
 
-// task to build the app
-gulp.task('buildApp', ['copyAppFiles', 'prepareVendorAssets', 'prepareAppAssets']);
+// task to build the app for dev enviroment
+gulp.task('devBuildApp', ['compileStyles', 'prepareDevIndex']);
+
+// task to build the app for prod enviroment
+gulp.task('prodBuildApp', ['copyFonts', 'prepareVendorAssets', 'prepareAppAssets', 'prepareProdIndex']);
