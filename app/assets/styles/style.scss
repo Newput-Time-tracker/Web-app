@@ -42,6 +42,9 @@ footer {
   &.forgot {
     height: 200px;
   }
+  &.confirm {
+    height: 350px;
+  }
 }
 .section {
   padding: 30px;
@@ -216,4 +219,7 @@ table {
 }
 .success-message {
   color: $success;
+}
+.confirm-btn-container {
+  margin-top: 24px;
 }

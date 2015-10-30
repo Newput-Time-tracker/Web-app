@@ -65,7 +65,7 @@ function($http, $q, appSettings, $cookies) {
       var q = $q.defer();
       $http({
         method : 'POST',
-        url : appSettings.SERVER_BASE_URL + '/register',
+        url : appSettings.SERVER_BASE_URL + '/forgotPwd',
         data : email,
         crossDomain : true,
         withCredentials : true,
@@ -82,7 +82,7 @@ function($http, $q, appSettings, $cookies) {
 
     saveDetailTimeSheet : function(timeSheet) {
       timeSheet.empId = '12';
-      timeSheet.token = '3B7B86D5FCF448C9AC1FF6AA4C78B99B';
+      timeSheet.token = '29D565099F7D36DC9A1569414267B7D1';
       timeSheet.workDate = '29-10-2015';
       var q = $q.defer();
       $http({
@@ -105,7 +105,7 @@ function($http, $q, appSettings, $cookies) {
       return userJsonData;
     },
     timesheetData: function() {
-      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '0C06857BF7071093C36F0E09C4C65F38'};
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '29D565099F7D36DC9A1569414267B7D1'};
       var q = $q.defer();
       $http({
         method : 'POST',
@@ -123,12 +123,30 @@ function($http, $q, appSettings, $cookies) {
       });
       return q.promise;
     },
-    endSession: function(){
+    endSession: function() {
       var cookies = $cookies.getAll();
       angular.forEach(cookies, function (v, k) {
           $cookies.remove(k);
       });
       return true;
+    },
+    resetPassword: function (resetPassword) {
+      var q = $q.defer();
+      $http({
+        method : 'POST',
+        url : appSettings.SERVER_BASE_URL + '/pwdVerify',
+        crossDomain : true,
+        withCredentials : true,
+        data: resetPassword,
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded'
+        }
+      }).success(function(response) {
+        q.resolve(response);
+      }).error(function(response) {
+        q.reject(response);
+      });
+      return q.promise;
     }
   };
 }]);
