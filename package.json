@@ -25,7 +25,7 @@
   },
   "scripts": {
     "preinstall": "echo now npm-modules will start to install",
-    "postinstall": "bower install && npm run build && npm run start",
+    "postinstall": "bower install && npm run build",
     "build": "gulp prodBuildApp",
     "start": "node web-server.js",
     "test": "echo no tests to run"
