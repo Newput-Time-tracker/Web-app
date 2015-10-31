@@ -1,7 +1,8 @@
 app.controller('forgotPasswordController', ['$scope', '$location', '$timeout', 'UserService',
 function($scope, $location, $timeout, UserService) {
   this.fetchPwd = function() {
-    var dataPromise = UserService.forgotPassword($scope.email);
+    var email = $scope.email;
+    var dataPromise = UserService.forgotPassword(email);
     dataPromise.then(function(response) {
      if(response.success) {
        $scope.successMessage = "Password recover link successfully sent on mail!";
