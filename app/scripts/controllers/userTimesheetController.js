@@ -105,6 +105,25 @@ function($scope, $location, UserService, AuthService) {
     totalMins = perHrs+':'+perMins;
     return totalMins;
   }
+
+  function perDaytimesheetData(localDS){
+    workDate = localDS.workDate;
+    dDate = formateDate(workDate, 1);
+    dDay = formateDate(workDate, 2);
+    localDS.length = 1;
+    localDS.day = dDate;
+    localDS.dayName = dDay;
+    return localDS;
+  }
+  function createDsOfEmptyData(index, monthIndex, yearIndex){
+    workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
+    dDate = formateDate(workDate, 1);
+    dDay = formateDate(workDate, 2);
+    var dataForEmptyRow = {'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
+    'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate,
+    'workDesc': ''};
+    return dataForEmptyRow;
+  }
   function populateTimesheet(res){
     var localDS = {};
     var workDate = null ;
@@ -113,37 +132,25 @@ function($scope, $location, UserService, AuthService) {
     var status = false;
     var monthIndex = $scope.monthsOptions.currentmonth.value;
     var yearIndex = $scope.yearOptions.current.value;
-    //TODO: why added +1 in month index
     var lastDate = new Date(yearIndex, monthIndex+1, 0);
     var days = lastDate.getDate();
     var monthlyTimesheet = [];
     for(var index = 1, j = 0; index <= days; index++) {
       if (res[j] != undefined) {
-        workDate = res[j].workDate;
-        dDate = formateDate(workDate, 1);
-        dDay = formateDate(workDate, 2);
         localDS = res[j];
-        localDS.length = 1;
-        localDS.day = dDate;
-        localDS.dayName = dDay;
+        localDS = perDaytimesheetData(localDS);
         status = false;
       } else {
         status = true;
       }
-
       if ((localDS.length > 0) || status){
         if(localDS.day == index) {
           monthlyTimesheet.push(localDS);
           j++;
           localDS = {};
-          localDS.length = 0;
         } else {
-          workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
-          dDate = formateDate(workDate, 1);
-          dDay = formateDate(workDate, 2);
-          monthlyTimesheet.push({'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
-          'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate,
-          'workDesc': ''});
+          var dataForEmptyRow = createDsOfEmptyData(index, monthIndex, yearIndex);
+          monthlyTimesheet.push(dataForEmptyRow);
         }
       }
     }
