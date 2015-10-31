@@ -19,6 +19,7 @@ var vendorScripts = [
   'bower_components/angular-route/angular-route.min.js',
   'bower_components/angular-cookies/angular-cookies.min.js',
   'bower_components/ngMask/dist/ngMask.min.js',
+  'bower_components/moment/min/moment.min.js',
   'app/assets/js/ui-bootstrap-tpls-0.12.1.js'
 ];
 

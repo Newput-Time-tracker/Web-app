@@ -106,7 +106,7 @@ function($http, $q, CONFIG, $cookies) {
       return userJsonData;
     },
     timesheetData: function() {
-      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '29D565099F7D36DC9A1569414267B7D1'};
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': 'B7F6ADD74E8D15C46A1170F052B3E037'};
       var q = $q.defer();
       $http({
         method : 'POST',
