@@ -37,7 +37,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller : 'signUpController',
     controllerAs : 'signUp'
   })
-  .when('/detailview', {
+  .when('/detailview/:date', {
     templateUrl : viewsDir + '_detailview.html',
     controller : 'detailViewController',
     controllerAs : 'detail'
