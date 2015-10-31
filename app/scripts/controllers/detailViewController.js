@@ -25,7 +25,8 @@ function($scope, $location, $timeout, UserService) {
     }
     //totalworkingHour = $scope.getTotoalhours($scope.timesheet);
     if($scope.errorMessage==null) {
-      var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet);
+      $scope.date = $routeParams.date;
+      var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
       dataPromise.then(function(response) {
         if(response.success) {
           $scope.successMessage = "Successfully Saved!";
