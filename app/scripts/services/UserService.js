@@ -152,4 +152,3 @@ function($http, $q, CONFIG, $cookies) {
     }
   };
 }]);
-
