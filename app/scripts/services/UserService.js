@@ -18,7 +18,7 @@ function($http, $q, CONFIG, $cookies) {
     },
 
     emailme : function(userObj) {
-      var data = {'empId': '12', 'month': 'oct', 'year': '2015', 'token': 'BEF4040E268A18BBD0ED0393E4E5C7F7'};
+      var data = {'empId': '12', 'month': 'oct', 'year': '2015', 'token': 'AE2DF5413454064A201AE35AD3E3C037'};
       var q = $q.defer();
       $http({
        method : 'POST',
@@ -63,7 +63,7 @@ function($http, $q, CONFIG, $cookies) {
 
     saveDetailTimeSheet : function(timeSheet, date) {
       timeSheet.empId = '12';
-      timeSheet.token = 'F1A9518F7463A445308EDDDECC211820';
+      timeSheet.token = 'DDB6ADF177C0AE7D3BC5F28F250EF437';
       timeSheet.workDate = date;
       var q = $q.defer();
       $http({
@@ -81,7 +81,7 @@ function($http, $q, CONFIG, $cookies) {
       return userJsonData;
     },
     timesheetData: function() {
-      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '61E00E8F8D52FC433820384CA1AE5C41'};
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': 'DDB6ADF177C0AE7D3BC5F28F250EF437'};
       var q = $q.defer();
       $http({
         method : 'POST',
