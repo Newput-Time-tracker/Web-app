@@ -1,157 +1,203 @@
-@import "variable";
+@import 'variable';
+
 body {
   font-family: 'Open Sans';
 }
+
 .wrapper {
+
   .navbar {
     background-color: $default;
     border: 1px solid $default;
-    border-radius: 0px;
+    border-radius: 0;
     box-shadow: 0 0 5px 0;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 
     h2 {
-      margin: 0px;
+      margin: 0;
       padding: 25px;
     }
+
   }
+
   .container {
-     padding: 35px;
+    padding: 35px;
   }
 }
+
 footer {
+
   .copyright {
     background-color: #f1f1f1;
     box-shadow: 0 1px 3px -1px;
     padding: 35px;
     text-align: center;
   }
+
 }
+
 .form-wrap {
   border-radius: 5px;
   box-shadow: 3px 3px 10px 0;
   margin-top: 45px;
   padding: 25px;
+
   h2 {
-    margin: 0px;
+    margin: 0;
   }
+
   .login-form {
-    padding: 25px 0px;
+    padding: 25px 0;
   }
+
   &.forgot {
     height: 250px;
   }
+
   &.confirm {
     height: 365px;
   }
 }
+
 .section {
   padding: 30px;
 }
- input {
-   .ng-dirty {
+
+input {
+
+  .ng-dirty {
     &.ng-invalid {
-      border-color: red;
+      border-color: #ff0000;
     }
    }
+
  }
+
 .signup-form-container {
   border: 1px solid #fff;
   border-radius: 8px;
-  box-shadow:  1px -2px 22px -7px;
+  box-shadow: 1px -2px 22px -7px;
   padding: 21px;
 }
+
 .timesheet-container {
+
   h3 {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
   }
+
 }
+
 .tt-table {
   padding: 12px;
+
   table {
     width: 98%;
   }
+
 }
+
 table {
-  tbody{
-     tr:nth-child(odd) {
+
+  tbody {
+    tr:nth-child(odd) {
       background-color: #def;
     }
+
     tr:nth-child(even) {
       background-color: #fff;
     }
   }
+
 }
+
 .container {
   min-height: 520px;
 }
+
 .welcome-title {
+
   .icon {
     text-align: right;
   }
+
 }
+
 .message {
   color: #99C240;
 }
+
 .col-span {
   text-align: right;
 }
+
 .help-icons {
+
   div {
     margin-top: 8px;
   }
+
 }
+
 .seperator {
   margin-top: -15px;
   text-align: center;
+
   span {
     display: inline-block;
     position: relative;
   }
+
   span:before {
     margin-right: 15px;
     right: 100%;
   }
+
   span:after {
     left: 100%;
     margin-left: 15px;
   }
+
   span:before,
   span:after {
     background: #757171;
-    content: "";
+    content: '';
     height: 1px;
     position: absolute;
     top: 50%;
     width: 185px;
   }
-}
-.error-message {
-  color: $error;
-}
-.border {
-  .btom-mrgn {
-    border:solid 0.7px #ededed;
-    margin: 10px;
-  }
-}
-.divider {
-  margin:10px;
-  height:auto;
-  display:inline-block;
-}
-.align-text {
-  margin-top: 10px;
-  text-align:center;
+
 }
 
 .error-message {
   color: #ff0000;
 }
 
+.border {
+
+  .btom-mrgn {
+    border: solid .7px #ededed;
+    margin: 10px;
+  }
+
+}
+
+.divider {
+  display: inline-block;
+  height: auto;
+  margin: 10px;
+}
+
+.align-text {
+  margin-top: 10px;
+  text-align: center;
+}
+
 .col-sm-12 {
+
   .input-group {
     margin-bottom: 10px;
   }
@@ -159,67 +205,74 @@ table {
 }
 
 @media screen and (max-width: 360px) {
- .form-group {
-   .input-group {
-     .work-description {
-       width:160px;
+  .form-group {
+    .input-group {
+      .work-description {
+        width: 160px;
+      }
+    }
+  }
+}
 
-     }
-     }
-   }
- }
- @media screen and (min-width: 767px) {
- .form-group {
-   .input-group {
-     .work-description {
-       width:280px;
+@media screen and (min-width: 767px) {
+  .form-group {
+    .input-group {
+      .work-description {
+        width: 280px;
+      }
+    }
+  }
+}
 
-     }
-     }
-   }
- }
-  @media screen and (min-width: 1024px) {
- .form-group {
-   .input-group {
-     .work-description {
-       width:490px;
-
-     }
-     }
-   }
- }
+@media screen and (min-width: 1024px) {
+  .form-group {
+    .input-group {
+      .work-description {
+        width: 490px;
+      }
+    }
+  }
+}
 
 .img {
   width: 15px;
 }
+
 .forgot-btn-container {
-  margin-top: 28px;
   margin-left: -67px;
+  margin-top: 28px;
 }
+
 .input-email {
+
   input {
     margin-top: 3px;
     width: 100%;
   }
 }
+
 .btn-align {
   &.col-sm-offset-4 {
     margin-left: 36%;
   }
 }
+
 .override {
   &.col-sm-3 {
     width: 28%;
   }
 }
+
 .center-link {
   clear: both;
   padding: 12px;
   text-align: center;
 }
+
 .success-message {
   color: $success;
 }
+
 .confirm-btn-container {
   margin-top: 24px;
 }
