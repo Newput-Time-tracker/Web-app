@@ -21,13 +21,17 @@
   },
   "devDependencies": {
     "eslint": "^1.7.3",
-    "karma-bower": "^1.0.1"
+    "karma-bower": "^1.0.1",
+    "pre-commit": "^1.1.2"
   },
   "scripts": {
     "preinstall": "echo now npm-modules will start to install",
     "postinstall": "bower install && npm run build",
     "build": "gulp prodBuildApp",
     "start": "node web-server.js",
+    "scsslint": "scss-lint app/assets/styles/*.scss",
+    "eslint": "eslint app/scripts",
     "test": "echo no tests to run"
-  }
+  },
+  "pre-commit": ["scsslint", "eslint", "test"]
 }
