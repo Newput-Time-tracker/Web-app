@@ -90,6 +90,7 @@
         <tr>
           <td colspan="10" class="col-span">Total Hrs.</td>
           <td>{{timesheetData.totalHours}} hrs</td>
+          <div class="center-link"><span class="error-message">{{errorMessage}}</span></div>
         </tr>
         <span ng-show="timesheetArr.length == 0" class="message">No data available for this selection!</span>
       </tbody>

@@ -168,9 +168,9 @@ function($scope, $rootScope, $location, UserService, AuthService) {
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
         }
-      } else {
-        $scope.message = 'No data available for this month !';
-      }
+        else {
+          $scope.message = 'No data available for this month !';
+        }
     }, function(error){
       console.log(error);
     });

@@ -14,7 +14,7 @@ function($scope, UserService) {
         $scope.successMessage = "Registered Successfully !";
       }
       else {
-         $scope.errorMessage = response.error;
+         $scope.errorMessage = "Email id already exist!";
       }
     }, function(error) {
       $scope.errorMessage = "Something went wrong on server!";
