@@ -2,7 +2,7 @@
   <div class="col-sm-3 col-xs-12"></div>
   <div class=" form-wrap col-sm-6 col-xs-12">
     <h3>TimeSheet</h3>
-    <div class="center-link"><span class="error-message">{{date}}</span></div>
+    <div class="center-link"><label><h4>{{date}}</h4></label></div>
     <form  name="detailview" role="form" novalidate="true" ng-submit="detailview.$valid && detail.saveTimesheet()">
       <div class="form-group">
         <div class="col-sm-12">
@@ -72,7 +72,7 @@
             <button ng-disabled="detailview.$invalid" type="submit" class="btn btn-primary divider">
               Save
             </button>
-            <a href="signup"> Back To Home Page </a>
+            <a href="usertimesheet"> Back To Home Page </a>
           </div>
         </div>
       </div>

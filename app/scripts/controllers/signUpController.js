@@ -17,7 +17,7 @@ function($scope, UserService) {
          $scope.errorMessage = response.error;
       }
     }, function(error) {
-      $scope.errorMessage = error;
+      $scope.errorMessage = "Something went wrong on server!";
     });
     resetForm();
   };
