@@ -17,8 +17,8 @@ function($http, $q, CONFIG, $cookies) {
       return q.promise;
     },
 
-    emailme : function() {
-      var data = {'empId': '12', 'month': 'oct', 'year': '2015', 'token': '0C06857BF7071093C36F0E09C4C65F38'};
+    emailme : function(userObj) {
+      var data = {'empId': '12', 'month': 'oct', 'year': '2015', 'token': 'BEF4040E268A18BBD0ED0393E4E5C7F7'};
       var q = $q.defer();
       $http({
        method : 'POST',
@@ -81,7 +81,7 @@ function($http, $q, CONFIG, $cookies) {
       return userJsonData;
     },
     timesheetData: function() {
-      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': 'F1A9518F7463A445308EDDDECC211820'};
+      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '61E00E8F8D52FC433820384CA1AE5C41'};
       var q = $q.defer();
       $http({
         method : 'POST',
@@ -119,4 +119,3 @@ function($http, $q, CONFIG, $cookies) {
     }
   };
 }]);
-

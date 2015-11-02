@@ -22,7 +22,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   var currentMonth = currentDate.getMonth();
   // it gives 0 based result.
   var currentYear = currentDate.getFullYear();
-  var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var monthList = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   $scope.weeksOptions = [];
   $scope.curYear = currentYear;
   $scope.newCurrentYear = '';
@@ -137,7 +137,6 @@ function($scope, $rootScope, $location, UserService, AuthService) {
           $rootScope.detailTimesheetByIndex[workDate] = localDS;
           j++;
           localDS = {};
-          localDS.length = 0;
         } else {
           workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
           dDate = formateDate(workDate, 1);
@@ -149,20 +148,9 @@ function($scope, $rootScope, $location, UserService, AuthService) {
         }
       }
     }
-    monthlyTimesheet.length = days;
     return monthlyTimesheet;
   }
 
-  function manageTimeSheet(emptyTimesheet, dayArr){
-    for(var index = 0; index < emptyTimesheet.length; index++) {
-      if(dayArr.indexOf(index) != -1) {
-        var key = dayArr.indexOf(index);
-        emptyTimesheet[index] = timesheetArr[key];
-      }
-    }
-    timesheetArr = {};
-    timesheetArr = emptyTimesheet;
-  }
   // time sheet
   $scope.showTimesheet = function() {
     var totalhrs = 0;
@@ -325,15 +313,12 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.weeksDateStr = '';
     $scope.showTimesheet();
   };
-
   //email excel sheet
-
   $scope.emailme = function() {
     if ($scope.employees != null) {
       var month = $scope.monthsOptions.currentmonth.label;
       var year = $scope.yearOptions.current.value;
       //var emailTimesheetObj = {empId: ($scope.employees.id).toString(), month: month, year: year.toString() };
-      var emailPromise = UserService.emailme();
       var emailPromise = UserService.emailme(userObj);
       emailPromise.then(function(res) {
         $scope.message = res.data;
@@ -344,7 +329,6 @@ function($scope, $rootScope, $location, UserService, AuthService) {
         console.log(error);
       });
     }
-
   };
   // logout user
   $scope.logout = function() {
