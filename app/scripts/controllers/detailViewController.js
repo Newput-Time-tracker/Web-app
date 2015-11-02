@@ -25,7 +25,6 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
     }
     //totalworkingHour = $scope.getTotoalhours($scope.timesheet);
     if($scope.errorMessage==null) {
-      $scope.date = $routeParams.date;
       var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
       dataPromise.then(function(response) {
         if(response.success) {
@@ -34,10 +33,10 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
             $location.path("/usertimesheet");
           }, 3000);
         }else {
-          $scope.errorMessage = "Something wrong on Server Please wait !";
+          $scope.errorMessage = error;
         }
       }, function(error) {
-        $scope.errorMessage = error;
+        $scope.errorMessage = "Something wrong on Server Please wait !";
       });
     }
   };
@@ -74,15 +73,17 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
       return;
   };
 
+
   init = function() {
-    var date = $routeParams.date;
+    $scope.date = $routeParams.date;
     var monthlyDetailTimeSheet = $rootScope.detailTimesheetByIndex;
-    if (monthlyDetailTimeSheet[date]) {
+    if (monthlyDetailTimeSheet[$scope.date]) {
       //$scope.timesheet.workDate = date;
-      $scope.timesheet = monthlyDetailTimeSheet[date];
+      $scope.timesheet = monthlyDetailTimeSheet[$scope.date];
     }
   };
   init();
+
 
   $scope.reset = function() {
     $scope.timesheet = null;
