@@ -33,7 +33,7 @@ footer .copyright {
   .form-wrap.forgot {
     height: 250px; }
   .form-wrap.confirm {
-    height: 350px; }
+    height: 365px; }
 
 .section {
   padding: 30px; }
@@ -136,7 +136,7 @@ table tbody tr:nth-child(even) {
   width: 15px; }
 
 .forgot-btn-container {
-  margin-top: 24px;
+  margin-top: 28px;
   margin-left: -67px; }
 
 .input-email input {
@@ -159,4 +159,3 @@ table tbody tr:nth-child(even) {
 
 .confirm-btn-container {
   margin-top: 24px; }
-

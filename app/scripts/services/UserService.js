@@ -61,7 +61,7 @@ function($http, $q, CONFIG, $cookies) {
       return q.promise;
     },
 
-    saveDetailTimeSheet : function(timeSheet) {
+    saveDetailTimeSheet : function(timeSheet, date) {
       timeSheet.empId = '12';
       timeSheet.token = 'F1A9518F7463A445308EDDDECC211820';
       timeSheet.workDate = date;
