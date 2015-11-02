@@ -18,9 +18,11 @@ function($scope, $location, UserService, AuthService) {
             $location.path('/usertimesheet');
           }
         }
+      } else {
+        $scope.errorMessage = res.error ;
       }
     }, function(error){
-      console.log('Something went wrong !');
+      $scope.errorMessage = 'Something is went wrong !' ;
     });
   };
   this.toLocation = function(loc) {
