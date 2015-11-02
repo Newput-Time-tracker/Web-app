@@ -7,12 +7,7 @@ function($http, $q, CONFIG, $cookies) {
       $http({
        method : 'POST',
         url : CONFIG.API_URL + '/login',
-        data : user,
-        crossDomain : true,
-        withCredentials : true,
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        data : user
       }).success(function(response) {
         userJsonData = response;
         q.resolve(response);
@@ -28,12 +23,7 @@ function($http, $q, CONFIG, $cookies) {
       $http({
        method : 'POST',
         url : CONFIG.API_URL + '/mailExcelSheet',
-        data : data,
-        crossDomain : true,
-        withCredentials : true,
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        data : data
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -47,12 +37,7 @@ function($http, $q, CONFIG, $cookies) {
       $http({
         method : 'POST',
         url : CONFIG.API_URL + '/register',
-        data : userObj,
-        crossDomain : true,
-        withCredentials : true,
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        data : userObj
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -67,12 +52,7 @@ function($http, $q, CONFIG, $cookies) {
       $http({
         method : 'POST',
         url : CONFIG.API_URL + '/forgotPwd',
-        data : email,
-        crossDomain : true,
-        withCredentials : true,
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        data : email
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -83,18 +63,13 @@ function($http, $q, CONFIG, $cookies) {
 
     saveDetailTimeSheet : function(timeSheet, date) {
       timeSheet.empId = '12';
-      timeSheet.token = 'BEF4040E268A18BBD0ED0393E4E5C7F7';
+      timeSheet.token = 'F1A9518F7463A445308EDDDECC211820';
       timeSheet.workDate = date;
       var q = $q.defer();
       $http({
         method : 'POST',
         url : CONFIG.API_URL + '/timeEntry',
-        data : timeSheet,
-        crossDomain : true,
-        withCredentials : true,
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        data : timeSheet
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -111,12 +86,7 @@ function($http, $q, CONFIG, $cookies) {
       $http({
         method : 'POST',
         url : CONFIG.API_URL + '/monthlyExcel',
-        crossDomain : true,
-        withCredentials : true,
-        data: emp,
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        data: emp
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -139,10 +109,7 @@ function($http, $q, CONFIG, $cookies) {
         url : CONFIG.API_URL +  '/pwdVerify',
         crossDomain : true,
         withCredentials : true,
-        data: reset,
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        data: reset
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {

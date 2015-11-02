@@ -37,7 +37,7 @@
       <div class="form-group">
         <div class="col-sm-6">
           <label class="control-label" for="contact">Contact:*</label>
-          <input type="number" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-required="true" ng-model="user.contact" name="contact"   placeholder="Enter Contact">
+          <input type="text" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-required="true" ng-model="user.contact" name="contact"   placeholder="Enter Contact">
           <div ng-show="signup.$submitted || signup.contact.$touched ">
             <span ng-cloak class="error-message" ng-show="signup.contact.$error.required">Tell us your contact.</span>
             <span ng-cloak class="error-message" ng-show="signup.contact.$error.number">This is not a valid contact no.</span>

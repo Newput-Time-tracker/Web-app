@@ -36,7 +36,7 @@ function($httpProvider) {
     return query.length ? query.substr(0, query.length - 1) : query;
   };
 
-  $httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
   $httpProvider.defaults.transformRequest = [
   function(data) {
