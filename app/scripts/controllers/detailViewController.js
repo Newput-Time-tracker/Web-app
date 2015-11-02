@@ -25,8 +25,8 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
     }
     //totalworkingHour = $scope.getTotoalhours($scope.timesheet);
     if($scope.errorMessage==null) {
-       var date = $routeParams.date;
-      var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, date);
+      $scope.date = $routeParams.date;
+      var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
       dataPromise.then(function(response) {
         if(response.success) {
           $scope.successMessage = "Successfully Saved!";
@@ -74,7 +74,6 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
       return;
   };
 
-
   init = function() {
     var date = $routeParams.date;
     var monthlyDetailTimeSheet = $rootScope.detailTimesheetByIndex;
@@ -83,8 +82,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
       $scope.timesheet = monthlyDetailTimeSheet[date];
     }
   };
-    init();
-
+  init();
 
   $scope.reset = function() {
     $scope.timesheet = null;
