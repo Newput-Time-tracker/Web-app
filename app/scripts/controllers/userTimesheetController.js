@@ -159,7 +159,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     timesheetArr = {};
     $scope.timesheetData = {};
     var monthlyData = UserService.timesheetData(perMonthEmpObj);
-    monthlyData.then(function(res){console.log(res);
+    monthlyData.then(function(res){
       if (res.success) {
         $scope.message = '';
         if (res.data.length > 0) {
@@ -171,6 +171,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
         else {
           $scope.message = 'No data available for this month !';
         }
+      }
     }, function(error){
       console.log(error);
     });
