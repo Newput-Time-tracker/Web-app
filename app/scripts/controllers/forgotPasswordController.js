@@ -8,7 +8,7 @@ function($scope, $location, $timeout, UserService) {
        $scope.successMessage = "Password recover link successfully sent on mail!";
      }
      else {
-       $scope.errorMessage = response.error;
+       $scope.errorMessage = "Invalid Email";
      }
     }, function(error) {
       $scope.errorMessage = "Server is down for maintainance please wait!";

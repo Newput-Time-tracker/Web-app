@@ -33,7 +33,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
             $location.path("/usertimesheet");
           }, 3000);
         }else {
-          $scope.errorMessage = error;
+          $scope.errorMessage = "Invalid Entry! Please make sure the correct format";
         }
       }, function(error) {
         $scope.errorMessage = "Something wrong on Server Please wait !";

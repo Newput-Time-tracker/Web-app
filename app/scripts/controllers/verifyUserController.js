@@ -13,7 +13,7 @@ function($scope, $location, $timeout, AuthService) {
         },2000);
       }
       else {
-         $scope.errorMessage = response.error;
+         $scope.errorMessage = "Please make sure the correct Email";
       }
     }, function(error) {
       $scope.errorMessage  = "Server will up in few minutes Please wait";;

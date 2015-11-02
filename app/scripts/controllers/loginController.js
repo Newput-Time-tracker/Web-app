@@ -5,7 +5,7 @@ function($scope, $location, UserService, AuthService) {
   if(cookieObj) {
     $location.path('/usertimesheet');
   }
-  this.verifyUser = function() {
+  this.loginUser = function() {
     var employeesPromise = UserService.authUser($scope.user);
     employeesPromise.then(function(res){
       if (res.success) {
@@ -19,7 +19,7 @@ function($scope, $location, UserService, AuthService) {
           }
         }
       } else {
-        $scope.errorMessage = res.error ;
+        $scope.errorMessage = "Invalid Credential or May be you didn't SignUP " ;
       }
     }, function(error){
       $scope.errorMessage = 'Something is went wrong !' ;
