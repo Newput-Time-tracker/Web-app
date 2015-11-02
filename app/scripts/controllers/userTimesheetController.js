@@ -1,5 +1,5 @@
-app.controller('userTimesheetController', ['$scope', '$location', 'UserService', 'AuthService',
-function($scope, $location, UserService, AuthService) {
+app.controller('userTimesheetController', ['$scope', '$rootScope', '$location', 'UserService', 'AuthService',
+function($scope, $rootScope, $location, UserService, AuthService) {
   $scope.employees = null;
   $scope.token = null;
   var cookieObj = AuthService.getAccessToken();
@@ -30,7 +30,7 @@ function($scope, $location, UserService, AuthService) {
   $scope.timesheetData = {};
   var dayArr = [] ; // store the day corresponding to the timesheet
   var weekList = ['Sunday', 'Monday','Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
-
+  $rootScope.detailTimesheetByIndex = {};
 
   // get weeks by date in a month
   function getWeeksInMonth(month, year) {
@@ -134,15 +134,17 @@ function($scope, $location, UserService, AuthService) {
       if ((localDS.length > 0) || status){
         if(localDS.day == index) {
           monthlyTimesheet.push(localDS);
+          $rootScope.detailTimesheetByIndex[workDate] = localDS;
           j++;
           localDS = {};
         } else {
           workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
           dDate = formateDate(workDate, 1);
           dDay = formateDate(workDate, 2);
-          monthlyTimesheet.push({'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
-          'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate,
-          'workDesc': ''});
+          var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
+          'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate, 'workDesc': ''};
+          monthlyTimesheet.push(oneDayData);
+          $rootScope.detailTimesheetByIndex[workDate] = oneDayData;
         }
       }
     }

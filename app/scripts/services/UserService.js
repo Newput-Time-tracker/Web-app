@@ -81,10 +81,10 @@ function($http, $q, CONFIG, $cookies) {
       return q.promise;
     },
 
-    saveDetailTimeSheet : function(timeSheet) {
+    saveDetailTimeSheet : function(timeSheet, date) {
       timeSheet.empId = '12';
-      timeSheet.token = '29D565099F7D36DC9A1569414267B7D1';
-      timeSheet.workDate = '29-10-2015';
+      timeSheet.token = 'BEF4040E268A18BBD0ED0393E4E5C7F7';
+      timeSheet.workDate = date;
       var q = $q.defer();
       $http({
         method : 'POST',
