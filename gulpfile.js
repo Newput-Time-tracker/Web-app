@@ -30,7 +30,7 @@ var applicationScripts = [
   'app/scripts/app.js',
   'app/scripts/services/httpRequest.js',
   'app/scripts/services/httpProvider.js',
-  'app/scripts/services/userService.js',
+  'app/scripts/services/UserService.js',
   'app/scripts/services/AuthService.js',
   'app/scripts/directives/formFieldDirectives.js',
   'app/scripts/controllers/loginController.js',
