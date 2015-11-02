@@ -1,5 +1,5 @@
-app.factory("UserService", ['$http', '$q', 'CONFIG', '$cookies',
-function($http, $q, CONFIG, $cookies) {
+app.factory("UserService", ['$http', '$q', 'CONFIG', 'AuthService' ,'$cookies',
+function($http, $q, CONFIG, AuthService, $cookies) {
   var userJsonData = [];
   return {
     authUser : function(user) {
@@ -18,12 +18,13 @@ function($http, $q, CONFIG, $cookies) {
     },
 
     emailme : function(userObj) {
-      var data = {'empId': '12', 'month': 'oct', 'year': '2015', 'token': 'BEF4040E268A18BBD0ED0393E4E5C7F7'};
+      var user = AuthService.getAccessToken();
+      var empEmail = {'empId': user.userObj.id, 'month': AuthService.getMonthByIndex(moment(user.userObj.doj, "DD-MM-YYYY").month()), 'year': moment(user.userObj.doj, "DD-MM-YYYY").year(), 'token': user.token.token};
       var q = $q.defer();
       $http({
        method : 'POST',
         url : CONFIG.API_URL + '/mailExcelSheet',
-        data : data
+        data : empEmail
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -62,8 +63,9 @@ function($http, $q, CONFIG, $cookies) {
     },
 
     saveDetailTimeSheet : function(timeSheet, date) {
-      timeSheet.empId = '12';
-      timeSheet.token = 'F1A9518F7463A445308EDDDECC211820';
+      var user = AuthService.getAccessToken();
+      timeSheet.empId = user.userObj.id;
+      timeSheet.token = user.token.token;
       timeSheet.workDate = date;
       var q = $q.defer();
       $http({
@@ -81,7 +83,8 @@ function($http, $q, CONFIG, $cookies) {
       return userJsonData;
     },
     timesheetData: function() {
-      var emp = {'empId': '12', 'year': '2015', 'month': 'october', 'token': '8ABDFEE130A2F6CBCCFEB4126B57B8FA'};
+      var user = AuthService.getAccessToken();
+      var emp = {'empId': user.userObj.id, 'month': AuthService.getMonthByIndex(moment(user.userObj.doj, "DD-MM-YYYY").month()), 'year': moment(user.userObj.doj, "DD-MM-YYYY").year(), 'token': user.token.token};
       var q = $q.defer();
       $http({
         method : 'POST',
