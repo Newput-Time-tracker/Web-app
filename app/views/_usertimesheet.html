@@ -66,7 +66,8 @@
           <th>Night Out</th>
           <th>Total Hrs</th>
           <th>Description</th>
-          <th>Action</th>
+          <th ng-hide = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value) ">Action</th>
+          <th ng-show = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value) ">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -81,7 +82,10 @@
           <td>{{t.nightOut}}</td>
           <td>{{t.totalHour}}</td>
           <td>{{t.workDesc}}</td>
-          <td><a href ="/detailview/{{t.workDate}}"><span class="glyphicon glyphicon-edit"></span></a> | <span class="glyphicon glyphicon-copyright-mark"></span></td>
+          <td ng-hide = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
+            <a href ="/detailview/{{t.workDate}}"><span class="glyphicon glyphicon-edit")></span></a> | <span class="glyphicon glyphicon-copyright-mark"></span></td>
+          <td ng-show = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
+            <center><a href ="/detailview/{{t.workDate}}"><span class="glyphicon glyphicon-info-sign")></span></center></a></td>
         </tr>
         <tr>
           <td colspan="10" class="col-span">Total Hrs.</td>

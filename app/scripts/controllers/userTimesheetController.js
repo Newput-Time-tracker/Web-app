@@ -25,6 +25,8 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   var monthList = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   $scope.weeksOptions = [];
   $scope.curYear = currentYear;
+  $scope.curMonth = currentMonth;
+
   $scope.newCurrentYear = '';
   var timesheetArr = {};
   $scope.timesheetData = {};
@@ -152,19 +154,22 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   }
 
   // time sheet
-  $scope.showTimesheet = function() {
+  $scope.showTimesheet = function(perMonthEmpObj) {
     var totalhrs = 0;
     timesheetArr = {};
     $scope.timesheetData = {};
-    var monthlyData = UserService.timesheetData();
-    monthlyData.then(function(res){
+    var monthlyData = UserService.timesheetData(perMonthEmpObj);
+    monthlyData.then(function(res){console.log(res);
       if (res.success) {
+        $scope.message = '';
         if (res.data.length > 0) {
           timesheetArr = populateTimesheet(res.data);
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
         }
+      } else {
+        $scope.message = 'No data available for this month !';
       }
     }, function(error){
       console.log(error);
@@ -246,7 +251,6 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     }
     selectOptions.currentmonth = obj;
     $scope.selectedMonth = obj.label;
-    $scope.showTimesheet();
     return selectOptions;
   }
 
@@ -293,6 +297,9 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.yearOptions = generateYearSelectBox(startYear, currentYear);
     var startMonth = dojYear.getMonth();
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, currentYear);
+    var monthLabel = $scope.selectedMonth;
+    var perMonthEmpObj = {'empId': $scope.employees.id, 'year': currentYear, 'month': monthLabel, 'token': $scope.token.token};
+    $scope.showTimesheet(perMonthEmpObj);
   }
   // Update year
   this.yearUpdate = function() {
@@ -300,7 +307,9 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
     initializeWeek(currentMonth, newCurrentYear);
-    $scope.showTimesheet();
+    var monthLabel = $scope.selectedMonth;
+    var perMonthEmpObj = {'empId': $scope.employees.id, 'year': newCurrentYear, 'month': monthLabel, 'token': $scope.token.token};
+    $scope.showTimesheet(perMonthEmpObj);
   };
 
   // Update Month
@@ -311,7 +320,9 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.selectedMonth = monthList[newCurrentMonth];
     initializeWeek(newCurrentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
-    $scope.showTimesheet();
+    var monthLabel = $scope.selectedMonth;
+    var perMonthEmpObj = {'empId': $scope.employees.id, 'year': newCurrentYear, 'month': monthLabel, 'token': $scope.token.token};
+    $scope.showTimesheet(perMonthEmpObj);
   };
   //email excel sheet
   $scope.emailme = function() {
