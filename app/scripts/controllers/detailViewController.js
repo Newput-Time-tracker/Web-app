@@ -74,7 +74,6 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
       return;
   };
 
-
   init = function() {
     var date = $routeParams.date;
     var monthlyDetailTimeSheet = $rootScope.detailTimesheetByIndex;
@@ -83,8 +82,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
       $scope.timesheet = monthlyDetailTimeSheet[date];
     }
   };
-    init();
-
+  init();
 
   $scope.reset = function() {
     $scope.timesheet = null;
