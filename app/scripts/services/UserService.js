@@ -82,14 +82,12 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     getProperty : function() {
       return userJsonData;
     },
-    timesheetData: function() {
-      var user = AuthService.getAccessToken();
-      var emp = {'empId': user.userObj.id, 'month': AuthService.getMonthByIndex(moment(user.userObj.doj, "DD-MM-YYYY").month()), 'year': moment(user.userObj.doj, "DD-MM-YYYY").year(), 'token': user.token.token};
+    timesheetData: function(perMonthEmpObj) {
       var q = $q.defer();
       $http({
         method : 'POST',
         url : CONFIG.API_URL + '/monthlyExcel',
-        data: emp
+        data: perMonthEmpObj
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
