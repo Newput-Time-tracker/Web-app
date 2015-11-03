@@ -26,9 +26,23 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/detailview/:date', function(req, res) {
+  res.sendFile('app/index.html', {
+    root : __dirname
+  });
+});
+
+app.get('/usertimesheet', function(req, res) {
+  res.sendFile('app/index.html', {
+    root : __dirname
+  });
+});
+
+
 var server = app.listen((process.env.PORT || 5000), function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log(__dirname);
   console.log('Example app listening at http://%s:%s', host, port);
 });
+

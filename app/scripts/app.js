@@ -37,15 +37,17 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'signUpController',
     controllerAs: 'signUp'
   })
-  .when('/detailview/:date', {
-    templateUrl: viewsDir + '_detailview.html',
-    controller: 'detailViewController',
-    controllerAs: 'detail'
+  .when('/detailview', {
+    templateUrl : viewsDir + '_detailview.html',
+    controller : 'detailViewController',
+    controllerAs : 'detail',
+    access: { requiredAuthentication: true }
   })
   .when('/usertimesheet', {
-    templateUrl: viewsDir + '_usertimesheet.html',
-    controller: 'userTimesheetController',
-    controllerAs: 'timesheet'
+    templateUrl : viewsDir + '_usertimesheet.html',
+    controller : 'userTimesheetController',
+    controllerAs : 'timesheet',
+    access: { requiredAuthentication: true }
   })
   .when('/verifyuser', {
     templateUrl: viewsDir + '_verifyuser.html',
@@ -61,3 +63,19 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     redirectTo: '/login'
   });
 }]);
+
+app.run(function($rootScope, $location, $cookies, AuthService) {
+$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+  if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
+    var user = AuthService.getUser();
+    if (!(user && user['token'])) {
+      // TODO: set expiry porperly
+      var date = nextRoute.params.date;
+      var path = nextRoute.originalPath.replace('/ :date','');
+      var url = {'redirectUrl' : path+'/'+date};
+      $cookies.put('tt_globals', JSON.stringify(url));
+      $location.path("/login");
+    }
+  }
+});
+});

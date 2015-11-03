@@ -8,7 +8,7 @@ function($scope, $location, $timeout, UserService) {
     dataPromise.then(function(response) {
       if (response.success) {
         $scope.successMessage = "Password recover link successfully sent on mail!";
-      } else {
+      }else {
         $scope.errorMessage = "Invalid Email";
       }
     }, function() {
