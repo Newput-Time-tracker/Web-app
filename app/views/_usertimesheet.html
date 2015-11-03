@@ -44,10 +44,10 @@
     </div>
     <div class="col-sm-offset-8 help-icons">
       <div class="col-sm-1 col-xs-1">
-        <a href="#" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a>
+        <a href="#" ng-click="exportMe()" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a>
       </div>
       <div class="col-sm-1 col-xs-1">
-        <a href="#" ng-click="emailme()" title="Email timesheet"><span class="glyphicon glyphicon-envelope"></span></a>
+        <a href="#" ng-click="emailme()" ng-confirm-click="Would you like to send timesheet of Month {{selectedMonth}} ?" title="Email timesheet"><span class="glyphicon glyphicon-envelope"></span></a>
       </div>
     </div>
   </div>

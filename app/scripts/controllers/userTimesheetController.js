@@ -362,6 +362,21 @@ function($scope, $rootScope, $location, UserService, AuthService) {
       });
     }
   };
+
+  $scope.exportMe = function() {
+    if ($scope.employees != null) {
+      var month = $scope.monthsOptions.currentmonth.label;
+      var year = $scope.yearOptions.current.value;
+      var monthLabel = $scope.selectedMonth;
+      var exportTimesheetObj = {'empId': $scope.employees.id, 'month': month, 'year': year, 'token': $scope.token.token};
+      var exportPromise = UserService.exportMe(exportTimesheetObj);
+      exportPromise.then(function(res) {
+
+      }, function(error) {
+        console.log(error);
+      });
+    }
+  };
   // logout user
   $scope.logout = function() {
     var status = UserService.endSession();

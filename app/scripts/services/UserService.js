@@ -31,6 +31,21 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       return q.promise;
     },
 
+    exportMe : function(exportObj) {
+      var q = $q.defer();
+      $http({
+       method : 'POST',
+        url : CONFIG.API_URL + '/excelExport',
+        data : exportObj
+      }).success(function(response) {
+        var fileName = response.headers;
+        console.log(fileName);
+      }).error(function(response) {
+        q.reject(response);
+      });
+      return q.promise;
+    },
+
     registerUser : function(userObj) {
       var q = $q.defer();
       $http({
