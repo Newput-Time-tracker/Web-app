@@ -14,7 +14,6 @@
     <center>
       <h2>Time Sheet of {{selectedMonth}}<sub>{{weeksDateStr}}</sub></h2>
     </center>
-    <center><div class = "message" ng-hide = !message>{{message}}</div></center>
   </div>
 
   <div class="row">
@@ -53,6 +52,7 @@
     </div>
   </div>
   <div class="tt-table">
+    <center><div class = "align-error error-message" ng-hide = !message>{{message}}</div></center>
     <table class="table table-bordered">
       <thead>
         <tr>

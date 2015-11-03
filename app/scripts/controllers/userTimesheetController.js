@@ -107,6 +107,15 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     totalMins = perHrs+':'+perMins;
     return totalMins;
   }
+  function populatePerDayData(index, monthIndex, yearIndex) {
+    var workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
+    var dDate = formateDate(workDate, 1);
+    var dDay = formateDate(workDate, 2);
+    var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '00:00', 'lunchIn': '00:00', 'lunchOut': '00:00', 'nightIn': '00:00',
+    'nightOut': '00:00', 'out': '00:00', 'totalHour': '00:00', 'workDate': workDate, 'workDesc': ''};
+    return oneDayData;
+  }
+
   function populateTimesheet(res){
     var localDS = {};
     var workDate = null ;
@@ -120,35 +129,39 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var days = lastDate.getDate();
     var monthlyTimesheet = [];
     for(var index = 1, j = 0; index <= days; index++) {
-      if (res[j] != undefined) {
-        workDate = res[j].workDate;
-        dDate = formateDate(workDate, 1);
-        dDay = formateDate(workDate, 2);
-        localDS = res[j];
-        localDS.length = 1;
-        localDS.day = dDate;
-        localDS.dayName = dDay;
-        status = false;
+      if(res == undefined) {
+        var oneDayData = populatePerDayData(index, monthIndex, yearIndex);
+        monthlyTimesheet.push(oneDayData);
       } else {
-        status = true;
-      }
-
-      if ((localDS.length > 0) || status){
-        if(localDS.day == index) {
-          monthlyTimesheet.push(localDS);
-          $rootScope.detailTimesheetByIndex[workDate] = localDS;
-          j++;
-          localDS = {};
-        } else {
-          workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
+        if (res[j] != undefined) {
+          workDate = res[j].workDate;
           dDate = formateDate(workDate, 1);
           dDay = formateDate(workDate, 2);
-          var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '00:00', 'lunchIn': '00:00', 'lunchOut': '00:00', 'nightIn': '00:00',
-          'nightOut': '00:00', 'out': '00:00', 'totalHour': '00:00', 'workDate': workDate, 'workDesc': ''};
-          monthlyTimesheet.push(oneDayData);
-          $rootScope.detailTimesheetByIndex[workDate] = oneDayData;
+          localDS = res[j];
+          localDS.length = 1;
+          localDS.day = dDate;
+          localDS.dayName = dDay;
+          status = false;
+        } else {
+            status = true;
         }
-      }
+          if ((localDS.length > 0) || status){
+            if(localDS.day == index) {
+              monthlyTimesheet.push(localDS);
+              $rootScope.detailTimesheetByIndex[workDate] = localDS;
+              j++;
+              localDS = {};
+            } else {
+              workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
+              dDate = formateDate(workDate, 1);
+              dDay = formateDate(workDate, 2);
+              var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
+              'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate, 'workDesc': ''};
+              monthlyTimesheet.push(oneDayData);
+              $rootScope.detailTimesheetByIndex[workDate] = oneDayData;
+            }
+         }
+       }
     }
     return monthlyTimesheet;
   }
@@ -168,10 +181,13 @@ function($scope, $rootScope, $location, UserService, AuthService) {
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
         }
-        else {
+      } else {
           $scope.message = 'No data available for this month !';
+          timesheetArr = populateTimesheet(res.data.msg);
+          totalhrs = calculatetime(timesheetArr);
+          timesheetArr.totalHours = totalhrs;
+          $scope.timesheetData = timesheetArr;
         }
-      }
     }, function(error){
       console.log(error);
     });
@@ -330,8 +346,9 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     if ($scope.employees != null) {
       var month = $scope.monthsOptions.currentmonth.label;
       var year = $scope.yearOptions.current.value;
-      //var emailTimesheetObj = {empId: ($scope.employees.id).toString(), month: month, year: year.toString() };
-      var emailPromise = UserService.emailme(userObj);
+      var monthLabel = $scope.selectedMonth;
+      var emailTimesheetObj = {'empId': $scope.employees.id, 'month': month, 'year': year, 'token': $scope.token.token};
+      var emailPromise = UserService.emailme(emailTimesheetObj);
       emailPromise.then(function(res) {
         $scope.message = res.data;
         if ($scope.message.length > 0) {
