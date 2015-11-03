@@ -143,8 +143,8 @@ function($scope, $rootScope, $location, UserService, AuthService) {
           workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
           dDate = formateDate(workDate, 1);
           dDay = formateDate(workDate, 2);
-          var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
-          'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate, 'workDesc': ''};
+          var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '00:00', 'lunchIn': '00:00', 'lunchOut': '00:00', 'nightIn': '00:00',
+          'nightOut': '00:00', 'out': '00:00', 'totalHour': '00:00', 'workDate': workDate, 'workDesc': ''};
           monthlyTimesheet.push(oneDayData);
           $rootScope.detailTimesheetByIndex[workDate] = oneDayData;
         }
