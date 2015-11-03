@@ -1,5 +1,5 @@
-app.controller('loginController', ['$scope', '$location', 'UserService', 'AuthService',
-function($scope, $location, UserService, AuthService) {
+app.controller('loginController', ['$scope', '$location', '$cookies', 'UserService', 'AuthService',
+function($scope, $location, $cookies, UserService, AuthService) {
   // check cookie exist or not
   var cookieObj = AuthService.getAccessToken();
   if(cookieObj) {
@@ -9,14 +9,13 @@ function($scope, $location, UserService, AuthService) {
     var employeesPromise = UserService.authUser($scope.user);
     employeesPromise.then(function(res){
       if (res.success) {
-        var employees = res.data;
-        if (employees.length > 1) {
-          $scope.userObj = employees[0];
-          $scope.token = employees[1];
-          if ($scope.userObj != null && $scope.token!= null) {
-            AuthService.setAccessToken($scope.token, $scope.userObj);
-            $location.path('/usertimesheet');
-          }
+        var tt_globals = $cookies.get('tt_globals');
+        if(tt_globals) {
+          var path = JSON.parse(tt_globals);
+          $location.path(path.redirectUrl);
+          AuthService.clearUrlTracker();
+        }else {
+        $location.path("usertimesheet");
         }
       } else {
         $scope.errorMessage = "Invalid Credential or May be you didn't SignUP " ;

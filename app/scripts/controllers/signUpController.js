@@ -1,27 +1,30 @@
 app.controller('signUpController', ['$scope', 'UserService',
 function($scope, UserService) {
   $scope.errorMessage = null;
-  this.userSignUp = function(user) {
+  var resetForm = function() {
+    $scope.errorMessage = null;
+  };
+  this.userSignUp = function() {
     var userReg = $scope.user;
     var age = $scope.calculateAge(userReg.dob);
-    if (age < 18) {
+    var NUMBER = 18;
+    if (age < NUMBER) {
       $scope.errorMessage = "Opps ! Age should be 18 above you can't Register";
       return;
     }
     var dataPromise = UserService.registerUser($scope.user);
     dataPromise.then(function(response) {
-      if(response.success){
+      if (response.success) {
         $scope.successMessage = "Registered Successfully !";
+      }else {
+        $scope.errorMessage = "Email id already exist!";
       }
-      else {
-         $scope.errorMessage = "Email id already exist!";
-      }
-    }, function(error) {
+    }, function() {
       $scope.errorMessage = "Something went wrong on server!";
     });
     resetForm();
   };
-  $scope.copareDate = function(user) {
+  $scope.copareDate = function() {
     var dob = $scope.user.dob;
     var doj = $scope.user.doj;
     resetForm();
@@ -32,21 +35,21 @@ function($scope, UserService) {
   };
 
   $scope.calculateAge = function(dob) {
-    var dob = new Date(dob);
-    var birth_year = dob.getFullYear();
-    var birth_month = dob.getMonth();
-    var birth_day = dob.getDate();
+    var dateOfBirth = new Date(dob);
+    var birthYear = dateOfBirth.getFullYear();
+    var birthMonth = dateOfBirth.getMonth();
+    var birthDay = dateOfBirth.getDate();
 
-    today_date = new Date();
-    today_year = today_date.getFullYear();
-    today_month = today_date.getMonth();
-    today_day = today_date.getDate();
-    age = today_year - birth_year;
+    var todayDate = new Date();
+    var todayYear = todayDate.getFullYear();
+    var todayMonth = todayDate.getMonth();
+    var todayDay = todayDate.getDate();
+    var age = todayYear - birthYear;
 
-    if (today_month < (birth_month - 1)) {
+    if (todayMonth < (birthMonth - 1)) {
       age--;
     }
-    if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+    if (((birthMonth - 1) == todayMonth) && (todayDay < birthDay)) {
       age--;
     }
     return age;
@@ -62,9 +65,4 @@ function($scope, UserService) {
     $scope.user = "";
   };
   $scope.reset();
-
-  resetForm = function() {
-    $scope.errorMessage = null;
-  };
-
 }]);

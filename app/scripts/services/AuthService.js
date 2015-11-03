@@ -1,6 +1,16 @@
 app.factory("AuthService", ['$http', '$q', 'CONFIG', '$cookies',
 function($http, $q, CONFIG, $cookies) {
+  var _userSession = null;
   return {
+
+    setUser : function(token, userObj) {
+      _userSession = {'token' : token, 'userObj' : userObj};
+    },
+
+    getUser : function() {
+      return _userSession;
+    },
+
     setAccessToken : function(token, userObj) {
       var expiry = null ;
       if(token.expire)
@@ -46,6 +56,10 @@ function($http, $q, CONFIG, $cookies) {
          "July", "August", "September", "October", "November", "December"
           ];
       return monthNames[index+1];
+    },
+    clearUrlTracker: function() {
+     $cookies.remove('urlTracker');//console.log($cookies.get(urlTracker));
+     return true;
     }
   };
 }]);
