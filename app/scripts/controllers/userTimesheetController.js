@@ -43,7 +43,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var start = 1;
     var end = 7 - firstDate.getDay();
     weeks.push({
-      'key' : '--Weeks--',
+      'key' : '--Select Week--',
       'start' : null,
       'end' : null
     });
@@ -292,11 +292,11 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     }
   }
   if ($scope.employees != null) {
-    var doj = parseInt($scope.employees.doj);
-    var dojYear = new Date(doj);
-    var startYear = dojYear.getFullYear();
+    var doj = $scope.employees.doj;
+    var dojYear = moment(doj, ["DD-MM-YYYY"]);
+    var startYear = dojYear.year();
     $scope.yearOptions = generateYearSelectBox(startYear, currentYear);
-    var startMonth = dojYear.getMonth();
+    var startMonth = dojYear.month();
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, currentYear);
     var monthLabel = $scope.selectedMonth;
     var perMonthEmpObj = {'empId': $scope.employees.id, 'year': currentYear, 'month': monthLabel, 'token': $scope.token.token};
