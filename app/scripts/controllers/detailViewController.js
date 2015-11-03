@@ -1,5 +1,7 @@
+/* global app: false */
+
 app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService',
-function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
+function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   $scope.errorMessage = null;
   var getWorkDayHours = function(timeIn, timeOut) {
     var timeInarray = timeIn.toString().split(":");
@@ -24,18 +26,19 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
       return;
     }
     //totalworkingHour = $scope.getTotoalhours($scope.timesheet);
-    if($scope.errorMessage==null) {
+    if ($scope.errorMessage==null) {
       var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
       dataPromise.then(function(response) {
-        if(response.success) {
+        var REDIRECT_TIMEOUT = 3000;
+        if (response.success) {
           $scope.successMessage = "Successfully Saved!";
           $timeout( function() {
             $location.path("/usertimesheet");
-          }, 3000);
+          }, REDIRECT_TIMEOUT);
         }else {
           $scope.errorMessage = "Invalid Entry! Please make sure the correct format";
         }
-      }, function(error) {
+      }, function() {
         $scope.errorMessage = "Something wrong on Server Please wait !";
       });
     }
