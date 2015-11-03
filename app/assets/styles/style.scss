@@ -1,62 +1,67 @@
 @import 'variable';
 
-body {
-  font-family: 'Open Sans';
+html {
+  min-height: 100%;
+  position: relative;
 }
 
-.wrapper {
+body {
+  font-family: 'Open Sans';
+  // Margin bottom by footer height
+  margin-bottom: 60px;
+}
 
-  .navbar {
-    background-color: $default;
-    border: 1px solid $default;
-    border-radius: 0;
-    box-shadow: 0 0 5px 0;
-    margin: 0;
-    padding: 0;
+header {
+
+  .navbar-inverse {
+
+    .navbar-brand {
+      color: #fff;
+      font-size: 22px;
+    }
+  }
+}
+
+.page-wrapper {
+  margin-bottom: 15px;
+  margin-top: 15px;
+
+  .alert {
+    padding: 5px;
+  }
+
+  .form-wrapper {
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px 0;
+    margin: 15px auto;
+    padding: 30px;
+    width: 450px;
 
     h2 {
       margin: 0;
-      padding: 25px;
     }
 
-  }
+    .login-form {
+      padding: 25px 0;
+    }
 
-  .container {
-    padding: 35px;
+    label {
+      font-weight: 600;
+    }
   }
 }
 
-footer {
+.footer {
+  background-color: #333;
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  width: 100%;
 
-  .copyright {
-    background-color: #f1f1f1;
-    box-shadow: 0 1px 3px -1px;
-    padding: 35px;
+  .copyright-text {
+    color: #ccc;
+    margin-top: 20px;
     text-align: center;
-  }
-
-}
-
-.form-wrap {
-  border-radius: 5px;
-  box-shadow: 3px 3px 10px 0;
-  margin-top: 45px;
-  padding: 25px;
-
-  h2 {
-    margin: 0;
-  }
-
-  .login-form {
-    padding: 25px 0;
-  }
-
-  &.forgot {
-    height: 250px;
-  }
-
-  &.confirm {
-    height: 365px;
   }
 }
 
@@ -111,10 +116,6 @@ table {
     }
   }
 
-}
-
-.container {
-  min-height: 520px;
 }
 
 .welcome-title {
@@ -272,10 +273,6 @@ table {
   color: $success;
 }
 
-.confirm-btn-container {
-  margin-top: 24px;
-}
-
 .forget-link {
 
   a {
@@ -293,10 +290,8 @@ table {
   .align-input {
     margin: 11px -14px;
   }
-
 }
+
 .align-error {
   margin-left: -46px;
 }
-
-

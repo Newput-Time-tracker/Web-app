@@ -1,3 +1,6 @@
+/* global app: false */
+/* global angular: false */
+
 app.config(['$httpProvider',
 function($httpProvider) {
   var toParam = function(obj) {
@@ -11,25 +14,29 @@ function($httpProvider) {
     var i;
 
     for (name in obj) {
-      value = obj[name];
-      if (value instanceof Array) {
-        for (i = 0; i < value.length; ++i) {
-          subValue = value[i];
-          fullSubName = name + '[' + i + ']';
-          innerObj = {};
-          innerObj[fullSubName] = subValue;
-          query += toParam(innerObj) + '&';
+      if (obj[name]) {
+        value = obj[name];
+        if (value instanceof Array) {
+          for (i = 0; i < value.length; ++i) {
+            subValue = value[i];
+            fullSubName = name + '[' + i + ']';
+            innerObj = {};
+            innerObj[fullSubName] = subValue;
+            query += toParam(innerObj) + '&';
+          }
+        } else if (value instanceof Object) {
+          for (subName in value) {
+            if (value[subName]) {
+              subValue = value[subName];
+              fullSubName = name + '[' + subName + ']';
+              innerObj = {};
+              innerObj[fullSubName] = subValue;
+              query += toParam(innerObj) + '&';
+            }
+          }
+        } else if (value !== "" && value !== null) {
+          query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
         }
-      } else if (value instanceof Object) {
-        for (subName in value) {
-          subValue = value[subName];
-          fullSubName = name + '[' + subName + ']';
-          innerObj = {};
-          innerObj[fullSubName] = subValue;
-          query += toParam(innerObj) + '&';
-        }
-      } else if (value !== "" && value !== null) {
-        query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
       }
     }
 

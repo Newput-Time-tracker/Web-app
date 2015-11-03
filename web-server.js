@@ -20,7 +20,7 @@ app.use('/js', express.static(__dirname + '/public/assets/js'));
 app.use('/views', express.static(__dirname + '/app/views'));
 app.use('/images', express.static(__dirname + '/app/assets/images'));
 
-app.get('/', function(req, res) {
+app.get('*', function(req, res) {
   res.sendFile('app/index.html', {
     root : __dirname
   });
