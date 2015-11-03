@@ -76,6 +76,16 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService)  {
 
   init = function() {
     $scope.date = $routeParams.date;
+    var newDate = moment($scope.date, ["DD-MM-YYYY"]);
+    var month = newDate.month();
+    var year = newDate.year();
+    var curDate = new Date();
+    var curMonth = curDate.getMonth();
+    var curYear = curDate.getFullYear();
+    $scope.isReadonly = true;
+    if ((month == curMonth) && (year == curYear)) {
+      $scope.isReadonly = false;
+    }
     var monthlyDetailTimeSheet = $rootScope.detailTimesheetByIndex;
     if (monthlyDetailTimeSheet[$scope.date]) {
       //$scope.timesheet.workDate = date;
