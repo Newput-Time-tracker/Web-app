@@ -265,7 +265,6 @@ table {
 
 .center-link {
   clear: both;
-  padding: 12px;
   text-align: center;
 }
 
@@ -276,3 +275,24 @@ table {
 .confirm-btn-container {
   margin-top: 24px;
 }
+
+.forget-link {
+
+  a {
+    margin: 2px;
+  }
+}
+
+.align-errors {
+  clear: both;
+  margin-left: 2px;
+}
+
+#forgetform {
+
+  .align-input {
+    margin: 11px -14px;
+  }
+
+}
+

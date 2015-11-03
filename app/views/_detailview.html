@@ -66,7 +66,7 @@
       <div class="form-group">
         <div class="col-sm-12">
           <div class="input-group">
-            <button type="button" class="btn btn-default divider" ng-click="reset()">
+            <button type="button" ng-disabled={{isReadonly}} class="btn btn-default divider" ng-click="reset()">
               Reset
             </button>
             <button ng-disabled="detailview.$invalid || {{isReadonly}}" type="submit" class="btn btn-primary divider">
