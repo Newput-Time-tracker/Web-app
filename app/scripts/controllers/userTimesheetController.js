@@ -183,7 +183,10 @@ function($scope, $rootScope, $location, UserService, AuthService) {
         }
       } else {
           $scope.message = 'No data available for this month !';
-          timesheetArr = populateTimesheet(res.data.msg);
+          if (res.data[0]) {
+            var msg = res.data[0].msg;
+          }
+          timesheetArr = populateTimesheet(msg);
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
