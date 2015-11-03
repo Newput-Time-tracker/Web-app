@@ -17,14 +17,12 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       return q.promise;
     },
 
-    emailme : function(userObj) {
-      var user = AuthService.getAccessToken();
-      var empEmail = {'empId': user.userObj.id, 'month': AuthService.getMonthByIndex(moment(user.userObj.doj, "DD-MM-YYYY").month()), 'year': moment(user.userObj.doj, "DD-MM-YYYY").year(), 'token': user.token.token};
+    emailme : function(emailTimesheetObj) {
       var q = $q.defer();
       $http({
        method : 'POST',
         url : CONFIG.API_URL + '/mailExcelSheet',
-        data : empEmail
+        data : emailTimesheetObj
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
