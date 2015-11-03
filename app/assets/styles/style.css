@@ -4,12 +4,12 @@ body {
 .wrapper .navbar {
   background-color: #F1F1F1;
   border: 1px solid #F1F1F1;
-  border-radius: 0px;
+  border-radius: 0;
   box-shadow: 0 0 5px 0;
-  margin: 0px;
-  padding: 0px; }
+  margin: 0;
+  padding: 0; }
   .wrapper .navbar h2 {
-    margin: 0px;
+    margin: 0;
     padding: 25px; }
 
 .wrapper .container {
@@ -27,9 +27,9 @@ footer .copyright {
   margin-top: 45px;
   padding: 25px; }
   .form-wrap h2 {
-    margin: 0px; }
+    margin: 0; }
   .form-wrap .login-form {
-    padding: 25px 0px; }
+    padding: 25px 0; }
   .form-wrap.forgot {
     height: 250px; }
   .form-wrap.confirm {
@@ -39,7 +39,7 @@ footer .copyright {
   padding: 30px; }
 
 input .ng-dirty.ng-invalid {
-  border-color: red; }
+  border-color: #ff0000; }
 
 .signup-form-container {
   border: 1px solid #fff;
@@ -48,8 +48,8 @@ input .ng-dirty.ng-invalid {
   padding: 21px; }
 
 .timesheet-container h3 {
-  margin: 0px;
-  padding: 0px; }
+  margin: 0;
+  padding: 0; }
 
 .tt-table {
   padding: 12px; }
@@ -92,7 +92,7 @@ table tbody tr:nth-child(even) {
   .seperator span:before,
   .seperator span:after {
     background: #757171;
-    content: "";
+    content: '';
     height: 1px;
     position: absolute;
     top: 50%;
@@ -102,20 +102,17 @@ table tbody tr:nth-child(even) {
   color: #ff0000; }
 
 .border .btom-mrgn {
-  border: solid 0.7px #ededed;
+  border: solid .7px #ededed;
   margin: 10px; }
 
 .divider {
-  margin: 10px;
+  display: inline-block;
   height: auto;
-  display: inline-block; }
+  margin: 10px; }
 
 .align-text {
   margin-top: 10px;
   text-align: center; }
-
-.error-message {
-  color: #ff0000; }
 
 .col-sm-12 .input-group {
   margin-bottom: 10px; }
@@ -136,8 +133,8 @@ table tbody tr:nth-child(even) {
   width: 15px; }
 
 .forgot-btn-container {
-  margin-top: 28px;
-  margin-left: -67px; }
+  margin-left: -67px;
+  margin-top: 28px; }
 
 .input-email input {
   margin-top: 3px;
@@ -151,7 +148,6 @@ table tbody tr:nth-child(even) {
 
 .center-link {
   clear: both;
-  padding: 12px;
   text-align: center; }
 
 .success-message {
@@ -159,3 +155,13 @@ table tbody tr:nth-child(even) {
 
 .confirm-btn-container {
   margin-top: 24px; }
+
+.forget-link a {
+  margin: 2px; }
+
+.align-errors {
+  clear: both;
+  margin-left: 2px; }
+
+#forgetform .align-input {
+  margin: 11px -14px; }
