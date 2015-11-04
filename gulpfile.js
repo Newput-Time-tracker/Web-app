@@ -69,7 +69,7 @@ gulp.task('compileStyles', function() {
 });
 
 // minify all CSS files and merge into single minified CSS file
-gulp.task('prepareAppStyles', function() {
+gulp.task('prepareAppStyles', ['compileStyles'], function() {
   return gulp.src('app/assets/styles/*.css')
     .pipe(minifyCss())
     .pipe(concat('application.min.css'))
