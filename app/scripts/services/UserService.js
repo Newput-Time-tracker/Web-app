@@ -1,20 +1,24 @@
-app.factory("UserService", ['$http', '$q', 'CONFIG', 'AuthService' ,'$cookies',
+/* global moment: false */
+/* global angular: false */
+/* global app: false */
+
+app.factory("UserService", ['$http', '$q', 'CONFIG', 'AuthService', '$cookies',
 function($http, $q, CONFIG, AuthService, $cookies) {
   var userJsonData = [];
   return {
     authUser: function(user) {
       var q = $q.defer();
       $http({
-      method: 'POST',
+        method: 'POST',
         url: CONFIG.API_URL + '/login',
         data: user
       }).success(function(response) {
         userJsonData = response;
         var employees = response.data;
         if (employees.length > 1) {
-          userObj = employees[0];
-          token = employees[1];
-          if (userObj != null && token!= null) {
+          var userObj = employees[0];
+          var token = employees[1];
+          if (userObj != null && token != null) {
             AuthService.setUser(token, userObj);
             AuthService.setAccessToken(token, userObj);
           }
@@ -25,12 +29,17 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       });
       return q.promise;
     },
-    emailme: function(userObj) {
+    emailme: function() {
       var user = AuthService.getAccessToken();
-      var empEmail = {'empId': user.userObj.id, 'month': AuthService.getMonthByIndex(moment(user.userObj.doj, "DD-MM-YYYY").month()), 'year': moment(user.userObj.doj, "DD-MM-YYYY").year(), 'token': user.token.token};
+      var empEmail = {
+        'empId': user.userObj.id,
+        'month': AuthService.getMonthByIndex(moment(user.userObj.doj, "DD-MM-YYYY").month()),
+        'year': moment(user.userObj.doj, "DD-MM-YYYY").year(),
+        'token': user.token.token
+      };
       var q = $q.defer();
       $http({
-       method: 'POST',
+        method: 'POST',
         url: CONFIG.API_URL + '/mailExcelSheet',
         data: empEmail
       }).success(function(response) {
@@ -56,12 +65,11 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     },
 
     forgotPassword: function(email) {
-      var email = {'email': email};
       var q = $q.defer();
       $http({
         method: 'POST',
         url: CONFIG.API_URL + '/forgotPwd',
-        data: email
+        data: {'email': email}
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -105,19 +113,19 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     },
     endSession: function() {
       var cookies = $cookies.getAll();
-      angular.forEach(cookies, function (v, k) {
-          $cookies.remove(k);
+      angular.forEach(cookies, function(v, k) {
+        $cookies.remove(k);
       });
       return true;
     },
-    resetPassword: function (resetPassword) {
-      var reset = {'empId' : resetPassword.empId, 'pToken' : resetPassword.pToken, 'newPassword' : resetPassword.password};
+    resetPassword: function(resetPassword) {
+      var reset = {'empId': resetPassword.empId, 'pToken': resetPassword.pToken, 'newPassword': resetPassword.password};
       var q = $q.defer();
       $http({
         method: 'POST',
-        url: CONFIG.API_URL +  '/pwdVerify',
-        crossDomain : true,
-        withCredentials : true,
+        url: CONFIG.API_URL + '/pwdVerify',
+        crossDomain: true,
+        withCredentials: true,
         data: reset
       }).success(function(response) {
         q.resolve(response);
@@ -128,13 +136,13 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     },
     getDayData: function(workDate) {
       var user = AuthService.getAccessToken();
-      var emp = {'id' : user.userObj.id, 'token' : user.token.token, 'workDate' : workDate};
+      var emp = {'id': user.userObj.id, 'token': user.token.token, 'workDate': workDate};
       var q = $q.defer();
       $http({
         method: 'POST',
-        url: CONFIG.API_URL +  '/workDayData',
-        crossDomain : true,
-        withCredentials : true,
+        url: CONFIG.API_URL + '/workDayData',
+        crossDomain: true,
+        withCredentials: true,
         data: emp
       }).success(function(response) {
         q.resolve(response);

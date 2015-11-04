@@ -1,3 +1,5 @@
+/* global app: false */
+
 app.controller('signUpController', ['$scope', 'UserService',
 function($scope, UserService) {
   $scope.errorMessage = null;
@@ -16,7 +18,7 @@ function($scope, UserService) {
     dataPromise.then(function(response) {
       if (response.success) {
         $scope.successMessage = "Registered Successfully !";
-      }else {
+      } else {
         $scope.errorMessage = "Email id already exist!";
       }
     }, function() {

@@ -1,3 +1,5 @@
+/* global app: false */
+
 app.directive('pwCheck', function() {
   return {
     require: 'ngModel',

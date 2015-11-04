@@ -1,104 +1,99 @@
-<div class="row row-margin">
-  <div class="col-sm-3 col-xs-12"></div>
-  <div class=" form-wrap col-sm-6 col-xs-12 ">
-    <h3>Sign-Up</h3>
-    <div class="border btom-mrgn"></div>
-    <form name="signup" class="form-horizontal loginform" role="form" novalidate="true" ng-submit="signup.$valid && signUp.userSignUp()">
-      <div class="form-group">
-        <div class="col-sm-6">
-          <label class="control-label" for="firstname">First Name:*</label>
-          <input type="text" class="form-control" ng-model="user.firstName" name="firstname" ng-required="true" placeholder="Enter First Name" >
-          <div ng-show="signup.$submitted || signup.firstname.$touched">
-            <div ng-cloak class="error-message" ng-show="signup.firstname.$error.required">
-              Tell us your First name.
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label class="control-label" for="lastname">Last Name:*</label>
-          <input type="text" class="form-control" ng-model="user.lastName" name="lastname"  ng-required="true" placeholder="Enter Last Name">
-          <div ng-show="signup.$submitted || signup.lastname.$touched">
-            <div ng-cloak class="error-message" ng-show="signup.lastname.$error.required">
-              Tell us your Last name.
-            </div>
+<div class="form-wrapper">
+  <h3>Sign-Up</h3>
+  <div class="border btom-mrgn"></div>
+  <form name="signup" class="form-horizontal loginform" role="form" novalidate="true" ng-submit="signup.$valid && signUp.userSignUp()">
+    <div class="form-group">
+      <div class="col-sm-6">
+        <label class="control-label" for="firstname">First Name:*</label>
+        <input type="text" class="form-control" ng-model="user.firstName" name="firstname" ng-required="true" placeholder="Enter First Name" >
+        <div ng-show="signup.$submitted || signup.firstname.$touched">
+          <div ng-cloak class="error-message" ng-show="signup.firstname.$error.required">
+            Tell us your First name.
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <div class="col-sm-12">
-          <label class="control-label" for="email">Email:*</label>
-          <input type="email" class="form-control" ng-model="user.email" name="email" ng-required="true"  placeholder="Enter email">
-          <div ng-show="signup.$submitted || signup.email.$touched">
-            <span ng-cloak class="error-message" ng-show="signup.email.$error.required">Tell us your email.</span>
-            <span ng-cloak class="error-message" ng-show="signup.email.$error.email">This is not a valid email.</span>
+      <div class="col-sm-6">
+        <label class="control-label" for="lastname">Last Name:*</label>
+        <input type="text" class="form-control" ng-model="user.lastName" name="lastname"  ng-required="true" placeholder="Enter Last Name">
+        <div ng-show="signup.$submitted || signup.lastname.$touched">
+          <div ng-cloak class="error-message" ng-show="signup.lastname.$error.required">
+            Tell us your Last name.
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <div class="col-sm-6">
-          <label class="control-label" for="contact">Contact:*</label>
-          <input type="text" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-required="true" ng-model="user.contact" name="contact"   placeholder="Enter Contact">
-          <div ng-show="signup.$submitted || signup.contact.$touched ">
-            <span ng-cloak class="error-message" ng-show="signup.contact.$error.required">Tell us your contact.</span>
-            <span ng-cloak class="error-message" ng-show="signup.contact.$error.number">This is not a valid contact no.</span>
-            <span ng-cloak class="error-message" ng-show="((signup.contact.$error.minlength || signup.contact.$error.maxlength) && signup.contact.$dirty) ">phone number should be 10 digits</span>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label class="control-label" for="address">Address:</label>
-          <input type="textarea" class="form-control" ng-model="user.address" name="address"  placeholder="Enter Address">
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label class="control-label" for="email">Email:*</label>
+        <input type="email" class="form-control" ng-model="user.email" name="email" ng-required="true"  placeholder="Enter email">
+        <div ng-show="signup.$submitted || signup.email.$touched">
+          <span ng-cloak class="error-message" ng-show="signup.email.$error.required">Tell us your email.</span>
+          <span ng-cloak class="error-message" ng-show="signup.email.$error.email">This is not a valid email.</span>
         </div>
       </div>
-      <div class="form-group">
-        <div class="col-sm-6">
-          <label class="control-label" for="dateofbirth">Date Of Birth:*</label>
-          <input type="text" class="form-control" name="dateofbirth" datepicker-popup="{{format}}" ng-model="user.dob" is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close" />
-          <div ng-show="signup.$submitted || signup.dateofbirth.$touched" >
-            <span ng-cloak class="error-message" ng-show="signup.dateofbirth.$error.required">Tell us Your Birthday</span>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label class="control-label" for="dateofjoining">Date of Joining:*</label>
-          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-change="copareDate(signup.dateofbirth)"  name="dateofjoining"  ng-model="user.doj"  is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close"  />
-          <div ng-show="signup.$submitted || signup.dateofjoining.$touched" >
-            <span ng-cloak class="error-message" ng-show="signup.dateofjoining.$error.required">Tell us Your Joining Date</span>
-          </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <label class="control-label" for="contact">Contact:*</label>
+        <input type="text" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-required="true" ng-model="user.contact" name="contact"   placeholder="Enter Contact">
+        <div ng-show="signup.$submitted || signup.contact.$touched ">
+          <span ng-cloak class="error-message" ng-show="signup.contact.$error.required">Tell us your contact.</span>
+          <span ng-cloak class="error-message" ng-show="signup.contact.$error.number">This is not a valid contact no.</span>
+          <span ng-cloak class="error-message" ng-show="((signup.contact.$error.minlength || signup.contact.$error.maxlength) && signup.contact.$dirty) ">phone number should be 10 digits</span>
         </div>
       </div>
+      <div class="col-sm-6">
+        <label class="control-label" for="address">Address:</label>
+        <input type="textarea" class="form-control" ng-model="user.address" name="address"  placeholder="Enter Address">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <label class="control-label" for="dateofbirth">Date Of Birth:*</label>
+        <input type="text" class="form-control" name="dateofbirth" datepicker-popup="{{format}}" ng-model="user.dob" is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close" />
+        <div ng-show="signup.$submitted || signup.dateofbirth.$touched" >
+          <span ng-cloak class="error-message" ng-show="signup.dateofbirth.$error.required">Tell us Your Birthday</span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label class="control-label" for="dateofjoining">Date of Joining:*</label>
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-change="copareDate(signup.dateofbirth)"  name="dateofjoining"  ng-model="user.doj"  is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close"  />
+        <div ng-show="signup.$submitted || signup.dateofjoining.$touched" >
+          <span ng-cloak class="error-message" ng-show="signup.dateofjoining.$error.required">Tell us Your Joining Date</span>
+        </div>
+      </div>
+    </div>
 
-      <div class="form-group">
-        <div class="col-sm-6">
-          <label class="control-label" for="password">Password:*</label>
-          <input type="password" class="form-control" ng-required="true" ng-model="user.password" id="password" name="password"  placeholder="Enter password">
-          <div ng-show="signup.$submitted || signup.password.$touched" >
-            <span ng-cloak class="error-message" ng-show="signup.password.$error.required">Tell us Your Password</span>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label class="control-label" for="confirmpassword">Confirm Password:*</label>
-          <input type="password" class="form-control" ng-required="true" ng-model="user.confirmpassword" id="confirmpassword" name="confirmpassword"  pw-check="user.password" placeholder="Enter password">
-          <div ng-show="signup.$submitted || signup.password.$touched || signup.password.$dirty">
-            <span  ng-cloak class="error-message" ng-show="signup.confirmpassword.$error.required">Tell us Your Confirm Password</span>
-            <span ng-cloak class="error-message" ng-show="signup.confirmpassword.$error.pwCheck">Password and Confirm password are not equal!</span>
-          </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <label class="control-label" for="password">Password:*</label>
+        <input type="password" class="form-control" ng-required="true" ng-model="user.password" id="password" name="password"  placeholder="Enter password">
+        <div ng-show="signup.$submitted || signup.password.$touched" >
+          <span ng-cloak class="error-message" ng-show="signup.password.$error.required">Tell us Your Password</span>
         </div>
       </div>
-      <span class="success-message">{{successMessage}}</span>
-      <span ng-cloak class="error-message">{{errorMessage}}</span>
-      <div class="border btom-mrgn"></div>
-      <div class="form-group">
-        <div class="col-sm-offset-0">
-          <button type="button" class="btn btn-default divider" ng-click="reset()">
-            Reset
-          </button>
-          <button type="submit" class="btn btn-primary divider">
-            Register
-          </button>
-          <a href="/app"> Back To Login Page </a>
+      <div class="col-sm-6">
+        <label class="control-label" for="confirmpassword">Confirm Password:*</label>
+        <input type="password" class="form-control" ng-required="true" ng-model="user.confirmpassword" id="confirmpassword" name="confirmpassword"  pw-check="user.password" placeholder="Enter password">
+        <div ng-show="signup.$submitted || signup.password.$touched || signup.password.$dirty">
+          <span  ng-cloak class="error-message" ng-show="signup.confirmpassword.$error.required">Tell us Your Confirm Password</span>
+          <span ng-cloak class="error-message" ng-show="signup.confirmpassword.$error.pwCheck">Password and Confirm password are not equal!</span>
         </div>
       </div>
-    </form>
-  </div>
-  <div class="col-sm-1 col-xs-12"></div>
-</div>
+    </div>
+    <span class="success-message">{{successMessage}}</span>
+    <span ng-cloak class="error-message">{{errorMessage}}</span>
+    <div class="border btom-mrgn"></div>
+    <div class="form-group">
+      <div>
+        <button type="button" class="btn btn-default divider" ng-click="reset()">
+          Reset
+        </button>
+        <button type="submit" class="btn btn-primary divider">
+          Register
+        </button>
+        <a href="/app"> Back To Login Page </a>
+      </div>
+    </div>
+  </form>
 </div>

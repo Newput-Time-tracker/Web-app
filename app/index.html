@@ -35,18 +35,20 @@
 
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <nav id="myNavbar" class="navbar navbar-default navbar-inverse" role="navigation">
-          <h2>Time Tracker</h2>
-        </nav>
-      </header>
-      <div class="container" ng-view></div>
-      <footer>
-        <div class="copyright">
-          <h4>@Copyright 2015</h4>
+    <header>
+      <nav id="myNavbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="/" class="navbar-brand">Time Tracker</a>
+          </div>
         </div>
-      </footer>
-    </div>
+      </nav>
+    </header>
+    <div class="container page-wrapper" ng-view></div>
+    <footer class="footer">
+      <div class="container">
+        <p class="copyright-text">Copyright © 2015 by Newput, Inc. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>

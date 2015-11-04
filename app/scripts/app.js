@@ -14,7 +14,13 @@ app.constant('CONFIG', {
     NAME: 'TT_SESSION',
     EXPIRY: 365 // in days
   },
-  ENV: ENV_TYPES.PRODUCTION
+  ENV: ENV_TYPES.PRODUCTION,
+  WEEK_DAYS: 7,
+  MOD: 10,
+  MIN_PER_HOUR: 60,
+  RD_SUFFIX: 3,
+  ST_SUFFIX: 1,
+  ND_SUFFIX: 2
 });
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   var viewsDir = 'views/';
@@ -37,16 +43,16 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'signUpController',
     controllerAs: 'signUp'
   })
-  .when('/detailview', {
-    templateUrl : viewsDir + '_detailview.html',
-    controller : 'detailViewController',
-    controllerAs : 'detail',
+  .when('/detailview/:date', {
+    templateUrl: viewsDir + '_detailview.html',
+    controller: 'detailViewController',
+    controllerAs: 'detail',
     access: { requiredAuthentication: true }
   })
   .when('/usertimesheet', {
-    templateUrl : viewsDir + '_usertimesheet.html',
-    controller : 'userTimesheetController',
-    controllerAs : 'timesheet',
+    templateUrl: viewsDir + '_usertimesheet.html',
+    controller: 'userTimesheetController',
+    controllerAs: 'timesheet',
     access: { requiredAuthentication: true }
   })
   .when('/verifyuser', {
@@ -65,17 +71,17 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 }]);
 
 app.run(function($rootScope, $location, $cookies, AuthService) {
-$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-  if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
-    var user = AuthService.getUser();
-    if (!(user && user['token'])) {
-      // TODO: set expiry porperly
-      var date = nextRoute.params.date;
-      var path = nextRoute.originalPath.replace('/ :date','');
-      var url = {'redirectUrl' : path+'/'+date};
-      $cookies.put('tt_globals', JSON.stringify(url));
-      $location.path("/login");
+  $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
+    if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
+      var user = AuthService.getUser();
+      if (!(user && user['token'])) {
+        // TODO: set expiry porperly
+        var date = nextRoute.params.date;
+        var path = nextRoute.originalPath.replace('/:date', '');
+        var url = {'redirectUrl': path + '/' + date};
+        $cookies.put('tt_globals', JSON.stringify(url));
+        $location.path("/login");
+      }
     }
-  }
-});
+  });
 });

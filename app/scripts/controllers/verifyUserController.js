@@ -1,3 +1,5 @@
+/* global app: false */
+
 app.controller('verifyUserController', ['$scope', '$location', '$timeout', 'AuthService',
 function($scope, $location, $timeout, AuthService) {
   var verifyUser = function() {
@@ -10,7 +12,7 @@ function($scope, $location, $timeout, AuthService) {
         $timeout(function() {
           $location.path('/login');
         }, number);
-      }else {
+      } else {
         $scope.errorMessage = "Please make sure the correct Email";
       }
     }, function() {

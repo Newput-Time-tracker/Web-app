@@ -1,3 +1,4 @@
+/* global moment: false */
 /* global app: false */
 
 app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService',
@@ -6,18 +7,18 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   var getWorkDayHours = function(timeIn, timeOut) {
     var timeInarray = timeIn.toString().split(":");
     var minutes = 60;
-    var minutesFirst = parseInt(timeInarray[0]) * minutes;
-    var totalFirstMin = parseInt(minutesFirst) + parseInt(timeInarray[1]);
+    var minutesFirst = parseInt(timeInarray[0], 10) * minutes;
+    var totalFirstMin = parseInt(minutesFirst, 10) + parseInt(timeInarray[1], 10);
 
     var timeOutarray = timeOut.toString().split(":");
-    var minutesSecond = parseInt(timeOutarray[0]) * minutes;
-    var totalSecondMin = parseInt(minutesSecond) + parseInt(timeOutarray[1]);
+    var minutesSecond = parseInt(timeOutarray[0], 10) * minutes;
+    var totalSecondMin = parseInt(minutesSecond, 10) + parseInt(timeOutarray[1], 10);
 
-    if (parseInt(totalSecondMin) < parseInt(totalFirstMin)) {
+    if (parseInt(totalSecondMin, 10) < parseInt(totalFirstMin, 10)) {
       $scope.errorMessage = "End Time should be greater than Start Time!";
       // return;
     }
-    var totalTimeInMinutes = parseInt(totalSecondMin) - parseInt(totalFirstMin);
+    var totalTimeInMinutes = parseInt(totalSecondMin, 10) - parseInt(totalFirstMin, 10);
     return totalTimeInMinutes;
   };
 
@@ -26,8 +27,8 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       $scope.errorMessage = "Time fields Can't leave blank!!";
       return;
     }
-    //totalworkingHour = $scope.getTotoalhours($scope.timesheet);
-    if ($scope.errorMessage==null) {
+    // totalworkingHour = $scope.getTotoalhours($scope.timesheet);
+    if ($scope.errorMessage == null) {
       var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
       dataPromise.then(function(response) {
         var REDIRECT_TIMEOUT = 3000;
@@ -48,8 +49,8 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     var reminDayTime = parseFloat(dayTime) - parseFloat(lunchTime);
     var totalWorkMinutes = parseFloat(reminDayTime) + parseFloat(nightTime);
     var minute = 60;
-    var hours = parseInt(Math.floor(parseInt(totalWorkMinutes)) / minute);
-    var minutes = parseInt(totalWorkMinutes) % minute;
+    var hours = parseInt(Math.floor(parseInt(totalWorkMinutes, 10)) / minute, 10);
+    var minutes = parseInt(totalWorkMinutes, 10) % minute;
     $scope.dayWork = hours + "." + minutes;
     return $scope.dayWork;
   };

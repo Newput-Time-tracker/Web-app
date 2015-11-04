@@ -1,20 +1,24 @@
-app.controller('userTimesheetController', ['$scope', '$rootScope', '$location', 'UserService', 'AuthService',
-function($scope, $rootScope, $location, UserService, AuthService) {
+/* global moment: false */
+/* global app: false */
+
+app.controller('userTimesheetController', ['$scope', 'CONFIG', '$rootScope', '$location', 'UserService', 'AuthService',
+function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.employees = null;
   $scope.token = null;
   var cookieObj = AuthService.getAccessToken();
+  var loginUserObj = null;
   if (cookieObj != null) {
     $scope.token = cookieObj.token;
     $scope.employees = cookieObj.userObj;
   } else {
     // fetch login's userdata from service
-    var userObj = UserService.getProperty();
-    if(userObj) {
-      if (userObj.success && userObj.data[0]) {
-        $scope.employees = userObj.data[0];
+    loginUserObj = UserService.getProperty();
+    if (loginUserObj) {
+      if (loginUserObj.success && loginUserObj.data[0]) {
+        $scope.employees = loginUserObj.data[0];
       }
     } else {
-        $location.path('/login');
+      $location.path('/login');
     }
   }
 
@@ -26,51 +30,48 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   $scope.weeksOptions = [];
   $scope.curYear = currentYear;
   $scope.curMonth = currentMonth;
-
+  var startMonth = null;
   $scope.newCurrentYear = '';
   var timesheetArr = {};
   $scope.timesheetData = {};
-  var dayArr = [] ; // store the day corresponding to the timesheet
-  var weekList = ['Sunday', 'Monday','Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
+  var monthLabel = '';
+  var perMonthEmpObj = {};
+  // store the day corresponding to the timesheet
+  var weekList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
   $rootScope.detailTimesheetByIndex = {};
+  var startYear = null;
 
   // get weeks by date in a month
   function getWeeksInMonth(month, year) {
-    var weeks = [],
-    firstDate = new Date(year, month, 1),
-    lastDate = new Date(year, month + 1, 0),
-    numDays = lastDate.getDate();
+    var weeks = [];
+    var firstDate = new Date(year, month, 1);
+    var lastDate = new Date(year, month + 1, 0);
+    var numDays = lastDate.getDate();
     var start = 1;
-    var end = 7 - firstDate.getDay();
-    weeks.push({
-      'key' : '--Select Week--',
-      'start' : null,
-      'end' : null
-    });
+    var end = CONFIG.WEEK_DAYS - firstDate.getDay();
+
+    weeks.push({ 'key': '--Select Week--', 'start': null, 'end': null });
     while (start <= numDays) {
       var upto = start + ' to ' + end;
-      weeks.push({
-        'key' : upto,
-        'start' : start,
-        'end' : end
-      });
+      weeks.push({ 'key': upto, 'start': start, 'end': end });
       start = end + 1;
-      end = end + 7;
-      if (end > numDays)
+      end += CONFIG.WEEK_DAYS;
+      if (end > numDays) {
         end = numDays;
+      }
     }
     return weeks;
   }
 
   // append suffix to week numbers (NOT IN USE RIGHT NOW)
   function weekSuffix(num) {
-    var i = num % 10;
+    var i = num % CONFIG.MOD;
     var suffix = '';
-    if (num == 1) {
+    if (num == CONFIG.ST_SUFFIX) {
       suffix = 'st';
-    } else if (i == 2) {
+    } else if (i == CONFIG.ND_SUFFIX) {
       suffix = 'nd';
-    } else if (i == 3) {
+    } else if (i == CONFIG.RD_SUFFIX) {
       suffix = 'rd';
     } else {
       suffix = 'th';
@@ -80,60 +81,73 @@ function($scope, $rootScope, $location, UserService, AuthService) {
 
   function formateDate(date, flag) {
     var momentObj = moment(date, ["DD-MM-YYYY"]);
-    if (flag == 1)
-      var dDay = momentObj.date();
-    else if (flag == 2) {
-      var dDay = momentObj.day();
-      dDay = weekList[dDay];
+    var dDay = null;
+    if (flag == 1) {
+      dDay = momentObj.date();
+    } else if (flag == 2) {
+      dDay = weekList[momentObj.day()];
     }
     return dDay;
   }
-  function fromatHours(hours){
+
+  function fromatHours(hours) {
     var splitHrs = hours.split(':');
-    var perDayMins = parseInt((splitHrs[0]*60)) + parseInt(splitHrs[1]);
+    var perDayMins = parseInt((splitHrs[0] * CONFIG.MIN_PER_HOUR), 10) + parseInt(splitHrs[1], 10);
     return perDayMins;
   }
 
-
-  function calculatetime(timesheetData){
+  function calculatetime(timesheetData) {
     var totalMins = 0;
-    for(var i = 0; i < timesheetData.length; i++){
+    for (var i = 0; i < timesheetData.length; i++) {
       var hours = timesheetData[i].totalHour;
       var perDayMins = fromatHours(hours);
-      totalMins = parseInt(perDayMins) + parseInt(totalMins);
+      totalMins = parseInt(perDayMins, 10) + parseInt(totalMins, 10);
     }
-    var perHrs = parseInt(totalMins / 60);
-    var perMins = parseInt(totalMins % 60);
-    totalMins = perHrs+':'+perMins;
+    var perHrs = parseInt(totalMins / CONFIG.MIN_PER_HOUR, 10);
+    var perMins = parseInt(totalMins % CONFIG.MIN_PER_HOUR, 10);
+    totalMins = perHrs + ':' + perMins;
     return totalMins;
   }
+
   function populatePerDayData(index, monthIndex, yearIndex) {
-    var workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
+    var workDate = index + '-' + (monthIndex + 1) + '-' + yearIndex;
     var dDate = formateDate(workDate, 1);
     var dDay = formateDate(workDate, 2);
-    var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '00:00', 'lunchIn': '00:00', 'lunchOut': '00:00', 'nightIn': '00:00',
-    'nightOut': '00:00', 'out': '00:00', 'totalHour': '00:00', 'workDate': workDate, 'workDesc': ''};
-    return oneDayData;
+    var perDayData = {
+      'day': dDate,
+      'dayName': dDay,
+      'in': '00:00',
+      'lunchIn': '00:00',
+      'lunchOut': '00:00',
+      'nightIn': '00:00',
+      'nightOut': '00:00',
+      'out': '00:00',
+      'totalHour': '00:00',
+      'workDate': workDate,
+      'workDesc': ''
+    };
+    return perDayData;
   }
 
-  function populateTimesheet(res){
+  function populateTimesheet(res) {
     var localDS = {};
-    var workDate = null ;
+    var workDate = null;
     var dDate = null;
     var dDay = null;
     var status = false;
+    var oneDayData = {};
     var monthIndex = $scope.monthsOptions.currentmonth.value;
     var yearIndex = $scope.yearOptions.current.value;
-    //TODO: why added +1 in month index
-    var lastDate = new Date(yearIndex, monthIndex+1, 0);
+    // TODO: why added +1 in month index
+    var lastDate = new Date(yearIndex, monthIndex + 1, 0);
     var days = lastDate.getDate();
     var monthlyTimesheet = [];
-    for(var index = 1, j = 0; index <= days; index++) {
-      if(res == undefined) {
-        var oneDayData = populatePerDayData(index, monthIndex, yearIndex);
+    for (var index = 1, j = 0; index <= days; index++) {
+      if (typeof res == 'undefined') {
+        oneDayData = populatePerDayData(index, monthIndex, yearIndex);
         monthlyTimesheet.push(oneDayData);
       } else {
-        if (res[j] != undefined) {
+        if (typeof res[j] != 'undefined') {
           workDate = res[j].workDate;
           dDate = formateDate(workDate, 1);
           dDay = formateDate(workDate, 2);
@@ -143,36 +157,47 @@ function($scope, $rootScope, $location, UserService, AuthService) {
           localDS.dayName = dDay;
           status = false;
         } else {
-            status = true;
+          status = true;
         }
-          if ((localDS.length > 0) || status){
-            if(localDS.day == index) {
-              monthlyTimesheet.push(localDS);
-              $rootScope.detailTimesheetByIndex[workDate] = localDS;
-              j++;
-              localDS = {};
-            } else {
-              workDate = index+'-'+(monthIndex+1)+'-'+yearIndex ;
-              dDate = formateDate(workDate, 1);
-              dDay = formateDate(workDate, 2);
-              var oneDayData = {'day': dDate, 'dayName': dDay, 'in': '0:00', 'lunchIn': '0:00', 'lunchOut': '0:00', 'nightIn': '0:00',
-              'nightOut': '0:00', 'out': '0:00', 'totalHour': '0:00', 'workDate': workDate, 'workDesc': ''};
-              monthlyTimesheet.push(oneDayData);
-              $rootScope.detailTimesheetByIndex[workDate] = oneDayData;
-            }
-         }
-       }
+        if ((localDS.length > 0) || status) {
+          if (localDS.day == index) {
+            monthlyTimesheet.push(localDS);
+            $rootScope.detailTimesheetByIndex[workDate] = localDS;
+            j++;
+            localDS = {};
+          } else {
+            workDate = index + '-' + (monthIndex + 1) + '-' + yearIndex;
+            dDate = formateDate(workDate, 1);
+            dDay = formateDate(workDate, 2);
+            oneDayData = {
+              'day': dDate,
+              'dayName': dDay,
+              'in': '0:00',
+              'lunchIn': '0:00',
+              'lunchOut': '0:00',
+              'nightIn': '0:00',
+              'nightOut': '0:00',
+              'out': '0:00',
+              'totalHour': '0:00',
+              'workDate': workDate,
+              'workDesc': ''
+            };
+            monthlyTimesheet.push(oneDayData);
+            $rootScope.detailTimesheetByIndex[workDate] = oneDayData;
+          }
+        }
+      }
     }
     return monthlyTimesheet;
   }
 
   // time sheet
-  $scope.showTimesheet = function(perMonthEmpObj) {
+  $scope.showTimesheet = function(perMonthObj) {
     var totalhrs = 0;
     timesheetArr = {};
     $scope.timesheetData = {};
-    var monthlyData = UserService.timesheetData(perMonthEmpObj);
-    monthlyData.then(function(res){
+    var monthlyData = UserService.timesheetData(perMonthObj);
+    monthlyData.then(function(res) {
       if (res.success) {
         $scope.message = '';
         if (res.data.length > 0) {
@@ -182,18 +207,17 @@ function($scope, $rootScope, $location, UserService, AuthService) {
           $scope.timesheetData = timesheetArr;
         }
       } else {
-          $scope.message = 'No data available for this month !';
-          if (res.data[0]) {
-            var msg = res.data[0].msg;
-          }
-          timesheetArr = populateTimesheet(msg);
-          totalhrs = calculatetime(timesheetArr);
-          timesheetArr.totalHours = totalhrs;
-          $scope.timesheetData = timesheetArr;
+        var msg = null;
+        $scope.message = 'No data available for this month !';
+        if (res.data[0]) {
+          msg = res.data[0].msg;
         }
-    }, function(error){
-      console.log(error);
-    });
+        timesheetArr = populateTimesheet(msg);
+        totalhrs = calculatetime(timesheetArr);
+        timesheetArr.totalHours = totalhrs;
+        $scope.timesheetData = timesheetArr;
+      }
+    }, function() {});
   };
 
   this.weekUpdate = function() {
@@ -205,7 +229,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
 
       var i = 0;
       for (var j = 0; j < timesheetArr.length; j++) {
-        if((timesheetArr[j] != undefined) && (timesheetArr[j].day >= startDate) && (timesheetArr[j].day <= endDate)) {
+        if ((typeof timesheetArr[j] != 'undefined') && (timesheetArr[j].day >= startDate) && (timesheetArr[j].day <= endDate)) {
           $scope.timesheetData[i] = timesheetArr[j];
           i++;
         }
@@ -222,7 +246,6 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var nweeks = getWeeksInMonth(newCurrentMonth, newCurrentYear);
     $scope.weeksOptions.weeks = nweeks;
     $scope.weekDay = $scope.weeksOptions.weeks[0];
-
   }
 
   // Initialize the week options
@@ -238,36 +261,20 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var selectOptions = [];
     if ((startYear == selectedYear) && (selectedYear != currentYear)) {
       i = start;
-      obj = {
-        'value' : start,
-        'label' : monthList[start]
-      };
+      obj = { 'value': start, 'label': monthList[start] };
       current = 11;
     } else if ((startYear == selectedYear) && (selectedYear == currentYear)) {
       i = start;
-      obj = {
-        'value' : current,
-        'label' : monthList[current]
-      };
+      obj = { 'value': current, 'label': monthList[current] };
     } else if (selectedYear == currentYear) {
-      obj = {
-        'value' : current,
-        'label' : monthList[current]
-      };
-
+      obj = { 'value': current, 'label': monthList[current] };
     } else {
       i = 0;
       current = 11;
-      obj = {
-        'value' : i,
-        'label' : monthList[i]
-      };
+      obj = { 'value': i, 'label': monthList[i] };
     }
     for (i; i <= current; i++) {
-      selectOptions.push({
-        'value' : i,
-        'label' : monthList[i]
-      });
+      selectOptions.push({ 'value': i, 'label': monthList[i] });
     }
     selectOptions.currentmonth = obj;
     $scope.selectedMonth = obj.label;
@@ -280,21 +287,20 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var selectOptions = [];
     for (var i = current; i >= start; i--) {
       selectOptions.push({
-        'value' : i,
-        'label' : i
+        'value': i,
+        'label': i
       });
     }
     selectOptions.current = {
-      'value' : current,
-      'label' : current
+      'value': current,
+      'label': current
     };
     return selectOptions;
   }
 
+  // Restrict the month and year to date of joining
 
-  //Restrict the month and year to date of joining
-
-  var cookieObj = AuthService.getAccessToken();
+  cookieObj = AuthService.getAccessToken();
   if (cookieObj) {
     $scope.employees = cookieObj.userObj;
     $scope.token = cookieObj.token;
@@ -313,12 +319,17 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   if ($scope.employees != null) {
     var doj = $scope.employees.doj;
     var dojYear = moment(doj, ["DD-MM-YYYY"]);
-    var startYear = dojYear.year();
+    startYear = dojYear.year();
     $scope.yearOptions = generateYearSelectBox(startYear, currentYear);
-    var startMonth = dojYear.month();
+    startMonth = dojYear.month();
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, currentYear);
-    var monthLabel = $scope.selectedMonth;
-    var perMonthEmpObj = {'empId': $scope.employees.id, 'year': currentYear, 'month': monthLabel, 'token': $scope.token.token};
+    monthLabel = $scope.selectedMonth;
+    perMonthEmpObj = {
+      'empId': $scope.employees.id,
+      'year': currentYear,
+      'month': monthLabel,
+      'token': $scope.token.token
+    };
     $scope.showTimesheet(perMonthEmpObj);
   }
   // Update year
@@ -327,8 +338,13 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
     initializeWeek(currentMonth, newCurrentYear);
-    var monthLabel = $scope.selectedMonth;
-    var perMonthEmpObj = {'empId': $scope.employees.id, 'year': newCurrentYear, 'month': monthLabel, 'token': $scope.token.token};
+    monthLabel = $scope.selectedMonth;
+    perMonthEmpObj = {
+      'empId': $scope.employees.id,
+      'year': newCurrentYear,
+      'month': monthLabel,
+      'token': $scope.token.token
+    };
     $scope.showTimesheet(perMonthEmpObj);
   };
 
@@ -340,26 +356,33 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.selectedMonth = monthList[newCurrentMonth];
     initializeWeek(newCurrentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
-    var monthLabel = $scope.selectedMonth;
-    var perMonthEmpObj = {'empId': $scope.employees.id, 'year': newCurrentYear, 'month': monthLabel, 'token': $scope.token.token};
+    monthLabel = $scope.selectedMonth;
+    perMonthEmpObj = {
+      'empId': $scope.employees.id,
+      'year': newCurrentYear,
+      'month': monthLabel,
+      'token': $scope.token.token
+    };
     $scope.showTimesheet(perMonthEmpObj);
   };
-  //email excel sheet
+  // email excel sheet
   $scope.emailme = function() {
     if ($scope.employees != null) {
       var month = $scope.monthsOptions.currentmonth.label;
       var year = $scope.yearOptions.current.value;
-      var monthLabel = $scope.selectedMonth;
-      var emailTimesheetObj = {'empId': $scope.employees.id, 'month': month, 'year': year, 'token': $scope.token.token};
+      var emailTimesheetObj = {
+        'empId': $scope.employees.id,
+        'month': month,
+        'year': year,
+        'token': $scope.token.token
+      };
       var emailPromise = UserService.emailme(emailTimesheetObj);
       emailPromise.then(function(res) {
         $scope.message = res.data;
         if ($scope.message.length > 0) {
           $scope.message = $scope.message[0].msg;
         }
-      }, function(error) {
-        console.log(error);
-      });
+      }, function() {});
     }
   };
   // logout user
@@ -369,5 +392,4 @@ function($scope, $rootScope, $location, UserService, AuthService) {
       $location.path('/login');
     }
   };
-
 }]);
