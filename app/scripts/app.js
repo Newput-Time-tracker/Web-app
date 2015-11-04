@@ -70,7 +70,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   });
 }]);
 
-app.run(function($rootScope, $location, $cookies, AuthService) {
+app.run(['$rootScope', '$location', '$cookies', 'AuthService', function($rootScope, $location, $cookies, AuthService) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
     if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
       var user = AuthService.getUser();
@@ -84,4 +84,4 @@ app.run(function($rootScope, $location, $cookies, AuthService) {
       }
     }
   });
-});
+}]);
