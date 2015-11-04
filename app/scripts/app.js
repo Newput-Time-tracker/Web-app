@@ -22,7 +22,8 @@ app.constant('CONFIG', {
   ND_SUFFIX: 2,
   CLOSE_MODAL_BOX: 2000,
   START_OF_THE_WEEK: 1,
-  END_OF_THE_WEEK: 7
+  END_OF_THE_WEEK: 7,
+  MIN_AGE: 18
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
@@ -73,7 +74,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   });
 }]);
 
-app.run(['$rootScope', '$location', '$cookies', 'AuthService', function($rootScope, $location, $cookies, AuthService) {
+app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', function($rootScope, $location, $cookies, AuthService, CONFIG) {
   $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
     if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
       var user = AuthService.getUser();
@@ -82,7 +83,9 @@ app.run(['$rootScope', '$location', '$cookies', 'AuthService', function($rootSco
         var date = nextRoute.params.date;
         var path = nextRoute.originalPath.replace('/:date', '');
         var url = {'redirectUrl': path + '/' + date};
-        $cookies.put('tt_globals', JSON.stringify(url));
+        var now = new Date();
+        now.setDate(now.getDate() + CONFIG.WEEK_DAYS);
+        $cookies.put('tt_globals', JSON.stringify(url), {expiry: now});
         $location.path("/login");
       }
     }

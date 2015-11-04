@@ -1,7 +1,7 @@
 /* global app: false */
 
-app.controller('signUpController', ['$scope', 'UserService',
-function($scope, UserService) {
+app.controller('signUpController', ['$scope', 'CONFIG', 'UserService',
+function($scope, CONFIG, UserService) {
   $scope.errorMessage = null;
   var resetForm = function() {
     $scope.errorMessage = null;
@@ -9,9 +9,8 @@ function($scope, UserService) {
   this.userSignUp = function() {
     var userReg = $scope.user;
     var age = $scope.calculateAge(userReg.dob);
-    var NUMBER = 18;
-    if (age < NUMBER) {
-      $scope.errorMessage = "Opps ! Age should be 18 above you can't Register";
+    if (age < CONFIG.MIN_AGE) {
+      $scope.errorMessage = " Age must be 18 year above ";
       return;
     }
     var dataPromise = UserService.registerUser($scope.user);
