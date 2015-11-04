@@ -4,6 +4,7 @@
 app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService',
 function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   $scope.errorMessage = null;
+  $scope.timesheet = {};
   var getWorkDayHours = function(timeIn, timeOut) {
     var timeInarray = timeIn.toString().split(":");
     var minutes = 60;
@@ -109,7 +110,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       var dataPromise = UserService.getDayData($scope.date);
       dataPromise.then(function(response) {
         if (response.success) {
-          $scope.timesheet = response.data;
+          $scope.timesheet = response.data[0];
         }else {
           $scope.errorMessage = response.error;
         }

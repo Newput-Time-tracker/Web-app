@@ -1,5 +1,4 @@
 /* global angular: false */
-
 // global constants
 var ENV_TYPES = { PRODUCTION: 'production', DEVELOPMENT: 'development', STAGING: 'staging' };
 
@@ -9,7 +8,7 @@ var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCooki
 app.constant('CONFIG', {
   APP_NAME: 'Time tracker',
   VERSION: '0.0.1',
-  API_URL: 'http://tt-rahul-backend.herokuapp.com/Tracker/rest/employee',
+  API_URL: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee',
   SESSION_COOKIE: {
     NAME: 'TT_SESSION',
     EXPIRY: 365 // in days
@@ -22,6 +21,7 @@ app.constant('CONFIG', {
   ST_SUFFIX: 1,
   ND_SUFFIX: 2
 });
+
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   var viewsDir = 'views/';
 
@@ -75,7 +75,7 @@ app.run(function($rootScope, $location, $cookies, AuthService) {
     if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
       var user = AuthService.getUser();
       if (!(user && user['token'])) {
-        // TODO: set expiry porperly
+      // TODO: set expiry porperly
         var date = nextRoute.params.date;
         var path = nextRoute.originalPath.replace('/:date', '');
         var url = {'redirectUrl': path + '/' + date};
