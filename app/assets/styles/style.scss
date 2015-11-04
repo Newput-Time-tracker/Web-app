@@ -296,4 +296,13 @@ table {
   margin-left: -46px;
 }
 
+.message-box {
+  row {
+    background-color: $message-box-color;
+    height: 40px;
+    margin: 15px;
+    padding: 9px;
+  }
+}
+
 

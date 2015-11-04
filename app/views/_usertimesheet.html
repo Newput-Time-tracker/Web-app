@@ -15,7 +15,21 @@
       <h2>Time Sheet of {{selectedMonth}}<sub>{{weeksDateStr}}</sub></h2>
     </center>
   </div>
-
+  <!-- Modal -->
+  <div id="emailBox" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>Are you sure you want to email the timesheet of {{selectedMonth}} from {{lastWeek}} </p>
+          <div class="message" ng-hide=!successEmailMessage>{{successEmailMessage}}</div>
+          <button type="button" id = "dismiss" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" ng-click="emailme()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal end  -->
   <div class="row">
     <div class="col-sm-offset-2 col-xs-offset-2">
       <div class="col-sm-3 col-xs-3">
@@ -44,16 +58,34 @@
     </div>
     <div class="col-sm-offset-8 help-icons">
       <div class="col-sm-1 col-xs-1">
-        <a href="#" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a>
+        <form name="export" method="put" target="_blank" style="display:none;">
+          <input type="text" name="month" value="october" ng-model="exportData.month"/>
+          <input type="text" name="year" value="2015" ng-model="exportData.year"/>
+          <input type="text" name="empid" value="12" ng-model="exportData.empid"/>
+          <button type ="submit" id="submit">submit</button>
+        </form>
+        <button type="button" ng-click="exportMe()">
+          <span class="glyphicon glyphicon-export"></span>
+        </button>
+        <!--a href="#" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a-->
       </div>
       <div class="col-sm-1 col-xs-1">
-        <a href="#" ng-click="emailme()" title="Email timesheet"><span class="glyphicon glyphicon-envelope"></span></a>
+        <button type="button" data-toggle="modal" data-target="#emailBox">
+          <span class="glyphicon glyphicon-envelope"></span>
+        </button>
+        <!--a href="#" ng-click="emailme()" title="Email timesheet"></a-->
       </div>
     </div>
   </div>
   <div class="tt-table">
-    <center><div class = "align-error error-message" ng-hide = !message>{{message}}</div></center>
-    <table class="table table-bordered">
+    <div ng-show="monthlyDataAvailablityStatus" class="conainer message-box">
+      <div class="row">
+        <div class="col-sm-12">
+          <center>{{monthlyDataAvailablityMessage}}</center>
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered" ng-show="!monthlyDataAvailablityStatus">
       <thead>
         <tr>
           <th>Date</th>

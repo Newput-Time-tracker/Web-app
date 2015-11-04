@@ -40,6 +40,11 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   var weekList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
   $rootScope.detailTimesheetByIndex = {};
   var startYear = null;
+  $scope.monthlyDataAvailablityStatus = false;
+  $scope.monthlyDataAvailablityMessage = '';
+  $scope.monthStart = 1;
+  $scope.monthEnd = 0;
+
 
   // get weeks by date in a month
   function getWeeksInMonth(month, year) {
@@ -53,11 +58,17 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     weeks.push({ 'key': '--Select Week--', 'start': null, 'end': null });
     while (start <= numDays) {
       var upto = start + ' to ' + end;
-      weeks.push({ 'key': upto, 'start': start, 'end': end });
-      start = end + 1;
-      end += CONFIG.WEEK_DAYS;
+      weeks.push({
+        'key': upto,
+        'start': CONFIG.START_OF_THE_WEEK,
+        'end': CONFIG.END_OF_THE_WEEK
+      });
+      start = end + CONFIG.START_OF_THE_WEEK;
+      end += CONFIG.END_OF_THE_WEEK;
+      $scope.monthEnd = numDays;
       if (end > numDays) {
         end = numDays;
+        $scope.monthEnd = numDays;
       }
     }
     return weeks;
@@ -205,12 +216,22 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
+          $scope.monthlyDataAvailablityStatus = false;
+          $scope.monthlyDataAvailablityMessage = '';
         }
       } else {
-        var msg = null;
-        $scope.message = 'No data available for this month !';
+        var msg = '';
         if (res.data[0]) {
           msg = res.data[0].msg;
+        }
+        if (perMonthObj.year == $scope.curYear) {
+          if (perMonthObj.month != $scope.curMonth) {
+            $scope.monthlyDataAvailablityStatus = true;
+            $scope.monthlyDataAvailablityMessage = 'Data is not avaibale for this month.';
+          }
+        } else {
+          $scope.monthlyDataAvailablityStatus = true;
+          $scope.monthlyDataAvailablityMessage = 'Data is not avaibale for this month.';
         }
         timesheetArr = populateTimesheet(msg);
         totalhrs = calculatetime(timesheetArr);
@@ -243,8 +264,10 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     }
   };
   function initializeWeek(newCurrentMonth, newCurrentYear) {
+    $scope.lastWeek = '';
     var nweeks = getWeeksInMonth(newCurrentMonth, newCurrentYear);
     $scope.weeksOptions.weeks = nweeks;
+    $scope.lastWeek = 'form ' + $scope.monthStart + ' to ' + $scope.monthEnd;
     $scope.weekDay = $scope.weeksOptions.weeks[0];
   }
 
@@ -378,12 +401,17 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       };
       var emailPromise = UserService.emailme(emailTimesheetObj);
       emailPromise.then(function(res) {
-        $scope.message = res.data;
-        if ($scope.message.length > 0) {
-          $scope.message = $scope.message[0].msg;
+        if (res.data.length > 0) {
+          $scope.successEmailMessage = res.data[0].msg;
         }
-      }, function() {});
+        setTimeout(function() { $('#dismiss').trigger('click'); }, CONFIG.CLOSE_MODAL_BOX);
+      }, function() {
+      });
     }
+  };
+
+  $scope.exportMe = function() {
+
   };
   // logout user
   $scope.logout = function() {
