@@ -56,7 +56,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     var start = 1;
     var end = CONFIG.WEEK_DAYS - firstDate.getDay();
 
-    weeks.push({ 'key': '--Select Week--', 'start': null, 'end': null });
+    weeks.push({ 'key': 'Select Week', 'start': null, 'end': null });
     while (start <= numDays) {
       var upto = start + ' to ' + end;
       weeks.push({
