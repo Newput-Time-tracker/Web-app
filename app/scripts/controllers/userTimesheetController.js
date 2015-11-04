@@ -57,11 +57,11 @@ function($scope, $rootScope, $location, UserService, AuthService) {
       var upto = start + ' to ' + end;
       weeks.push({
         'key': upto,
-        'start': START_OF_THE_WEEK,
-        'end': END_OF_THE_WEEK
+        'start': CONFIG.START_OF_THE_WEEK,
+        'end': CONFIG.END_OF_THE_WEEK
       });
-      start = (end + START_OF_THE_WEEK);
-      end += END_OF_THE_WEEK;
+      start = (end + CONFIG.START_OF_THE_WEEK);
+      end += CONFIG.END_OF_THE_WEEK;
       if (end > numDays) {
         end = numDays;
       }
@@ -71,13 +71,13 @@ function($scope, $rootScope, $location, UserService, AuthService) {
 
   // append suffix to week numbers (NOT IN USE RIGHT NOW)
   function weekSuffix(num) {
-    var i = num % MOD;
+    var i = num % CONFIG.MOD;
     var suffix = '';
-    if (num == ST_SUFFIX) {
+    if (num == CONFIG.ST_SUFFIX) {
       suffix = 'st';
-    } else if (i == ND_SUFFIX) {
+    } else if (i == CONFIG.ND_SUFFIX) {
       suffix = 'nd';
-    } else if (i == RD_SUFFIX) {
+    } else if (i == CONFIG.RD_SUFFIX) {
       suffix = 'rd';
     } else {
       suffix = 'th';
@@ -99,7 +99,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
 
   function fromatHours(hours) {
     var splitHrs = hours.split(':');
-    var perDayMins = (splitHrs[0] * MIN_PER_SEC) + splitHrs[1];
+    var perDayMins = (splitHrs[0] * CONFIG.MIN_PER_SEC) + splitHrs[1];
     return perDayMins;
   }
 
@@ -111,8 +111,8 @@ function($scope, $rootScope, $location, UserService, AuthService) {
       var perDayMins = fromatHours(hours);
       totalMins = perDayMins + totalMins;
     }
-    var perHrs = totalMins / MIN_PER_SEC;
-    var perMins = totalMins % MIN_PER_SEC;
+    var perHrs = totalMins / CONFIG.MIN_PER_SEC;
+    var perMins = totalMins % CONFIG.MIN_PER_SEC;
     totalMins = perHrs + ' : ' + perMins;
     return totalMins;
   }
