@@ -1,4 +1,3 @@
-/* global moment: false */
 /* global angular: false */
 /* global app: false */
 
@@ -29,25 +28,23 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       });
       return q.promise;
     },
-    emailme: function() {
-      var user = AuthService.getAccessToken();
-      var empEmail = {
-        'empId': user.userObj.id,
-        'month': AuthService.getMonthByIndex(moment(user.userObj.doj, "DD-MM-YYYY").month()),
-        'year': moment(user.userObj.doj, "DD-MM-YYYY").year(),
-        'token': user.token.token
-      };
+    emailMe: function(emailTimesheetObj) {
       var q = $q.defer();
       $http({
         method: 'POST',
         url: CONFIG.API_URL + '/mailExcelSheet',
-        data: empEmail
+        data: emailTimesheetObj
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
         q.reject(response);
       });
       return q.promise;
+    },
+
+    exportMe: function(exportObj) {
+      var downloadUrl = CONFIG.API_URL + '/excelExport?empId=' + exportObj.empId + '&month=' + exportObj.month + '&year=' + exportObj.year;
+      return downloadUrl;
     },
 
     registerUser: function(userObj) {
