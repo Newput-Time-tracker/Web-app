@@ -1,13 +1,15 @@
+/* global app: false */
+
 app.controller('loginController', ['$scope', '$location', 'UserService', 'AuthService',
 function($scope, $location, UserService, AuthService) {
   // check cookie exist or not
   var cookieObj = AuthService.getAccessToken();
-  if(cookieObj) {
+  if (cookieObj) {
     $location.path('/usertimesheet');
   }
   this.loginUser = function() {
     var employeesPromise = UserService.authUser($scope.user);
-    employeesPromise.then(function(res){
+    employeesPromise.then(function(res) {
       if (res.success) {
         var employees = res.data;
         if (employees.length > 1) {
@@ -19,10 +21,10 @@ function($scope, $location, UserService, AuthService) {
           }
         }
       } else {
-        $scope.errorMessage = "Invalid Credential or May be you didn't SignUP " ;
+        $scope.errorMessage = "Invalid Credential or May be you didn't SignUP ";
       }
-    }, function(error){
-      $scope.errorMessage = 'Something is went wrong !' ;
+    }, function() {
+      $scope.errorMessage = 'Something is went wrong !';
     });
   };
   this.toLocation = function(loc) {

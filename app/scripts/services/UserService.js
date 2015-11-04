@@ -1,13 +1,16 @@
-app.factory("UserService", ['$http', '$q', 'CONFIG', 'AuthService' ,'$cookies',
+/* global app: false */
+/* global angular: false */
+
+app.factory("UserService", ['$http', '$q', 'CONFIG', 'AuthService', '$cookies',
 function($http, $q, CONFIG, AuthService, $cookies) {
   var userJsonData = [];
   return {
-    authUser : function(user) {
+    authUser: function(user) {
       var q = $q.defer();
       $http({
-       method : 'POST',
-        url : CONFIG.API_URL + '/login',
-        data : user
+        method: 'POST',
+        url: CONFIG.API_URL + '/login',
+        data: user
       }).success(function(response) {
         userJsonData = response;
         q.resolve(response);
@@ -17,12 +20,12 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       return q.promise;
     },
 
-    emailme : function(emailTimesheetObj) {
+    emailme: function(emailTimesheetObj) {
       var q = $q.defer();
       $http({
-       method : 'POST',
-        url : CONFIG.API_URL + '/mailExcelSheet',
-        data : emailTimesheetObj
+        method: 'POST',
+        url: CONFIG.API_URL + '/mailExcelSheet',
+        data: emailTimesheetObj
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -31,12 +34,12 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       return q.promise;
     },
 
-    registerUser : function(userObj) {
+    registerUser: function(userObj) {
       var q = $q.defer();
       $http({
-        method : 'POST',
-        url : CONFIG.API_URL + '/register',
-        data : userObj
+        method: 'POST',
+        url: CONFIG.API_URL + '/register',
+        data: userObj
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -45,13 +48,13 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       return q.promise;
     },
 
-    forgotPassword : function(email) {
-      var email = {'email' : email};
+    forgotPassword: function() {
+      var email = {'email': email};
       var q = $q.defer();
       $http({
-        method : 'POST',
-        url : CONFIG.API_URL + '/forgotPwd',
-        data : email
+        method: 'POST',
+        url: CONFIG.API_URL + '/forgotPwd',
+        data: email
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -60,16 +63,16 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       return q.promise;
     },
 
-    saveDetailTimeSheet : function(timeSheet, date) {
+    saveDetailTimeSheet: function(timeSheet, date) {
       var user = AuthService.getAccessToken();
       timeSheet.empId = user.userObj.id;
       timeSheet.token = user.token.token;
       timeSheet.workDate = date;
       var q = $q.defer();
       $http({
-        method : 'POST',
-        url : CONFIG.API_URL + '/timeEntry',
-        data : timeSheet
+        method: 'POST',
+        url: CONFIG.API_URL + '/timeEntry',
+        data: timeSheet
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
@@ -77,14 +80,14 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       });
       return q.promise;
     },
-    getProperty : function() {
+    getProperty: function() {
       return userJsonData;
     },
     timesheetData: function(perMonthEmpObj) {
       var q = $q.defer();
       $http({
-        method : 'POST',
-        url : CONFIG.API_URL + '/monthlyExcel',
+        method: 'POST',
+        url: CONFIG.API_URL + '/monthlyExcel',
         data: perMonthEmpObj
       }).success(function(response) {
         q.resolve(response);
@@ -95,19 +98,19 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     },
     endSession: function() {
       var cookies = $cookies.getAll();
-      angular.forEach(cookies, function (v, k) {
-          $cookies.remove(k);
+      angular.forEach(cookies, function(v, k) {
+        $cookies.remove(k);
       });
       return true;
     },
-    resetPassword: function (resetPassword) {
-      var reset = {'empId' : resetPassword.empId, 'pToken' : resetPassword.pToken, 'newPassword' : resetPassword.password};
+    resetPassword: function(resetPassword) {
+      var reset = {'empId': resetPassword.empId, 'pToken': resetPassword.pToken, 'newPassword': resetPassword.password};
       var q = $q.defer();
       $http({
-        method : 'POST',
-        url : CONFIG.API_URL +  '/pwdVerify',
-        crossDomain : true,
-        withCredentials : true,
+        method: 'POST',
+        url: CONFIG.API_URL + '/pwdVerify',
+        crossDomain: true,
+        withCredentials: true,
         data: reset
       }).success(function(response) {
         q.resolve(response);

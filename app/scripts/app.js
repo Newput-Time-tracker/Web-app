@@ -14,7 +14,14 @@ app.constant('CONFIG', {
     NAME: 'TT_SESSION',
     EXPIRY: 365 // in days
   },
-  ENV: ENV_TYPES.PRODUCTION
+  ENV: ENV_TYPES.PRODUCTION,
+  MIN_PER_SEC: 60,
+  START_OF_THE_WEEK: 1,
+  END_OF_THE_WEEK: 7,
+  MOD: 10,
+  ND_SUFFIX: 2,
+  RD_SUFFIX: 3,
+  ST_SUFFIX: 1
 });
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   var viewsDir = 'views/';
