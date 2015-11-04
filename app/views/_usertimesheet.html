@@ -21,10 +21,13 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-body">
-          <p>Are you sure you want to email the timesheet of {{selectedMonth}} from {{lastWeek}} </p>
+          <p>
+            Are you sure you want to email the timesheet of {{selectedMonth}} from {{lastWeek}}
+            to this <b>{{employees.email}}</b> registered id ?
+          </p>
           <div class="message" ng-hide=!successEmailMessage>{{successEmailMessage}}</div>
           <button type="button" id = "dismiss" class="btn btn-default" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary" ng-click="emailme()">Yes</button>
+          <button type="button" class="btn btn-primary" ng-click="emailMe()">Yes</button>
         </div>
       </div>
     </div>
@@ -58,12 +61,6 @@
     </div>
     <div class="col-sm-offset-8 help-icons">
       <div class="col-sm-1 col-xs-1">
-        <form name="export" method="put" target="_blank" style="display:none;">
-          <input type="text" name="month" value="october" ng-model="exportData.month"/>
-          <input type="text" name="year" value="2015" ng-model="exportData.year"/>
-          <input type="text" name="empid" value="12" ng-model="exportData.empid"/>
-          <button type ="submit" id="submit">submit</button>
-        </form>
         <button type="button" ng-click="exportMe()">
           <span class="glyphicon glyphicon-export"></span>
         </button>

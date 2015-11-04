@@ -60,8 +60,8 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       var upto = start + ' to ' + end;
       weeks.push({
         'key': upto,
-        'start': CONFIG.START_OF_THE_WEEK,
-        'end': CONFIG.END_OF_THE_WEEK
+        'start': start,
+        'end': end
       });
       start = end + CONFIG.START_OF_THE_WEEK;
       end += CONFIG.END_OF_THE_WEEK;
@@ -389,9 +389,10 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     $scope.showTimesheet(perMonthEmpObj);
   };
   // email excel sheet
-  $scope.emailme = function() {
+  $scope.emailMe = function() {
     if ($scope.employees != null) {
-      var month = $scope.monthsOptions.currentmonth.label;
+      var month = $scope.monthsOptions.currentmonth.values;
+      month = monthList[month];
       var year = $scope.yearOptions.current.value;
       var emailTimesheetObj = {
         'empId': $scope.employees.id,
@@ -399,7 +400,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
         'year': year,
         'token': $scope.token.token
       };
-      var emailPromise = UserService.emailme(emailTimesheetObj);
+      var emailPromise = UserService.emailMe(emailTimesheetObj);
       emailPromise.then(function(res) {
         if (res.data.length > 0) {
           $scope.successEmailMessage = res.data[0].msg;
@@ -411,8 +412,20 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   };
 
   $scope.exportMe = function() {
-
+    if ($scope.employees != null) {
+      var month = $scope.monthsOptions.currentmonth.value;
+      month = monthList[month];
+      var year = $scope.yearOptions.current.value;
+      var exportTimesheetObj = {
+        'empId': $scope.employees.id,
+        'month': month,
+        'year': year
+      };
+      var exportPromise = UserService.exportMe(exportTimesheetObj);
+      window.open(exportPromise, '_blank');
+    }
   };
+
   // logout user
   $scope.logout = function() {
     var status = UserService.endSession();
