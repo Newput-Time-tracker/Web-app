@@ -36,6 +36,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.timesheetData = {};
   var monthLabel = '';
   var perMonthEmpObj = {};
+  $scope.yearText = $scope.curYear;
   // store the day corresponding to the timesheet
   var weekList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
   $rootScope.detailTimesheetByIndex = {};
@@ -360,6 +361,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   // Update year
   this.yearUpdate = function() {
     var newCurrentYear = $scope.yearOptions.current.value;
+    $scope.yearText = newCurrentYear;
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
     initializeWeek(currentMonth, newCurrentYear);
