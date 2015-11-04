@@ -19,7 +19,8 @@ app.constant('CONFIG', {
   MIN_PER_HOUR: 60,
   RD_SUFFIX: 3,
   ST_SUFFIX: 1,
-  ND_SUFFIX: 2
+  ND_SUFFIX: 2,
+  CLOSE_MODAL_BOX: 2000
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
