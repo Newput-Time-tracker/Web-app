@@ -150,6 +150,23 @@ function($http, $q, CONFIG, AuthService, $cookies) {
         q.reject(response);
       });
       return q.promise;
+    },
+    getDayData: function(workDate) {
+      var user = AuthService.getAccessToken();
+      var emp = {'empId': user.userObj.id, 'token': user.token.token, 'workDate': workDate};
+      var q = $q.defer();
+      $http({
+        method: 'POST',
+        url: CONFIG.API_URL +  '/workDayData',
+        crossDomain : true,
+        withCredentials : true,
+        data: emp
+      }).success(function(response) {
+        q.resolve(response);
+      }).error(function(response) {
+        q.reject(response);
+      });
+      return q.promise;
     }
   };
 }]);
