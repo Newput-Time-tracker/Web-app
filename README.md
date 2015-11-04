@@ -1,3 +1,5 @@
+[![Stories in Ready](https://badge.waffle.io/Newput-Time-tracker/Web-app.svg?label=ready&title=Ready)](http://waffle.io/Newput-Time-tracker/Web-app)
+
 # Time Tracker Web app
 
 Wep app for helps in managing the timesheet data.
