@@ -233,10 +233,12 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           $scope.monthlyDataAvailablityStatus = true;
           $scope.monthlyDataAvailablityMessage = 'Data is not avaibale for this month.';
         }
-        timesheetArr = populateTimesheet(msg);
-        totalhrs = calculatetime(timesheetArr);
-        timesheetArr.totalHours = totalhrs;
-        $scope.timesheetData = timesheetArr;
+        if ($scope.monthlyDataAvailablityStatus != true) {
+          timesheetArr = populateTimesheet(msg);
+          totalhrs = calculatetime(timesheetArr);
+          timesheetArr.totalHours = totalhrs;
+          $scope.timesheetData = timesheetArr;
+        }
       }
     }, function() {});
   };

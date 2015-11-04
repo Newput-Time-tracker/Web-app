@@ -75,14 +75,12 @@
     </div>
   </div>
   <div class="tt-table">
-    <div ng-show="monthlyDataAvailablityStatus" class="conainer message-box">
-      <div class="row">
-        <div class="col-sm-12">
-          <center>{{monthlyDataAvailablityMessage}}</center>
-        </div>
+    <div ng-if="monthlyDataAvailablityStatus">
+      <div class="well well-sm">
+        {{monthlyDataAvailablityMessage}}
       </div>
     </div>
-    <table class="table table-bordered" ng-show="!monthlyDataAvailablityStatus">
+    <table class="table table-bordered" ng-if="!monthlyDataAvailablityStatus">
       <thead>
         <tr>
           <th>Date</th>
