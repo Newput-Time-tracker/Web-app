@@ -10,7 +10,7 @@ Wep app for helps in managing the timesheet data.
 ### Linting process(current directory should be web-app):
 1. Run `eslint app/scripts` to verify no linitng issues with JS.
 2. Run `gem install scss_lint`.
-  2.1. Run `scss-lint app/assets/styles/*.scss` to verify no linitng issues with SCSS.
+3. Run `scss-lint app/assets/styles/*.scss` to verify no linitng issues with SCSS.
 
 ## Dev App:
 https://time-tracker-web.herokuapp.com/
