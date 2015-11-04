@@ -28,10 +28,11 @@ function($http, $q, CONFIG, $cookies) {
     getAccessToken: function() {
       var accessToken = $cookies.get('accessToken');
       var UserObj = $cookies.get('UserObj');
+      var cookieObj = {};
       if (accessToken && UserObj) {
-        var cookieObj = {'token': JSON.parse(accessToken), 'userObj': JSON.parse(UserObj)};
+        cookieObj = {'token': JSON.parse(accessToken), 'userObj': JSON.parse(UserObj)};
       } else {
-        var cookieObj = null;
+        cookieObj = null;
       }
       return cookieObj;
     },

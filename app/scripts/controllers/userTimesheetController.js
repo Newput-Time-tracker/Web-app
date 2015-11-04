@@ -1,21 +1,21 @@
 /* global moment: false */
 /* global app: false */
 
-app.controller('userTimesheetController', ['$scope', '$rootScope', '$location', 'UserService', 'AuthService',
-function($scope, $rootScope, $location, UserService, AuthService) {
+app.controller('userTimesheetController', ['$scope', 'CONFIG', '$rootScope', '$location', 'UserService', 'AuthService',
+function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.employees = null;
   $scope.token = null;
   var cookieObj = AuthService.getAccessToken();
-  var userObj = null;
+  var loginUserObj = null;
   if (cookieObj != null) {
     $scope.token = cookieObj.token;
     $scope.employees = cookieObj.userObj;
   } else {
     // fetch login's userdata from service
-    userObj = UserService.getProperty();
-    if (userObj) {
-      if (userObj.success && userObj.data[0]) {
-        $scope.employees = userObj.data[0];
+    loginUserObj = UserService.getProperty();
+    if (loginUserObj) {
+      if (loginUserObj.success && loginUserObj.data[0]) {
+        $scope.employees = loginUserObj.data[0];
       }
     } else {
       $location.path('/login');
@@ -30,13 +30,16 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   $scope.weeksOptions = [];
   $scope.curYear = currentYear;
   $scope.curMonth = currentMonth;
-
+  var startMonth = null;
   $scope.newCurrentYear = '';
   var timesheetArr = {};
   $scope.timesheetData = {};
+  var monthLabel = '';
+  var perMonthEmpObj = {};
   // store the day corresponding to the timesheet
   var weekList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
   $rootScope.detailTimesheetByIndex = {};
+  var startYear = null;
 
   // get weeks by date in a month
   function getWeeksInMonth(month, year) {
@@ -45,14 +48,14 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var lastDate = new Date(year, month + 1, 0);
     var numDays = lastDate.getDate();
     var start = 1;
-    var end = 7 - firstDate.getDay();
+    var end = CONFIG.WEEK_DAYS - firstDate.getDay();
 
     weeks.push({ 'key': '--Select Week--', 'start': null, 'end': null });
     while (start <= numDays) {
       var upto = start + ' to ' + end;
       weeks.push({ 'key': upto, 'start': start, 'end': end });
       start = end + 1;
-      end = end + 7;
+      end += CONFIG.WEEK_DAYS;
       if (end > numDays) {
         end = numDays;
       }
@@ -62,13 +65,13 @@ function($scope, $rootScope, $location, UserService, AuthService) {
 
   // append suffix to week numbers (NOT IN USE RIGHT NOW)
   function weekSuffix(num) {
-    var i = num % 10;
+    var i = num % CONFIG.MOD;
     var suffix = '';
-    if (num == 1) {
+    if (num == CONFIG.ST_SUFFIX) {
       suffix = 'st';
-    } else if (i == 2) {
+    } else if (i == CONFIG.ND_SUFFIX) {
       suffix = 'nd';
-    } else if (i == 3) {
+    } else if (i == CONFIG.RD_SUFFIX) {
       suffix = 'rd';
     } else {
       suffix = 'th';
@@ -89,7 +92,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
 
   function fromatHours(hours) {
     var splitHrs = hours.split(':');
-    var perDayMins = parseInt((splitHrs[0] * 60), 10) + parseInt(splitHrs[1], 10);
+    var perDayMins = parseInt((splitHrs[0] * CONFIG.MIN_PER_HOUR), 10) + parseInt(splitHrs[1], 10);
     return perDayMins;
   }
 
@@ -100,8 +103,8 @@ function($scope, $rootScope, $location, UserService, AuthService) {
       var perDayMins = fromatHours(hours);
       totalMins = parseInt(perDayMins, 10) + parseInt(totalMins, 10);
     }
-    var perHrs = parseInt(totalMins / 60, 10);
-    var perMins = parseInt(totalMins % 60, 10);
+    var perHrs = parseInt(totalMins / CONFIG.MIN_PER_HOUR, 10);
+    var perMins = parseInt(totalMins % CONFIG.MIN_PER_HOUR, 10);
     totalMins = perHrs + ':' + perMins;
     return totalMins;
   }
@@ -110,7 +113,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var workDate = index + '-' + (monthIndex + 1) + '-' + yearIndex;
     var dDate = formateDate(workDate, 1);
     var dDay = formateDate(workDate, 2);
-    var oneDayData = {
+    var perDayData = {
       'day': dDate,
       'dayName': dDay,
       'in': '00:00',
@@ -123,7 +126,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
       'workDate': workDate,
       'workDesc': ''
     };
-    return oneDayData;
+    return perDayData;
   }
 
   function populateTimesheet(res) {
@@ -132,6 +135,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var dDate = null;
     var dDay = null;
     var status = false;
+    var oneDayData = {};
     var monthIndex = $scope.monthsOptions.currentmonth.value;
     var yearIndex = $scope.yearOptions.current.value;
     // TODO: why added +1 in month index
@@ -140,7 +144,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     var monthlyTimesheet = [];
     for (var index = 1, j = 0; index <= days; index++) {
       if (typeof res == 'undefined') {
-        var oneDayData = populatePerDayData(index, monthIndex, yearIndex);
+        oneDayData = populatePerDayData(index, monthIndex, yearIndex);
         monthlyTimesheet.push(oneDayData);
       } else {
         if (typeof res[j] != 'undefined') {
@@ -165,7 +169,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
             workDate = index + '-' + (monthIndex + 1) + '-' + yearIndex;
             dDate = formateDate(workDate, 1);
             dDay = formateDate(workDate, 2);
-            var oneDayData = {
+            oneDayData = {
               'day': dDate,
               'dayName': dDay,
               'in': '0:00',
@@ -188,11 +192,11 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   }
 
   // time sheet
-  $scope.showTimesheet = function(perMonthEmpObj) {
+  $scope.showTimesheet = function(perMonthObj) {
     var totalhrs = 0;
     timesheetArr = {};
     $scope.timesheetData = {};
-    var monthlyData = UserService.timesheetData(perMonthEmpObj);
+    var monthlyData = UserService.timesheetData(perMonthObj);
     monthlyData.then(function(res) {
       if (res.success) {
         $scope.message = '';
@@ -203,9 +207,10 @@ function($scope, $rootScope, $location, UserService, AuthService) {
           $scope.timesheetData = timesheetArr;
         }
       } else {
+        var msg = null;
         $scope.message = 'No data available for this month !';
         if (res.data[0]) {
-          var msg = res.data[0].msg;
+          msg = res.data[0].msg;
         }
         timesheetArr = populateTimesheet(msg);
         totalhrs = calculatetime(timesheetArr);
@@ -295,7 +300,7 @@ function($scope, $rootScope, $location, UserService, AuthService) {
 
   // Restrict the month and year to date of joining
 
-  var cookieObj = AuthService.getAccessToken();
+  cookieObj = AuthService.getAccessToken();
   if (cookieObj) {
     $scope.employees = cookieObj.userObj;
     $scope.token = cookieObj.token;
@@ -314,12 +319,12 @@ function($scope, $rootScope, $location, UserService, AuthService) {
   if ($scope.employees != null) {
     var doj = $scope.employees.doj;
     var dojYear = moment(doj, ["DD-MM-YYYY"]);
-    var startYear = dojYear.year();
+    startYear = dojYear.year();
     $scope.yearOptions = generateYearSelectBox(startYear, currentYear);
-    var startMonth = dojYear.month();
+    startMonth = dojYear.month();
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, currentYear);
-    var monthLabel = $scope.selectedMonth;
-    var perMonthEmpObj = {
+    monthLabel = $scope.selectedMonth;
+    perMonthEmpObj = {
       'empId': $scope.employees.id,
       'year': currentYear,
       'month': monthLabel,
@@ -333,8 +338,8 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.monthsOptions = generateMonthSelectBox(startMonth, currentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
     initializeWeek(currentMonth, newCurrentYear);
-    var monthLabel = $scope.selectedMonth;
-    var perMonthEmpObj = {
+    monthLabel = $scope.selectedMonth;
+    perMonthEmpObj = {
       'empId': $scope.employees.id,
       'year': newCurrentYear,
       'month': monthLabel,
@@ -351,8 +356,8 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     $scope.selectedMonth = monthList[newCurrentMonth];
     initializeWeek(newCurrentMonth, newCurrentYear);
     $scope.weeksDateStr = '';
-    var monthLabel = $scope.selectedMonth;
-    var perMonthEmpObj = {
+    monthLabel = $scope.selectedMonth;
+    perMonthEmpObj = {
       'empId': $scope.employees.id,
       'year': newCurrentYear,
       'month': monthLabel,
@@ -365,7 +370,6 @@ function($scope, $rootScope, $location, UserService, AuthService) {
     if ($scope.employees != null) {
       var month = $scope.monthsOptions.currentmonth.label;
       var year = $scope.yearOptions.current.value;
-      var monthLabel = $scope.selectedMonth;
       var emailTimesheetObj = {
         'empId': $scope.employees.id,
         'month': month,

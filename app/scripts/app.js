@@ -9,12 +9,18 @@ var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCooki
 app.constant('CONFIG', {
   APP_NAME: 'Time tracker',
   VERSION: '0.0.1',
-  API_URL: 'http://time-tracker-backend-app.com/Tracker/rest/employee',
+  API_URL: 'http://tt-rahul-backend.herokuapp.com/Tracker/rest/employee', //'http://time-tracker-backend-app.com/Tracker/rest/employee',
   SESSION_COOKIE: {
     NAME: 'TT_SESSION',
     EXPIRY: 365 // in days
   },
-  ENV: ENV_TYPES.PRODUCTION
+  ENV: ENV_TYPES.PRODUCTION,
+  WEEK_DAYS: 7,
+  MOD: 10,
+  MIN_PER_HOUR: 60,
+  RD_SUFFIX: 3,
+  ST_SUFFIX: 1,
+  ND_SUFFIX: 2
 });
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   var viewsDir = 'views/';
@@ -37,7 +43,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'signUpController',
     controllerAs: 'signUp'
   })
-  .when('/detailview', {
+  .when('/detailview/:date', {
     templateUrl: viewsDir + '_detailview.html',
     controller: 'detailViewController',
     controllerAs: 'detail',
