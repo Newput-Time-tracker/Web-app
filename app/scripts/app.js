@@ -1,4 +1,5 @@
 /* global angular: false */
+/* eslint guard-for-in: 1 */
 // global constants
 var ENV_TYPES = { PRODUCTION: 'production', DEVELOPMENT: 'development', STAGING: 'staging' };
 
@@ -77,7 +78,6 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 }]);
 
 app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', function($rootScope, $location, $cookies, AuthService, CONFIG) {
-
   var prepareRoute = function(routeObj) {
     var route = routeObj.originalPath;
     for (var key in routeObj['pathParams']) {
@@ -96,10 +96,8 @@ app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', functio
         now.setDate(now.getDate() + CONFIG.WEEK_DAYS);
         $cookies.put('tt_globals', JSON.stringify(url), {expiry: now});
         $location.path("/login");
-      }
-      else {
+      }else {
         $location.path(prepareRoute(nextRoute));
-
       }
     }
   });
