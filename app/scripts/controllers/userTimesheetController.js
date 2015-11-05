@@ -217,6 +217,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
+          $scope.monthlyDataAvailablityStatus = false;
         }
       } else {
         var msg = 'undefined';
