@@ -184,13 +184,13 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
             oneDayData = {
               'day': dDate,
               'dayName': dDay,
-              'in': '0:00',
-              'lunchIn': '0:00',
-              'lunchOut': '0:00',
-              'nightIn': '0:00',
-              'nightOut': '0:00',
-              'out': '0:00',
-              'totalHour': '0:00',
+              'in': '00:00',
+              'lunchIn': '00:00',
+              'lunchOut': '00:00',
+              'nightIn': '00:00',
+              'nightOut': '00:00',
+              'out': '00:00',
+              'totalHour': '00:00',
               'workDate': workDate,
               'workDesc': ''
             };
