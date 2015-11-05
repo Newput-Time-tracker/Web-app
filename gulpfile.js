@@ -37,7 +37,7 @@ var applicationScripts = [
   'app/scripts/controllers/signUpController.js',
   'app/scripts/controllers/userTimesheetController.js',
   'app/scripts/controllers/detailViewController.js',
-  'app/scripts/controllers/verifyController.js',
+  'app/scripts/controllers/verifyUserController.js',
   'app/scripts/controllers/forgotPasswordController.js'
 ];
 
