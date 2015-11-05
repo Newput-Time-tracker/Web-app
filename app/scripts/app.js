@@ -23,7 +23,9 @@ app.constant('CONFIG', {
   CLOSE_MODAL_BOX: 2000,
   START_OF_THE_WEEK: 1,
   END_OF_THE_WEEK: 7,
-  MIN_AGE: 18
+  MIN_AGE: 18,
+  REDIRECT_TIMEOUT: 2000,
+  FADE_OUT: 3000
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
