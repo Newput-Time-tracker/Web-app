@@ -34,6 +34,7 @@ var applicationScripts = [
   'app/scripts/services/AuthService.js',
   'app/scripts/directives/formFieldDirectives.js',
   'app/scripts/controllers/loginController.js',
+  'app/scripts/controllers/datePickerController.js',
   'app/scripts/controllers/signUpController.js',
   'app/scripts/controllers/userTimesheetController.js',
   'app/scripts/controllers/detailViewController.js',

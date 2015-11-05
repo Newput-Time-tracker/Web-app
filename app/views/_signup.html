@@ -74,16 +74,31 @@
       <div class="row">
         <div class="col-sm-6">
           <label for="dateofbirth">Date Of Birth:*</label>
-          <input type="text" class="form-control" name="dateofbirth" datepicker-popup="{{format}}" ng-model="user.dob" is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close" />
-          <div ng-show="signup.$submitted || signup.dateofbirth.$touched" >
-            <span ng-cloak class="text-danger" ng-show="signup.dateofbirth.$error.required">Tell us Your Birthday</span>
+          <div class="input-group" ng-controller="DatePickrCntrl">
+          <input type="text" class="form-control" datepicker-popup="{{format}}" name="dt" ng-model="user.dob" is-open="datepickers.dt"
+          datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+          <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="open($event,'dt')">
+            <i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+          </div>
+          <div ng-show="signup.$submitted || signup.dt.$touched" >
+            <span ng-cloak class="alert-danger" ng-show="signup.dt.$error.required">Tell us Your Birthday</span>
           </div>
         </div>
         <div class="col-sm-6">
           <label for="dateofjoining">Date of Joining:*</label>
-          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-change="copareDate(signup.dateofbirth)"  name="dateofjoining"  ng-model="user.doj"  is-open="opened" ng-click="open($event)" ng-required="true" close-text="Close"  />
-          <div ng-show="signup.$submitted || signup.dateofjoining.$touched" >
-            <span ng-cloak class="text-danger" ng-show="signup.dateofjoining.$error.required">Tell us Your Joining Date</span>
+          <div class="input-group" ng-controller="DatePickrCntrl">
+            <input type="text" class="form-control" datepicker-popup="{{format}}" name="dtSecond" ng-model="user.doj"
+             is-open="datepickers.dtSecond" datepicker-options="dateOptions"
+             ng-required="true" close-text="Close" ng-change="copareDate(signup.dateofbirth)" />
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="open($event,'dtSecond')">
+               <i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+          <div ng-show="signup.$submitted || signup.dtSecond.$touched" >
+            <span ng-cloak class="alert-danger" ng-show="signup.dtSecond.$error.required">Tell us Your Joining Date</span>
           </div>
         </div>
       </div>

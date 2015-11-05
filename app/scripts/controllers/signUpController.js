@@ -3,6 +3,7 @@
 app.controller('signUpController', ['$scope', 'CONFIG', 'UserService',
 function($scope, CONFIG, UserService) {
   $scope.errorMessage = null;
+
   var resetErrorMessage = function() {
     $scope.errorMessage = null;
     $scope.successMessage = null;

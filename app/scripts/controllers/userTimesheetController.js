@@ -229,7 +229,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
             $scope.monthlyDataAvailablityStatus = false;
           }
         } else {
-          $scope.monthlyDataAvailablityStatus = false;
+          $scope.monthlyDataAvailablityStatus = true;
         }
         if ($scope.monthlyDataAvailablityStatus != true) {
           timesheetArr = populateTimesheet(msg);
