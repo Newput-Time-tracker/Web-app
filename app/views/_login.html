@@ -4,7 +4,7 @@
   <form name="loginform" class="login-form" novalidate="true" ng-submit = "loginform.$valid && login.loginUser()">
     <div class="form-group row" ng-if="errorMessage">
       <div class="col-sm-12">
-        <div class="alert alert-danger alert-dismissible" role="alert">
+        <div class="alert text-danger alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -18,7 +18,7 @@
       </div>
       <div class="col-sm-8">
         <input type="email" name= "email" class="form-control" id="email" ng-model="user.email" required>
-        <span class ="alert-danger" ng-cloak> <span ng-show="submitted && loginform.email.$error.required">Please enter email.</span> <span ng-show="loginform.email.$error.email && loginform.email.$touched">Please enter correct email.</span> </span>
+        <span class ="text-danger" ng-cloak> <span ng-show="submitted && loginform.email.$error.required">Please enter email.</span> <span ng-show="loginform.email.$error.email && loginform.email.$touched">Please enter correct email.</span> </span>
       </div>
     </div>
     <div class="form-group row">
@@ -27,7 +27,7 @@
       </div>
       <div class="col-sm-8">
         <input type="password" ng-model="user.password" name="password" class="form-control" id="pwd" required>
-        <span class ="alert-danger" ng-cloak> <span ng-show="(submitted && loginform.password.$error.required) || (loginform.password.$touched && loginform.password.$invalid)">Please enter password.</span> </span>
+        <span class ="text-danger" ng-cloak> <span ng-show="(submitted && loginform.password.$error.required) || (loginform.password.$touched && loginform.password.$invalid)">Please enter password.</span> </span>
       </div>
     </div>
     <div class ="col-sm-offset-4 btn-align">

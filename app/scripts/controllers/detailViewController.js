@@ -128,9 +128,11 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   $scope.reset = function() {
     $scope.timesheet = null;
     $scope.dayWork = null;
+    $scope.totalHours = null;
   };
 
   $scope.resetMessage = function() {
     $scope.errorMessage = null;
+     $scope.successMessage = null;
   };
 }]);

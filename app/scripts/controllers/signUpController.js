@@ -19,7 +19,7 @@ function($scope, CONFIG, UserService) {
     var dataPromise = UserService.registerUser($scope.user);
     dataPromise.then(function(response) {
       if (response.success) {
-        $scope.successMessage = "Registered Successfully !";
+        $scope.successMessage = "Successfully Registered ! A verification email is sent to your email id, Please verify to login.";
       } else {
         $scope.errorMessage = "Email id already exist!";
       }

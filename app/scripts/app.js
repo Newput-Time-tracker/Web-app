@@ -25,7 +25,7 @@ app.constant('CONFIG', {
   END_OF_THE_WEEK: 7,
   MIN_AGE: 18,
   REDIRECT_TIMEOUT: 2000,
-  FADE_OUT: 3000
+  FADE_OUT: 5000
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

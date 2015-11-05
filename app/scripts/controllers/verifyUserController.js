@@ -7,13 +7,10 @@ function($scope, $location, $timeout, AuthService) {
     var dataPromise = AuthService.verifyUser($scope.verifyUser);
     dataPromise.then(function(response) {
       if (response.success) {
-        var number = 2000;
+        var number = 4000;
         $scope.successMessage = "Verify Successfully!";
-        $timeout(function() {
-          $location.path('/login');
-        }, number);
       } else {
-        $scope.errorMessage = "Email id or token is not correct.";
+        $scope.errorMessage = "You account is already verified";
       }
     }, function() {
       $scope.errorMessage = "Server will up in few minutes Please wait";
