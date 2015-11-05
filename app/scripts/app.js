@@ -8,7 +8,7 @@ var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCooki
 app.constant('CONFIG', {
   APP_NAME: 'Time tracker',
   VERSION: '0.0.1',
-  API_URL: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee',
+  API_URL: 'http://tt-rahul-backend.herokuapp.com/Tracker/rest/employee',
   SESSION_COOKIE: {
     NAME: 'TT_SESSION',
     EXPIRY: 365 // in days
@@ -23,7 +23,9 @@ app.constant('CONFIG', {
   CLOSE_MODAL_BOX: 2000,
   START_OF_THE_WEEK: 1,
   END_OF_THE_WEEK: 7,
-  MIN_AGE: 18
+  MIN_AGE: 18,
+  REDIRECT_TIMEOUT: 2000,
+  FADE_OUT: 3000
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
