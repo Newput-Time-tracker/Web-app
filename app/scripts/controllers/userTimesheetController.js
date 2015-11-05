@@ -217,22 +217,18 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
-          $scope.monthlyDataAvailablityStatus = false;
-          $scope.monthlyDataAvailablityMessage = '';
         }
       } else {
-        var msg = '';
-        if (res.data[0]) {
-          msg = res.data[0].msg;
-        }
+        var msg = 'undefined';
         if (perMonthObj.year == $scope.curYear) {
-          if (perMonthObj.month != $scope.curMonth) {
+          if (perMonthObj.month != monthList[$scope.curMonth]) {
             $scope.monthlyDataAvailablityStatus = true;
             $scope.monthlyDataAvailablityMessage = 'Data is not avaibale for this month.';
+          } else {
+            $scope.monthlyDataAvailablityStatus = false;
           }
         } else {
-          $scope.monthlyDataAvailablityStatus = true;
-          $scope.monthlyDataAvailablityMessage = 'Data is not avaibale for this month.';
+          $scope.monthlyDataAvailablityStatus = false;
         }
         if ($scope.monthlyDataAvailablityStatus != true) {
           timesheetArr = populateTimesheet(msg);
@@ -406,12 +402,17 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       };
       var emailPromise = UserService.emailMe(emailTimesheetObj);
       emailPromise.then(function(res) {
-        if (res.data.length > 0) {
-          $scope.successEmailMessage = res.data[0].msg;
+        if (res.success) {
+          $scope.message = 'Timesheet has been sent successfully.';
+        } else {
+          $scope.message = 'No timesheet data is available.';
         }
-        setTimeout(function() { $('#dismiss').trigger('click'); }, CONFIG.CLOSE_MODAL_BOX);
-      }, function() {
-      });
+      }, function() {}
+      );
+      setTimeout(function() {
+        $('#dismiss').trigger('click');
+        $scope.message = '';
+      }, CONFIG.CLOSE_MODAL_BOX);
     }
   };
 
