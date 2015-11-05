@@ -5,12 +5,13 @@ function($scope, CONFIG, UserService) {
   $scope.errorMessage = null;
   var resetForm = function() {
     $scope.errorMessage = null;
+     $scope.successMessage = null;
   };
   this.userSignUp = function() {
     var userReg = $scope.user;
     var age = $scope.calculateAge(userReg.dob);
     if (age < CONFIG.MIN_AGE) {
-      $scope.errorMessage = " Age must be 18 year above ";
+      $scope.errorMessage = " Age should be 18 year or above ";
       return;
     }
     var dataPromise = UserService.registerUser($scope.user);
@@ -21,7 +22,7 @@ function($scope, CONFIG, UserService) {
         $scope.errorMessage = "Email id already exist!";
       }
     }, function() {
-      $scope.errorMessage = "Something went wrong on server!";
+      $scope.errorMessage = "Server is in maintenance mode!";
     });
     resetForm();
   };
@@ -30,7 +31,7 @@ function($scope, CONFIG, UserService) {
     var doj = $scope.user.doj;
     resetForm();
     if (new Date(dob) > new Date(doj)) {
-      $scope.errorMessage = " Opps ! Date of Birth should be Less than Date of Joining";
+      $scope.errorMessage = "Date of birth should be less than date of joining";
       return;
     }
   };
@@ -63,7 +64,7 @@ function($scope, CONFIG, UserService) {
   };
 
   $scope.reset = function() {
-    $scope.user = "";
+    $scope.user = null;
   };
   $scope.reset();
 }]);
