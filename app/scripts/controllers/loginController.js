@@ -7,6 +7,13 @@ function($scope, $location, $cookies, UserService, AuthService) {
   if (cookieObj) {
     $location.path('/usertimesheet');
   }
+  // reset messages
+  var resetMessage = function() {
+    $scope.errorMessage = null;
+    $scope.successMessage = null;
+  };
+
+  // login user service
   this.loginUser = function() {
     var employeesPromise = UserService.authUser($scope.user);
     employeesPromise.then(function(res) {
@@ -25,6 +32,7 @@ function($scope, $location, $cookies, UserService, AuthService) {
     }, function() {
       $scope.errorMessage = 'Something went wrong, please try again!';
     });
+    resetMessage();
   };
   this.toLocation = function(loc) {
     $location.path('/' + loc);
