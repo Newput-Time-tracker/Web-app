@@ -48,6 +48,17 @@ header {
     label {
       font-weight: 600;
     }
+
+    .center-link {
+
+      &.padded {
+        padding: 10px;
+      }
+
+      .link {
+        padding: 20px;
+      }
+    }
   }
 }
 
