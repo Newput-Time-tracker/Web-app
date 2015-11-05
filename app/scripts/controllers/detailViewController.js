@@ -5,6 +5,7 @@ app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$t
 function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   $scope.errorMessage = null;
   $scope.timesheet = {};
+  // calculate total minutes of day work
   var getWorkDayHours = function(timeIn, timeOut) {
     var timeInarray = timeIn.toString().split(":");
     var minutes = 60;
@@ -23,6 +24,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     return totalTimeInMinutes;
   };
 
+  // save timesheet entry
   this.saveTimesheet = function() {
     if ($scope.timesheet == null) {
       $scope.errorMessage = "Time fields Can't leave blank!!";
@@ -46,15 +48,17 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       });
     }
   };
+  // calculate hours and minutes of day work
   var dayWork = function(dayTime, lunchTime, nightTime) {
     var reminDayTime = parseFloat(dayTime) - parseFloat(lunchTime);
     var totalWorkMinutes = parseFloat(reminDayTime) + parseFloat(nightTime);
     var minute = 60;
     var hours = parseInt(Math.floor(parseInt(totalWorkMinutes, 10)) / minute, 10);
     var minutes = parseInt(totalWorkMinutes, 10) % minute;
-    $scope.dayWork = hours + "." + minutes;
-    return $scope.dayWork;
+    $scope.totalHours = hours + "." + minutes;
+    return $scope.totalHours;
   };
+  // calculate total hours
   $scope.getTotalhours = function() {
     $scope.dayWork = null;
     $scope.resetMessage();
@@ -79,7 +83,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
 
     dayWork(dayTime, lunchTime, nightTime);
   };
-
+  // check valid time format
   $scope.isInvalid = function(timeIn, timeOut) {
     if ((timeIn != null && timeOut == null) || (timeIn == null && timeOut != null) ||
      (timeIn === "" && timeOut != "") || (timeOut === "" && timeIn != "")) {
@@ -87,7 +91,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       return;
     }
   };
-
+  // initialize method use when some one call detail url direct form browser or edit any existing record
   var init = function() {
     $scope.date = $routeParams.date;
     var newDate = moment($scope.date, ["DD-MM-YYYY"]);
@@ -105,6 +109,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       if (monthlyDetailTimeSheet[$scope.date]) {
         $scope.timesheet.workDate = $scope.date;
         $scope.timesheet = monthlyDetailTimeSheet[$scope.date];
+        $scope.totalHours = $scope.timesheet.totalHour;
       }
     }else {
       var dataPromise = UserService.getDayData($scope.date);

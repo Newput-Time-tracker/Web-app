@@ -3,12 +3,14 @@
 app.controller('signUpController', ['$scope', 'CONFIG', 'UserService',
 function($scope, CONFIG, UserService) {
   $scope.errorMessage = null;
-  var resetForm = function() {
+  var resetErrorMessage = function() {
     $scope.errorMessage = null;
     $scope.successMessage = null;
   };
+  // user registration
   this.userSignUp = function() {
     var userReg = $scope.user;
+    // calculate age
     var age = $scope.calculateAge(userReg.dob);
     if (age < CONFIG.MIN_AGE) {
       $scope.errorMessage = " Age should be 18 year or above ";
@@ -24,18 +26,20 @@ function($scope, CONFIG, UserService) {
     }, function() {
       $scope.errorMessage = "Server is in maintenance mode!";
     });
-    resetForm();
+    resetErrorMessage();
   };
-  $scope.copareDate = function() {
+  // compare date of birth and date of joining
+  $scope.compareDate = function() {
     var dob = $scope.user.dob;
     var doj = $scope.user.doj;
-    resetForm();
+    resetErrorMessage();
     if (new Date(dob) > new Date(doj)) {
       $scope.errorMessage = "Date of birth should be less than date of joining";
       return;
     }
   };
 
+  // calculate the register user age from date of birth
   $scope.calculateAge = function(dob) {
     var dateOfBirth = new Date(dob);
     var birthYear = dateOfBirth.getFullYear();
@@ -62,8 +66,10 @@ function($scope, CONFIG, UserService) {
     $event.stopPropagation();
     $scope.opened = true;
   };
-  $scope.reset = function(signup) {
-    signup.$setPristine();
-    signup.$setUntouched();
+  // reset form
+  $scope.reset = function() {
+    resetErrorMessage();
+    $scope.signup.$setPristine();
+    $scope.signup.$setUntouched();
   };
 }]);
