@@ -77,11 +77,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 }]);
 
 app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', function($rootScope, $location, $cookies, AuthService, CONFIG) {
+  // Check the authentication required url and navigate to login
   $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
     if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
       var user = AuthService.getUser();
       if (!(user && user['token'])) {
-      // TODO: set expiry porperly
         var date = nextRoute.params.date;
         var path = nextRoute.originalPath.replace('/:date', '');
         var url = {'redirectUrl': path + '/' + date};

@@ -13,7 +13,7 @@
         </div>
         <input ng-readonly = "{{isReadonly}}" type="text" name="dayout" ng-model="timesheet.out" class="form-control"  placeholder="End" mask='99:99' ng-change="getTotalhours()">
       </div>
-      <span ng-show="((detailview.$submitted && detailview.dayin.$invalid) || (detailview.dayin.$dirty && detailview.dayin.$invalid)) || ((detailview.$submitted && detailview.dayout.$invalid) || (detailview.dayout.$dirty && detailview.dayout.$invalid)) "> Please enter correct time format. </span>
+      <span class="alert-danger" ng-show="((detailview.$submitted && detailview.dayin.$invalid) || (detailview.dayin.$dirty && detailview.dayin.$invalid)) || ((detailview.$submitted && detailview.dayout.$invalid) || (detailview.dayout.$dirty && detailview.dayout.$invalid))">Please enter correct time format. </span>
     </div>
     <div class="form-group">
       <label for="">Lunch</label>
@@ -24,7 +24,7 @@
         </div>
         <input ng-readonly = "{{isReadonly}}" type="text" name="lunchout" ng-model="timesheet.lunchOut" class="form-control"  placeholder="End" mask='99:99' ng-change="getTotalhours()">
       </div>
-      <span ng-show="((detailview.$submitted && detailview.lunchin.$invalid) || (detailview.lunchin.$dirty && detailview.lunchin.$invalid)) || ((detailview.$submitted && detailview.lunchout.$invalid) || (detailview.lunchout.$dirty && detailview.lunchout.$invalid)) "> Please enter correct time format. </span>
+      <span class="alert-danger" ng-show="((detailview.$submitted && detailview.lunchin.$invalid) || (detailview.lunchin.$dirty && detailview.lunchin.$invalid)) || ((detailview.$submitted && detailview.lunchout.$invalid) || (detailview.lunchout.$dirty && detailview.lunchout.$invalid)) "> Please enter correct time format. </span>
     </div>
     <div class="form-group">
       <label for="">Night</label>
@@ -35,13 +35,13 @@
         </div>
         <input ng-readonly = "{{isReadonly}}" type="text" name="nightout" ng-model="timesheet.nightOut" class="form-control"  placeholder="End" mask='99:99'  ng-change="getTotalhours()">
       </div>
-      <span ng-show="((detailview.$submitted && detailview.nightin.$invalid) || (detailview.nightin.$dirty && detailview.nightin.$invalid)) || ((detailview.$submitted && detailview.nightout.$invalid) || (detailview.nightout.$dirty && detailview.nightout.$invalid)) "> Please enter correct time format. </span>
+      <span class="alert-danger" ng-show="((detailview.$submitted && detailview.nightin.$invalid) || (detailview.nightin.$dirty && detailview.nightin.$invalid)) || ((detailview.$submitted && detailview.nightout.$invalid) || (detailview.nightout.$dirty && detailview.nightout.$invalid)) "> Please enter correct time format. </span>
     </div>
     <div class="form-group">
       <div class="input-group">
         <label for="totalhours">Total Hours</label>
         <button type="button" name="totalhours" id="totalhours" class="btn btn-deafult">
-          {{dayWork}}:hrs
+          {{totalHours}}:hrs
         </button>
       </div>
     </div>
@@ -51,8 +51,8 @@
           <textarea ng-readonly = "{{isReadonly}}" class="work-description"  maxlength="100" name="workdesc"  id ="workdesc" ng-model="timesheet.workDesc" > </textarea>
       </div>
     </div>
-    <span class="success-message">{{successMessage}}</span>
-    <span class="error-message">{{errorMessage}}</span>
+    <span class="alert-success">{{successMessage}}</span>
+    <span class="alert-danger">{{errorMessage}}</span>
     <div class="form-group">
       <div class="input-group">
         <button type="button" ng-disabled={{isReadonly}} class="btn btn-default divider" ng-click="reset()">
