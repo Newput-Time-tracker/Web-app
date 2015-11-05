@@ -5,7 +5,7 @@ function($scope, CONFIG, UserService) {
   $scope.errorMessage = null;
   var resetForm = function() {
     $scope.errorMessage = null;
-     $scope.successMessage = null;
+    $scope.successMessage = null;
   };
   this.userSignUp = function() {
     var userReg = $scope.user;
