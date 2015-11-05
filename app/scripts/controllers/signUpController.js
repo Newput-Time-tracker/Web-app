@@ -62,9 +62,8 @@ function($scope, CONFIG, UserService) {
     $event.stopPropagation();
     $scope.opened = true;
   };
-
-  $scope.reset = function() {
-    $scope.user = null;
+  $scope.reset = function(signup) {
+    signup.$setPristine();
+    signup.$setUntouched();
   };
-  $scope.reset();
 }]);
