@@ -133,6 +133,6 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
 
   $scope.resetMessage = function() {
     $scope.errorMessage = null;
-     $scope.successMessage = null;
+    $scope.successMessage = null;
   };
 }]);
