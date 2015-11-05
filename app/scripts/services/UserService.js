@@ -1,5 +1,6 @@
 /* global angular: false */
 /* global app: false */
+/* global moment: false */
 
 app.factory("UserService", ['$http', '$q', 'CONFIG', 'AuthService', '$cookies',
 function($http, $q, CONFIG, AuthService, $cookies) {
@@ -48,11 +49,16 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     },
 
     registerUser: function(userObj) {
+      var userData = userObj;
+      var user = {'firstName': userData.firstName, 'lastName': userData.lastName, 'email': userData.email,
+      'contact': userData.contact.toString(), 'address': userData.address, 'gender': userData.gender,
+      'dob': moment(userData.dob).format('DD-MM-YYYY').toString(), 'password': userData.password,
+      'doj': moment(userData.doj).format('DD-MM-YYYY').toString()};
       var q = $q.defer();
       $http({
         method: 'POST',
         url: CONFIG.API_URL + '/register',
-        data: userObj
+        data: user
       }).success(function(response) {
         q.resolve(response);
       }).error(function(response) {
