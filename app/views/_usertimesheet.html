@@ -27,7 +27,7 @@
           <p>
             Do you want to email the timesheet of {{selectedMonth}}, {{yearText}} to <b>{{employees.email}}</b> ?
           </p>
-          <div class="message" ng-hide=!successEmailMessage>{{successEmailMessage}}</div>
+          <div class="message" ng-hide=!message>{{message}}</div>
         </div>
         <div class="modal-header">
           <button type="button" id = "dismiss" class="btn btn-default" data-dismiss="modal">No</button>
@@ -68,13 +68,11 @@
         <a href="javascript:void(0)" type="button" ng-click="exportMe()">
           <span class="glyphicon glyphicon-export"></span>
         </a>
-        <!--a href="#" title="Export timesheet"><span class="glyphicon glyphicon-export"></span></a-->
       </div>
       <div class="col-sm-1 col-xs-1">
         <a href="javascript:void(0)" type="button" data-toggle="modal" data-target="#emailBox">
           <span class="glyphicon glyphicon-envelope"></span>
         </a>
-        <!--a href="#" ng-click="emailme()" title="Email timesheet"></a-->
       </div>
     </div>
   </div>
@@ -121,9 +119,7 @@
         <tr>
           <td colspan="10" class="col-span">Total Hrs.</td>
           <td>{{timesheetData.totalHours}} hrs</td>
-          <div class="center-link"><span class="error-message">{{errorMessage}}</span></div>
         </tr>
-        <span ng-show="timesheetArr.length == 0" class="message">No data available for this selection!</span>
       </tbody>
     </table>
   </div>

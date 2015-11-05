@@ -8,7 +8,7 @@ var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCooki
 app.constant('CONFIG', {
   APP_NAME: 'Time tracker',
   VERSION: '0.0.1',
-  API_URL: 'http://tt-rahul-backend.herokuapp.com/Tracker/rest/employee',
+  API_URL: 'http://time-tracker-backend-app.herokuapp.com/Tracker/rest/employee',
   SESSION_COOKIE: {
     NAME: 'TT_SESSION',
     EXPIRY: 365 // in days
