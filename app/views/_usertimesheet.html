@@ -3,9 +3,9 @@
     <div class="col-sm-7 col-xs-8 icon">
       Welcome {{employees.firstName}}!
     </div>
-    <div class ="col-sm-2 col-xs-1"><a href="#"><span class="glyphicon glyphicon-cog"></span></a>
+    <div class ="col-sm-2 col-xs-1"><a href="#" title="Settings"><span class="glyphicon glyphicon-cog"></span></a>
     </div>
-    <div class="col-sm-2 col-xs-1"><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+    <div class="col-sm-2 col-xs-1"><a href="#" title="Logout" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
     </div>
   </div>
 </div>
@@ -65,12 +65,12 @@
     </div>
     <div class="col-sm-offset-8 help-icons">
       <div class="col-sm-1 col-xs-1">
-        <a href="javascript:void(0)" type="button" ng-click="exportMe()">
+        <a href="javascript:void(0)" type="button" ng-click="exportMe()" title="Export Timesheet">
           <span class="glyphicon glyphicon-export"></span>
         </a>
       </div>
       <div class="col-sm-1 col-xs-1">
-        <a href="javascript:void(0)" type="button" data-toggle="modal" data-target="#emailBox">
+        <a href="javascript:void(0)" type="button" data-toggle="modal" data-target="#emailBox" title="Email Timesheet">
           <span class="glyphicon glyphicon-envelope"></span>
         </a>
       </div>
@@ -112,9 +112,9 @@
           <td>{{t.totalHour}}</td>
           <td>{{t.workDesc}}</td>
           <td ng-hide = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
-            <a href ="detailview/{{t.workDate}}"><span class="glyphicon glyphicon-edit")></span></a> | <span class="glyphicon glyphicon-copyright-mark"></span></td>
+            <a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><span class="glyphicon glyphicon-edit")></span></a> | <a href="javascript:void(0)" title="Copy Row"><span class="glyphicon glyphicon-copyright-mark"></span><a></a></td>
           <td ng-show = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
-            <center><a href ="detailview/{{t.workDate}}"><span class="glyphicon glyphicon-info-sign")></span></center></a></td>
+            <center><a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><span class="glyphicon glyphicon-info-sign")></span></center></a></td>
         </tr>
         <tr>
           <td colspan="10" class="col-span">Total Hrs.</td>
