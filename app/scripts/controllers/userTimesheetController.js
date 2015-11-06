@@ -391,8 +391,9 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   };
   // email excel sheet
   $scope.emailMe = function() {
+    $scope.message = '';
     if ($scope.employees != null) {
-      var month = $scope.monthsOptions.currentmonth.values;
+      var month = $scope.monthsOptions.currentmonth.value;
       month = monthList[month];
       var year = $scope.yearOptions.current.value;
       var emailTimesheetObj = {
@@ -410,10 +411,14 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
         }
       }, function() {}
       );
-      setTimeout(function() {
-        $('#dismiss').trigger('click');
+      $('#emailBox').on('hide.bs.modal', function() {
         $scope.message = '';
-      }, CONFIG.CLOSE_MODAL_BOX);
+        $('#email-timesheet-response').html('');
+      });
+      // setTimeout(function() {
+        // $('#dismiss').trigger('click');
+        // $scope.message = '';
+      // }, CONFIG.CLOSE_MODAL_BOX);
     }
   };
 
