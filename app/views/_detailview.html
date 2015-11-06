@@ -56,7 +56,7 @@
     <span class="text-danger">{{errorMessage}}</span>
     <div class="form-group">
       <div class="input-group">
-        <button ng-disabled="detailview.$invalid || {{isReadonly}}" type="submit" class="btn btn-primary divider">
+        <button id ="submit-btn" ng-disabled="detailview.$invalid || {{isReadonly}}" type="submit" class="btn btn-primary divider">
           Save
         </button>
         <button type="button" ng-disabled={{isReadonly}} class="btn btn-default divider" ng-click="reset()">
