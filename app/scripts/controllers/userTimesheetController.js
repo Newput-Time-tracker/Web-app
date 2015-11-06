@@ -46,6 +46,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.monthStart = 1;
   $scope.monthEnd = 0;
   $scope.disabledAttr = false;
+  $scope.icon = false;
 
 
   // get weeks by date in a month
@@ -213,6 +214,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       if (res.success) {
         $scope.message = '';
         if (res.data.length > 0) {
+          $scope.icon = true;
           timesheetArr = populateTimesheet(res.data);
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
@@ -221,6 +223,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           $scope.disabledAttr = false;
         }
       } else {
+        $scope.icon = false;
         var msg = 'undefined';
         if (perMonthObj.year == $scope.curYear) {
           if (perMonthObj.month != monthList[$scope.curMonth]) {
@@ -233,7 +236,8 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           }
         } else {
           $scope.monthlyDataAvailablityStatus = true;
-          $scope.disabledAttr = false;
+          $scope.disabledAttr = true;
+          $scope.monthlyDataAvailablityMessage = 'Data is not avaibale for this month.';
         }
         if ($scope.monthlyDataAvailablityStatus != true) {
           timesheetArr = populateTimesheet(msg);
