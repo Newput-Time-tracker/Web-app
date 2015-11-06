@@ -40,7 +40,7 @@
     <div class="form-group">
       <div class="input-group">
         <label for="totalhours">Total Hours</label>
-          <b>{{totalHours}}</b>
+          <b>{{totalHour}}</b>
       </div>
     </div>
     <div class="form-group">
@@ -53,11 +53,11 @@
     <span class="text-danger">{{errorMessage}}</span>
     <div class="form-group">
       <div class="input-group">
-        <button type="button" ng-disabled={{isReadonly}} class="btn btn-default divider" ng-click="reset()">
-          Reset
-        </button>
         <button ng-disabled="detailview.$invalid || {{isReadonly}}" type="submit" class="btn btn-primary divider">
           Save
+        </button>
+        <button type="button" ng-disabled={{isReadonly}} class="btn btn-default divider" ng-click="reset()">
+          Reset
         </button>
         <a href="usertimesheet"> Back To Home Page </a>
       </div>
