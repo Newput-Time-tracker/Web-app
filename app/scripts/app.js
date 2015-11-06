@@ -1,4 +1,5 @@
 /* global angular: false */
+/* eslint guard-for-in: 1 */
 // global constants
 var ENV_TYPES = { PRODUCTION: 'production', DEVELOPMENT: 'development', STAGING: 'staging' };
 
@@ -77,18 +78,28 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 }]);
 
 app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', function($rootScope, $location, $cookies, AuthService, CONFIG) {
+  var prepareRoute = function(routeObj) {
+    var route = routeObj.originalPath;
+    for (var key in routeObj['pathParams']) {
+      if (routeObj['pathParams'].hasOwnProperty(key)) {
+        route = route.replace(':' + key, routeObj['pathParams'][key]);
+      }
+    }
+    return route;
+  };
+
   // Check the authentication required url and navigate to login
   $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
     if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
-      var user = AuthService.getUser();
+      var user = AuthService.getAccessToken();
       if (!(user && user['token'])) {
-        var date = nextRoute.params.date;
-        var path = nextRoute.originalPath.replace('/:date', '');
-        var url = {'redirectUrl': path + '/' + date};
+        var url = {'redirectUrl': prepareRoute(nextRoute)};
         var now = new Date();
         now.setDate(now.getDate() + CONFIG.WEEK_DAYS);
         $cookies.put('tt_globals', JSON.stringify(url), {expiry: now});
         $location.path("/login");
+      }else {
+        $location.path(prepareRoute(nextRoute));
       }
     }
   });

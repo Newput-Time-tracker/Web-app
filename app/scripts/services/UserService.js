@@ -15,7 +15,7 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       }).success(function(response) {
         userJsonData = response;
         var employees = response.data;
-        if (employees.length > 1) {
+        if (employees.length) {
           var userObj = employees[0];
           var token = employees[1];
           if (userObj != null && token != null) {
@@ -139,7 +139,7 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     },
     getDayData: function(workDate) {
       var user = AuthService.getAccessToken();
-      var emp = {'id': user.userObj.id, 'token': user.token.token, 'workDate': workDate};
+      var emp = {'id': user.userObj.id, 'token': user.token.token, 'workDate': workDate.toString()};
       var q = $q.defer();
       $http({
         method: 'POST',
