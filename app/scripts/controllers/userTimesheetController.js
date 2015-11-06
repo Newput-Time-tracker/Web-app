@@ -45,6 +45,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.monthlyDataAvailablityMessage = '';
   $scope.monthStart = 1;
   $scope.monthEnd = 0;
+  $scope.disabledAttr = false;
 
 
   // get weeks by date in a month
@@ -117,7 +118,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     }
     var perHrs = parseInt(totalMins / CONFIG.MIN_PER_HOUR, 10);
     var perMins = parseInt(totalMins % CONFIG.MIN_PER_HOUR, 10);
-    totalMins = perHrs + ':' + perMins;
+    totalMins = perHrs + '.' + perMins;
     return totalMins;
   }
 
@@ -207,7 +208,6 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.showTimesheet = function(perMonthObj) {
     var totalhrs = 0;
     timesheetArr = {};
-    $scope.timesheetData = {};
     var monthlyData = UserService.timesheetData(perMonthObj);
     monthlyData.then(function(res) {
       if (res.success) {
@@ -218,6 +218,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
           $scope.monthlyDataAvailablityStatus = false;
+          $scope.disabledAttr = false;
         }
       } else {
         var msg = 'undefined';
@@ -225,16 +226,20 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           if (perMonthObj.month != monthList[$scope.curMonth]) {
             $scope.monthlyDataAvailablityStatus = true;
             $scope.monthlyDataAvailablityMessage = 'Data is not avaibale for this month.';
+            $scope.disabledAttr = true;
           } else {
             $scope.monthlyDataAvailablityStatus = false;
+            $scope.disabledAttr = false;
           }
         } else {
           $scope.monthlyDataAvailablityStatus = true;
+          $scope.disabledAttr = false;
         }
         if ($scope.monthlyDataAvailablityStatus != true) {
           timesheetArr = populateTimesheet(msg);
           totalhrs = calculatetime(timesheetArr);
           timesheetArr.totalHours = totalhrs;
+          $scope.timesheetData = {};
           $scope.timesheetData = timesheetArr;
         }
       }

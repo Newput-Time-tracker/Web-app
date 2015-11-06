@@ -41,7 +41,7 @@
   <div class="row">
     <div class="col-sm-offset-2 col-xs-offset-2">
       <div class="col-sm-3 col-xs-3">
-        <select class="form-control" ng-change="timesheet.weekUpdate()" ng-model ="weekDay" ng-options="week.key for week in weeksOptions.weeks">
+        <select ng-disabled = "disabledAttr" class="form-control" ng-change="timesheet.weekUpdate()" ng-model ="weekDay" ng-options="week.key for week in weeksOptions.weeks">
           <options>
             -- Weeks --
           </options>
@@ -64,7 +64,7 @@
         </select>
       </div>
     </div>
-    <div class="col-sm-offset-8 help-icons">
+    <div class="col-sm-offset-8 help-icons" ng-if="!monthlyDataAvailablityStatus">
       <div class="col-sm-1 col-xs-1">
         <a href="javascript:void(0)" type="button" ng-click="exportMe()" title="Export Timesheet">
           <span class="glyphicon glyphicon-export"></span>
@@ -113,13 +113,13 @@
           <td>{{t.totalHour}}</td>
           <td>{{t.workDesc}}</td>
           <td ng-hide = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
-            <a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><span class="glyphicon glyphicon-edit")></span></a> | <a href="javascript:void(0)" title="Copy Row"><span class="glyphicon glyphicon-copyright-mark"></span><a></a></td>
+            <center><a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><span class="glyphicon glyphicon-edit")></span></a></center> <a ng-if="false" href="javascript:void(0)" title="Copy Row"><span class="glyphicon glyphicon-copyright-mark"></span><a></a></td>
           <td ng-show = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
             <center><a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><span class="glyphicon glyphicon-info-sign")></span></center></a></td>
         </tr>
         <tr>
           <td colspan="10" class="col-span">Total Hrs.</td>
-          <td>{{timesheetData.totalHours}} hrs</td>
+          <td>{{timesheetData.totalHours}}</td>
         </tr>
       </tbody>
     </table>
