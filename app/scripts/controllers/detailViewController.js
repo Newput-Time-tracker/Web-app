@@ -149,6 +149,9 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     $scope.timesheet = null;
     $scope.dayWork = null;
     $scope.totalHour = null;
+    $scope.resetMessage();
+    $scope.detailview.$setPristine();
+    $scope.detailview.$setUntouched();
   };
 
   $scope.resetMessage = function() {
