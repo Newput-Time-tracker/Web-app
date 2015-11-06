@@ -74,8 +74,8 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     var minute = 60;
     var hours = parseInt(Math.floor(parseInt(totalWorkMinutes, 10)) / minute, 10);
     var minutes = parseInt(totalWorkMinutes, 10) % minute;
-    $scope.totalHours = hours + "." + minutes;
-    return $scope.totalHours;
+    $scope.totalHour = hours + "." + minutes;
+    return $scope.totalHour;
   };
   // calculate total hours
   $scope.getTotalhours = function() {
@@ -128,13 +128,14 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       if (monthlyDetailTimeSheet[$scope.date]) {
         $scope.timesheet.workDate = $scope.date;
         $scope.timesheet = monthlyDetailTimeSheet[$scope.date];
-        $scope.totalHours = $scope.timesheet.totalHour;
+        $scope.totalHour = $scope.timesheet.totalHour;
       }
     }else {
       var dataPromise = UserService.getDayData($scope.date);
       dataPromise.then(function(response) {
         if (response.success) {
           $scope.timesheet = response.data[0];
+          $scope.totalHour = $scope.timesheet.totalHour;
         }else {
           $scope.errorMessage = response.error;
         }
@@ -147,7 +148,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   $scope.reset = function() {
     $scope.timesheet = null;
     $scope.dayWork = null;
-    $scope.totalHours = null;
+    $scope.totalHour = null;
   };
 
   $scope.resetMessage = function() {

@@ -139,13 +139,11 @@ function($http, $q, CONFIG, AuthService, $cookies) {
     },
     getDayData: function(workDate) {
       var user = AuthService.getAccessToken();
-      var emp = {'id': user.userObj.id, 'token': user.token.token, 'workDate': workDate.toString()};
+      var emp = {'empId': user.userObj.id, 'token': user.token.token, 'workDate': workDate.toString()};
       var q = $q.defer();
       $http({
         method: 'POST',
         url: CONFIG.API_URL + '/workDayData',
-        crossDomain: true,
-        withCredentials: true,
         data: emp
       }).success(function(response) {
         q.resolve(response);
