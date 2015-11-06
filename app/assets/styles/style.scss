@@ -49,6 +49,10 @@ header {
       font-weight: 600;
     }
 
+    &.extend-form-width {
+      width: 600px;
+    }
+
     .center-link {
 
       &.padded {
@@ -325,4 +329,10 @@ table {
   margin-bottom: 5px;
 
 }
+
+.logo-img {
+  margin-right: 6px;
+  margin-top: -6px;
+}
+
 
