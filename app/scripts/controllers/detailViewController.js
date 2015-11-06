@@ -24,9 +24,32 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     return totalTimeInMinutes;
   };
 
+  var checkData = function(timesheet) {
+    if ((timesheet.in && timesheet.out) ||
+      (timesheet.lunchIn && timesheet.luncOut) ||
+     (timesheet.nightIn && timesheet.nightOut)) {
+      return true;
+    }else {
+      return false;
+    }
+  };
+  var checkBlank = function(timesheet) {
+    if ((timesheet.in == '00:00' && timesheet.out == '00:00') &&
+     (timesheet.lunchIn == '00:00' && timesheet.luncOut == '00:00') &&
+     (timesheet.nightIn == '00:00' && timesheet.nightOut == '00:00')) {
+      return true;
+    }else {
+      return false;
+    }
+  };
+
   // save timesheet entry
   this.saveTimesheet = function() {
-    if ($scope.timesheet == null) {
+    var flag = checkData($scope.timesheet);
+    if ($scope.timesheet == null || !flag) {
+      $scope.errorMessage = "Time fields Can't leave blank!!";
+      return;
+    }else if (checkBlank($scope.timesheet)) {
       $scope.errorMessage = "Time fields Can't leave blank!!";
       return;
     }
@@ -34,14 +57,10 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     if ($scope.errorMessage == null) {
       var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
       dataPromise.then(function(response) {
-        var REDIRECT_TIMEOUT = 3000;
         if (response.success) {
           $scope.successMessage = "Successfully Saved!";
-          $timeout(function() {
-            $location.path("/usertimesheet");
-          }, REDIRECT_TIMEOUT);
         }else {
-          $scope.errorMessage = "Invalid Entry! Please make sure the correct format";
+          $scope.errorMessage = "Sorry ! You can fill data only for current week.";
         }
       }, function() {
         $scope.errorMessage = "Something wrong on Server Please wait !";
