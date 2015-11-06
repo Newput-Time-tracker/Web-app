@@ -81,7 +81,9 @@ app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', functio
   var prepareRoute = function(routeObj) {
     var route = routeObj.originalPath;
     for (var key in routeObj['pathParams']) {
-      route = route.replace(':' + key, routeObj['pathParams'][key]);
+      if (routeObj['pathParams'].hasOwnProperty(key)) {
+        route = route.replace(':' + key, routeObj['pathParams'][key]);
+      }
     }
     return route;
   };
