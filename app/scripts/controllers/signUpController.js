@@ -10,6 +10,7 @@ function($scope, CONFIG, UserService) {
   };
   // user registration
   this.userSignUp = function() {
+    $('#submit-btn').text('Please wait...').attr('disabled', 'disabled');
     var userReg = $scope.user;
     // calculate age
     var age = $scope.calculateAge(userReg.dob);
@@ -21,12 +22,16 @@ function($scope, CONFIG, UserService) {
     dataPromise.then(function(response) {
       if (response.success) {
         $scope.successMessage = "Successfully Registered ! A verification email is sent to your email id, Please verify to login.";
+        $('#submit-btn').text('Register').removeAttr("disabled");
       } else {
         $scope.errorMessage = "Email id already exist!";
+        $('#submit-btn').text('Register').removeAttr("disabled");
       }
     }, function() {
       $scope.errorMessage = "Server is in maintenance mode!";
+      $('#submit-btn').text('Register').removeAttr("disabled");
     });
+
     resetErrorMessage();
   };
   // compare date of birth and date of joining

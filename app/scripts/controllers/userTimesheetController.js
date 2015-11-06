@@ -396,6 +396,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   };
   // email excel sheet
   $scope.emailMe = function() {
+    $('#submit-btn').text('Please wait...').attr('disabled', 'disabled');
     $scope.emailStatus = false;
     if ($scope.employees != null) {
       var month = $scope.monthsOptions.currentmonth.value;
@@ -410,6 +411,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       var emailPromise = UserService.emailMe(emailTimesheetObj);
       emailPromise.then(function() {
         $scope.emailStatus = true; // no need to check status
+        $('#submit-btn').text('Yes').removeAttr("disabled");
         $('#emailBox').on('hide.bs.modal', function() {
           $scope.message = '';
           $('#email-timesheet-response').html('');

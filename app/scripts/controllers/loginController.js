@@ -15,6 +15,7 @@ function($scope, $location, $cookies, UserService, AuthService) {
 
   // login user service
   this.loginUser = function() {
+    $('#submit-btn').text('Please wait...').attr('disabled', 'disabled');
     var employeesPromise = UserService.authUser($scope.user);
     employeesPromise.then(function(res) {
       if (res.success) {
@@ -28,10 +29,13 @@ function($scope, $location, $cookies, UserService, AuthService) {
         }
       } else {
         $scope.errorMessage = 'Looks like wrong email or password';
+        $('#submit-btn').text('Sign In').removeAttr("disabled");
       }
     }, function() {
       $scope.errorMessage = 'Something went wrong, please try again!';
+      $('#submit-btn').text('Sign In').removeAttr("disabled");
     });
+
     resetMessage();
   };
   this.toLocation = function(loc) {

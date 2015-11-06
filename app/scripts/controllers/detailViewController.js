@@ -45,12 +45,15 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
 
   // save timesheet entry
   this.saveTimesheet = function() {
+    $('#submit-btn').text('Please wait...').attr('disabled', 'disabled');
     var flag = checkData($scope.timesheet);
     if ($scope.timesheet == null || !flag) {
       $scope.errorMessage = "Time fields Can't leave blank!!";
+      $('#submit-btn').text('Save').removeAttr("disabled");
       return;
     }else if (checkBlank($scope.timesheet)) {
       $scope.errorMessage = "Time fields Can't leave blank!!";
+      $('#submit-btn').text('Save').removeAttr("disabled");
       return;
     }
     // totalworkingHour = $scope.getTotoalhours($scope.timesheet);
@@ -59,11 +62,14 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       dataPromise.then(function(response) {
         if (response.success) {
           $scope.successMessage = "Successfully Saved!";
+          $('#submit-btn').text('Save').removeAttr("disabled");
         }else {
           $scope.errorMessage = "Sorry ! You can fill data only for current week.";
+          $('#submit-btn').text('Save').removeAttr("disabled");
         }
       }, function() {
         $scope.errorMessage = "Something wrong on Server Please wait !";
+        $('#submit-btn').text('Save').removeAttr("disabled");
       });
     }
   };
@@ -110,7 +116,8 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       return;
     }
   };
-  // initialize method use when some one call detail url direct form browser or edit any existing record
+  // initialize method use when some one call detail url direct form browser or edit any
+  // existing record
   var init = function() {
     $scope.date = $routeParams.date;
     var newDate = moment($scope.date, ["DD-MM-YYYY"]);

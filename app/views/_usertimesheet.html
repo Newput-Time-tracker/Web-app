@@ -12,7 +12,7 @@
 <div class="row timesheet-container">
   <div class="col-sm-12">
     <center>
-      <h2>Time Sheet of {{selectedMonth}}<sub>{{weeksDateStr}}</sub></h2>
+      <h2>Time Sheet of {{selectedMonth}}</h2>
     </center>
   </div>
   <!-- Modal -->
@@ -31,7 +31,7 @@
           <div id="email-timesheet-response" ng-if="emailStatus" class="text-success">Timehseet has been sent successfully.</div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" ng-click="emailMe()">Yes</button>
+          <button type="button" id = "submit-btn" class="btn btn-primary" ng-click="emailMe()">Yes</button>
           <button type="button" id = "dismiss" class="btn btn-default" data-dismiss="modal">No</button>
         </div>
       </div>
