@@ -28,7 +28,7 @@
           <p>
             Do you want to email the timesheet of {{selectedMonth}}, {{yearText}} to <b>{{employees.email}}</b> ?
           </p>
-          <div id="email-timesheet-response" class="text-success">{{message}}</div>
+          <div id="email-timesheet-response" ng-if="emailStatus" class="text-success">Timehseet has been sent successfully.</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" ng-click="emailMe()">Yes</button>

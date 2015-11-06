@@ -396,7 +396,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   };
   // email excel sheet
   $scope.emailMe = function() {
-    $scope.message = '';
+    $scope.emailStatus = false;
     if ($scope.employees != null) {
       var month = $scope.monthsOptions.currentmonth.value;
       month = monthList[month];
@@ -408,22 +408,18 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
         'token': $scope.token.token
       };
       var emailPromise = UserService.emailMe(emailTimesheetObj);
-      emailPromise.then(function(res) {
-        if (res.success) {
-          $scope.message = 'Timesheet has been sent successfully.';
-        } else {
-          $scope.message = 'No timesheet data is available.';
-        }
+      emailPromise.then(function() {
+        $scope.emailStatus = true; // no need to check status
+        $('#emailBox').on('hide.bs.modal', function() {
+          $scope.message = '';
+          $('#email-timesheet-response').html('');
+        });
+        setTimeout(function() {
+          $('#dismiss').trigger('click');
+          $scope.message = '';
+        }, CONFIG.CLOSE_MODAL_BOX);
       }, function() {}
       );
-      $('#emailBox').on('hide.bs.modal', function() {
-        $scope.message = '';
-        $('#email-timesheet-response').html('');
-      });
-      // setTimeout(function() {
-        // $('#dismiss').trigger('click');
-        // $scope.message = '';
-      // }, CONFIG.CLOSE_MODAL_BOX);
     }
   };
 
