@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-sm-12">
           <label for="email">Email:*</label>
-          <input type="email" class="form-control" maxlength="25"  ng-model="user.email" name="email" ng-required="true"  placeholder="Enter email">
+          <input type="email" class="form-control" maxlength="30"  ng-model="user.email" name="email" ng-required="true"  placeholder="Enter email">
           <div ng-show="signup.$submitted || signup.email.$touched">
             <span ng-cloak class="text-danger" ng-show="signup.email.$error.required">Tell us your email.</span>
             <span ng-cloak class="text-danger" ng-show="signup.email.$error.email">This is not a valid email.</span>

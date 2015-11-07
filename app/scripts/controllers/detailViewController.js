@@ -1,5 +1,6 @@
 /* global moment: false */
 /* global app: false */
+/* global detailview: false */
 
 app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService',
 function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
@@ -151,6 +152,22 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       });
     }
   };
+
+  $scope.getDayInStatus = function() {
+    var dayin = detailview.dayin.value;
+    var dayout = detailview.dayout.value;
+    if ($scope.timesheet.lunchIn && dayin) {
+      if ($scope.timesheet.lunchIn < dayin) {
+        $scope.errorMessage = "Looks like you are having lunch before coming to office!";
+      }
+    }
+    if ($scope.timesheet.lunchIn && dayout) {
+      if ($scope.timesheet.lunchIn > dayout) {
+        $scope.errorMessage = "Looks like you are having lunch after leaving office!";
+      }
+    }
+  };
+
   init();
   $scope.reset = function() {
     $scope.timesheet = null;
