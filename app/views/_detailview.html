@@ -46,10 +46,7 @@
     <div class="form-group">
       <label for="workdesc">Work Desc.</label>
       <div class="input-group">
-          <textarea ng-readonly = "{{isReadonly}}" class="work-description form-control"  ng-required="true" maxlength="100" name="workdesc"  id ="workdesc" ng-model="timesheet.workDesc" > </textarea>
-      </div>
-      <div ng-show="detailview.$submitted || detailview.workdesc.$touched" >
-          <span ng-cloak class="text-danger" ng-show="detailview.workdesc.$error.required">Please fill description</span>
+          <textarea ng-readonly = "{{isReadonly}}" class="work-description form-control"  maxlength="100" name="workdesc"  id ="workdesc" ng-model="timesheet.workDesc" > </textarea>
       </div>
     </div>
     <span class="text-success">{{successMessage}}</span>
