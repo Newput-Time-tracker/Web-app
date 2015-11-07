@@ -9,7 +9,7 @@ function($scope, $location, $timeout, AuthService) {
       if (response.success) {
         $scope.successMessage = "Verify Successfully!";
       } else {
-        $scope.errorMessage = "You account is already verified";
+        $scope.errorMessage = "Your account is already verified";
       }
     }, function() {
       $scope.errorMessage = "Server will up in few minutes Please wait";
