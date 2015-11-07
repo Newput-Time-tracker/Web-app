@@ -18,11 +18,11 @@
     <div class="form-group">
       <label for="">Lunch</label>
       <div class="input-group">
-        <input ng-readonly = "{{isReadonly}}" type="text" name="lunchin" ng-model="timesheet.lunchIn" class="form-control" placeholder="00:00" mask='99:99' ng-change="getTotalhours()">
+        <input ng-readonly = "{{isReadonly}}" type="text" name="lunchin" ng-model="timesheet.lunchIn" class="form-control" placeholder="00:00" mask='99:99' ng-change="getTotalhours(); getDayInStatus()">
         <div class="input-group-addon">
           To
         </div>
-        <input ng-readonly = "{{isReadonly}}" type="text" name="lunchout" ng-model="timesheet.lunchOut" class="form-control"  placeholder="00:00" mask='99:99' ng-change="getTotalhours()">
+        <input ng-readonly = "{{isReadonly}}" type="text" name="lunchout" ng-model="timesheet.lunchOut" class="form-control"  placeholder="00:00" mask='99:99' ng-change="getTotalhours(); getDayInStatus()">
       </div>
       <span class="text-danger" ng-show="((detailview.$submitted && detailview.lunchin.$invalid) || (detailview.lunchin.$dirty && detailview.lunchin.$invalid)) || ((detailview.$submitted && detailview.lunchout.$invalid) || (detailview.lunchout.$dirty && detailview.lunchout.$invalid)) "> Please enter correct time format. </span>
     </div>
