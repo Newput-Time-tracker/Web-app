@@ -103,9 +103,9 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       $scope.timesheet.nightIn != null && $scope.timesheet.nightOut != null) {
       nightTime = getWorkDayHours($scope.timesheet.nightIn, $scope.timesheet.nightOut);
     }
-    // $scope.isInvalid($scope.timesheet.in, $scope.timesheet.out);
-    // $scope.isInvalid($scope.timesheet.lunchIn, $scope.timesheet.lunchOut);
-    // $scope.isInvalid($scope.timesheet.nightIn, $scope.timesheet.nightOut);
+    $scope.isInvalid($scope.timesheet.in, $scope.timesheet.out);
+    $scope.isInvalid($scope.timesheet.lunchIn, $scope.timesheet.lunchOut);
+    $scope.isInvalid($scope.timesheet.nightIn, $scope.timesheet.nightOut);
 
     dayWork(dayTime, lunchTime, nightTime);
   };
