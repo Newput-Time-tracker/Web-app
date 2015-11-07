@@ -103,9 +103,9 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       $scope.timesheet.nightIn != null && $scope.timesheet.nightOut != null) {
       nightTime = getWorkDayHours($scope.timesheet.nightIn, $scope.timesheet.nightOut);
     }
-    $scope.isInvalid($scope.timesheet.in, $scope.timesheet.out);
-    $scope.isInvalid($scope.timesheet.lunchIn, $scope.timesheet.lunchOut);
-    $scope.isInvalid($scope.timesheet.nightIn, $scope.timesheet.nightOut);
+    // $scope.isInvalid($scope.timesheet.in, $scope.timesheet.out);
+    // $scope.isInvalid($scope.timesheet.lunchIn, $scope.timesheet.lunchOut);
+    // $scope.isInvalid($scope.timesheet.nightIn, $scope.timesheet.nightOut);
 
     dayWork(dayTime, lunchTime, nightTime);
   };
@@ -159,11 +159,13 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     if ($scope.timesheet.lunchIn && dayin) {
       if ($scope.timesheet.lunchIn < dayin) {
         $scope.errorMessage = "Looks like you are having lunch before coming to office!";
+        return;
       }
     }
     if ($scope.timesheet.lunchIn && dayout) {
       if ($scope.timesheet.lunchIn > dayout) {
         $scope.errorMessage = "Looks like you are having lunch after leaving office!";
+        return;
       }
     }
   };
