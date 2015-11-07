@@ -15,4 +15,4 @@ Wep app for helps in managing the timesheet data.
 3. Run `scss-lint app/assets/styles/*.scss` to verify no linitng issues with SCSS.
 
 ## Dev App:
-https://time-tracker-web.herokuapp.com/
+http://time-tracker-web.herokuapp.com/
