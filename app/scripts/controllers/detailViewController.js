@@ -26,12 +26,13 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   };
 
   var checkData = function(timesheet) {
-    if ((timesheet.in && timesheet.out) ||
-      (timesheet.lunchIn && timesheet.luncOut) ||
-     (timesheet.nightIn && timesheet.nightOut)) {
-      return true;
-    }else {
-      return false;
+    if (timesheet != null) {
+      if ((timesheet.in && timesheet.out) || (timesheet.lunchIn && timesheet.luncOut) ||
+      (timesheet.nightIn && timesheet.nightOut)) {
+        return true;
+      } else {
+        return false;
+      }
     }
   };
   var checkBlank = function(timesheet) {
@@ -46,7 +47,6 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
 
   // save timesheet entry
   this.saveTimesheet = function() {
-    $('#submit-btn').text('Please wait...').attr('disabled', 'disabled');
     var flag = checkData($scope.timesheet);
     if ($scope.timesheet == null || !flag) {
       $scope.errorMessage = "Time fields Can't leave blank!!";
@@ -60,6 +60,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     // totalworkingHour = $scope.getTotoalhours($scope.timesheet);
     if ($scope.errorMessage == null) {
       var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
+      $('#submit-btn').text('Please wait...').attr('disabled', 'disabled');
       dataPromise.then(function(response) {
         if (response.success) {
           $scope.successMessage = "Successfully Saved!";
@@ -178,6 +179,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     $scope.resetMessage();
     $scope.detailview.$setPristine();
     $scope.detailview.$setUntouched();
+    $('#submit-btn').text('Save').removeAttr("disabled");
   };
 
   $scope.resetMessage = function() {
