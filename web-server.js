@@ -3,7 +3,7 @@ var app = express();
 
 // serve static files on server
 
-//for DEV envrionment
+/*for DEV envrionment*/
 app.use(express.static(__dirname));
 app.use('/vendors', express.static(__dirname + '/bower_components'));
 app.use('/dev_css', express.static(__dirname + '/app/assets/styles'));
