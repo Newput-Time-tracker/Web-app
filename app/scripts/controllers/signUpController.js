@@ -16,6 +16,7 @@ function($scope, CONFIG, UserService) {
     var age = $scope.calculateAge(userReg.dob);
     if (age < CONFIG.MIN_AGE) {
       $scope.errorMessage = " Age should be 18 year or above ";
+      $('#submit-btn').text('Register').removeAttr("disabled");
       return;
     }
     var dataPromise = UserService.registerUser($scope.user);
@@ -41,6 +42,7 @@ function($scope, CONFIG, UserService) {
     resetErrorMessage();
     if (new Date(dob) > new Date(doj)) {
       $scope.errorMessage = "Date of birth should be less than date of joining";
+      $('#submit-btn').text('Register').removeAttr("disabled");
       return;
     }
   };
