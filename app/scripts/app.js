@@ -5,7 +5,11 @@ var ENV_TYPES = { PRODUCTION: 'production', DEVELOPMENT: 'development', STAGING:
 
 var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ngMask', 'ngCookies']);
 
-// app level constants
+/* app level constants*/
+
+app level constants*
+
+
 app.constant('CONFIG', {
   APP_NAME: 'Time tracker',
   VERSION: '0.0.1',
