@@ -92,14 +92,19 @@ app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', functio
   $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
     if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
       var user = AuthService.getAccessToken();
+      $rootScope.userName = '';
+      $rootScope.userStatus = false;
       if (!(user && user['token'])) {
         var url = {'redirectUrl': prepareRoute(nextRoute)};
         var now = new Date();
         now.setDate(now.getDate() + CONFIG.WEEK_DAYS);
         $cookies.put('tt_globals', JSON.stringify(url), {expiry: now});
+        $rootScope.userStatus = false;
         $location.path("/login");
-      }else {
+      } else {
         $location.path(prepareRoute(nextRoute));
+        $rootScope.userName = user['userObj'].firstName;
+        $rootScope.userStatus = true;
       }
     }
   });

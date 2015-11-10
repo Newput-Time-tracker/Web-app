@@ -48,35 +48,6 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.disabledAttr = false;
   $scope.icon = false;
 
-
-  // get weeks by date in a month
-  function getWeeksInMonth(month, year) {
-    var weeks = [];
-    var firstDate = new Date(year, month, 1);
-    var lastDate = new Date(year, month + 1, 0);
-    var numDays = lastDate.getDate();
-    var start = 1;
-    var end = CONFIG.WEEK_DAYS - firstDate.getDay();
-
-    weeks.push({ 'key': 'Select Week', 'start': null, 'end': null });
-    while (start <= numDays) {
-      var upto = start + ' to ' + end;
-      weeks.push({
-        'key': upto,
-        'start': start,
-        'end': end
-      });
-      start = end + CONFIG.START_OF_THE_WEEK;
-      end += CONFIG.END_OF_THE_WEEK;
-      $scope.monthEnd = numDays;
-      if (end > numDays) {
-        end = numDays;
-        $scope.monthEnd = numDays;
-      }
-    }
-    return weeks;
-  }
-
   // append suffix to week numbers (NOT IN USE RIGHT NOW)
   function weekSuffix(num) {
     var i = num % CONFIG.MOD;
@@ -102,6 +73,41 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       dDay = weekList[momentObj.day()];
     }
     return dDay;
+  }
+
+  // get weeks by date in a month
+  function getWeeksInMonth(month, year) {
+    var weeks = [];
+    var firstDate = new Date(year, month, 1);
+    var lastDate = new Date(year, month + 1, 0);
+    var numDays = lastDate.getDate();
+    var start = 1;
+    var end = CONFIG.WEEK_DAYS - firstDate.getDay();
+    var count = 1;
+    var weeklyStartDate = '';
+    var weeklyEndDate = '';
+    weeks.push({ 'key': 'Select Week', 'start': null, 'end': null });
+    while (start <= numDays) {
+      weeklyStartDate = start + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getFullYear();
+      var weeklyStartDay = formateDate(weeklyStartDate, 2);
+      weeklyEndDate = end + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getFullYear();
+      var weeklyEndDay = formateDate(weeklyEndDate, 2);
+      var upto = weekSuffix(count) + ' Week, ' + weeklyStartDay + ',' + weekSuffix(start) + ' to ' + weeklyEndDay + ',' + weekSuffix(end);
+      weeks.push({
+        'key': upto,
+        'start': start,
+        'end': end
+      });
+      start = end + CONFIG.START_OF_THE_WEEK;
+      end += CONFIG.END_OF_THE_WEEK;
+      $scope.monthEnd = numDays;
+      if (end > numDays) {
+        end = numDays;
+        $scope.monthEnd = numDays;
+      }
+      count++;
+    }
+    return weeks;
   }
 
   function fromatHours(hours) {
@@ -448,14 +454,6 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       };
       var exportPromise = UserService.exportMe(exportTimesheetObj);
       window.open(exportPromise, '_blank');
-    }
-  };
-
-  // logout user
-  $scope.logout = function() {
-    var status = UserService.endSession();
-    if (status) {
-      $location.path('/login');
     }
   };
 }]);

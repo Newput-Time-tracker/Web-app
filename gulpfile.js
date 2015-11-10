@@ -39,7 +39,8 @@ var applicationScripts = [
   'app/scripts/controllers/userTimesheetController.js',
   'app/scripts/controllers/detailViewController.js',
   'app/scripts/controllers/verifyUserController.js',
-  'app/scripts/controllers/forgotPasswordController.js'
+  'app/scripts/controllers/forgotPasswordController.js',
+  'app/scripts/controllers/logoutController.js'
 ];
 
 // build assets
