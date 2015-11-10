@@ -25,40 +25,20 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     return totalTimeInMinutes;
   };
 
-  var checkData = function(timesheet) {
-    if (timesheet != null) {
-      if ((timesheet.in && timesheet.out) || (timesheet.lunchIn && timesheet.luncOut) ||
-      (timesheet.nightIn && timesheet.nightOut)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  };
-  var checkBlank = function(timesheet) {
-    if ((timesheet.in == '00:00' && timesheet.out == '00:00') &&
-     (timesheet.lunchIn == '00:00' && timesheet.luncOut == '00:00') &&
-     (timesheet.nightIn == '00:00' && timesheet.nightOut == '00:00')) {
-      return true;
-    }else {
-      return false;
-    }
-  };
-
   // save timesheet entry
   this.saveTimesheet = function() {
-    var flag = checkData($scope.timesheet);
-    if ($scope.timesheet == null || !flag) {
-      $scope.errorMessage = "Time fields Can't leave blank!!";
-      $('#submit-btn').text('Save').removeAttr("disabled");
-      return;
-    }else if (checkBlank($scope.timesheet)) {
+    // var flag = checkData($scope.timesheet);
+    $scope.isInvalid($scope.timesheet.in, $scope.timesheet.out);
+    $scope.isInvalid($scope.timesheet.lunchIn, $scope.timesheet.lunchOut);
+    $scope.isInvalid($scope.timesheet.nightIn, $scope.timesheet.nightOut);
+
+    if ($scope.timesheet == null) {
       $scope.errorMessage = "Time fields Can't leave blank!!";
       $('#submit-btn').text('Save').removeAttr("disabled");
       return;
     }
     // totalworkingHour = $scope.getTotoalhours($scope.timesheet);
-    if ($scope.errorMessage == null) {
+    if ($scope.errorMessage == null && $scope.lunchErrorMessage == null && $scope.nightErrorMessage == null) {
       var dataPromise = UserService.saveDetailTimeSheet($scope.timesheet, $scope.date);
       $('#submit-btn').text('Please wait...').attr('disabled', 'disabled');
       dataPromise.then(function(response) {
@@ -104,9 +84,9 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       $scope.timesheet.nightIn != null && $scope.timesheet.nightOut != null) {
       nightTime = getWorkDayHours($scope.timesheet.nightIn, $scope.timesheet.nightOut);
     }
-    $scope.isInvalid($scope.timesheet.in, $scope.timesheet.out);
-    $scope.isInvalid($scope.timesheet.lunchIn, $scope.timesheet.lunchOut);
-    $scope.isInvalid($scope.timesheet.nightIn, $scope.timesheet.nightOut);
+    // $scope.isInvalid($scope.timesheet.in, $scope.timesheet.out);
+    // $scope.isInvalid($scope.timesheet.lunchIn, $scope.timesheet.lunchOut);
+    // $scope.isInvalid($scope.timesheet.nightIn, $scope.timesheet.nightOut);
 
     dayWork(dayTime, lunchTime, nightTime);
   };
@@ -114,7 +94,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   $scope.isInvalid = function(timeIn, timeOut) {
     if ((timeIn != null && timeOut == null) || (timeIn == null && timeOut != null) ||
      (timeIn === "" && timeOut != "") || (timeOut === "" && timeIn != "")) {
-      $scope.errorMessage = "Please insert valid time format";
+      $scope.errorMessage = "Please insert valid combination of input";
       return;
     }
   };
@@ -159,19 +139,31 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     var dayout = detailview.dayout.value;
     if ($scope.timesheet.lunchIn && dayin) {
       if ($scope.timesheet.lunchIn < dayin) {
-        $scope.errorMessage = "Looks like you are having lunch before coming to office!";
+        $scope.lunchErrorMessage = "Looks like you are having lunch before coming to office!";
         return;
       }
     }
     if ($scope.timesheet.lunchIn && dayout) {
       if ($scope.timesheet.lunchIn > dayout) {
-        $scope.errorMessage = "Looks like you are having lunch after leaving office!";
+        $scope.lunchErrorMessage = "Looks like you are having lunch after leaving office!";
         return;
       }
     }
   };
 
-  init();
+  $scope.getNightInStatus = function() {
+    var nightin = detailview.nightin.value;
+    if (nightin) {
+      var night = nightin.split(':');
+      var nu = 18;
+      var ngtTime = parseInt(night[0], 10);
+      if (ngtTime <= nu) {
+        $scope.nightErrorMessage = "Looks like you are filling invalid night time!";
+        return;
+      }
+    }
+  };
+
   $scope.reset = function() {
     $scope.timesheet = null;
     $scope.dayWork = null;
@@ -185,5 +177,8 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
   $scope.resetMessage = function() {
     $scope.errorMessage = null;
     $scope.successMessage = null;
+    $scope.nightErrorMessage = null;
+    $scope.lunchErrorMessage = null;
   };
+  init();
 }]);
