@@ -79,5 +79,6 @@ function($scope, CONFIG, UserService) {
     resetErrorMessage();
     $scope.signup.$setPristine();
     $scope.signup.$setUntouched();
+    $scope.user = '';
   };
 }]);
