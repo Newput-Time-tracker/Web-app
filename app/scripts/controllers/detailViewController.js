@@ -124,6 +124,17 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
       dataPromise.then(function(response) {
         if (response.success) {
           $scope.timesheet = response.data[0];
+          var nightOut = $scope.timesheet.nightOut;
+          var num = 6;
+          if (parseInt(nightOut, 10) <= num) {
+            var timeArray = nightOut.toString().split(":");
+            var dayHours = 24;
+            var hours = dayHours + parseInt(timeArray[0], 10);
+            var minutes = timeArray[1];
+            $scope.timesheet.nightOut = hours + ":" + minutes;
+          }else {
+            $scope.timesheet = response.data[0];
+          }
           $scope.totalHour = $scope.timesheet.totalHour;
         }else {
           $scope.errorMessage = response.error;
