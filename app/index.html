@@ -60,6 +60,10 @@
 
     <script src="scripts/controllers/forgotPasswordController.js"></script>
 
+    <script src="scripts/controllers/indexController.js"></script>
+
+    <script src="scripts/controllers/logoutController.js"></script>
+
     <!-- endinject -->
 
   </head>
@@ -69,6 +73,12 @@
         <div class="container">
           <div class="navbar-header">
              <a href="/" class="navbar-brand"><span><img class="logo-img" src="app/assets/images/logo.png"></span> Time Tracker</a>
+          </div>
+          <div id="navbarCollapse" class="collapse navbar-collapse" ng-if="userStatus">
+            <ul class="nav navbar-nav navbar-right">
+                <li><div class="welcome-text">Welcome {{userName}}!</div></li>
+                <li ng-controller="logoutController"><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a></li>
+            </ul>
           </div>
         </div>
       </nav>

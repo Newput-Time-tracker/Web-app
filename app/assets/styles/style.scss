@@ -340,3 +340,12 @@ table {
   margin-left: 5px;
 }
 
+.welcome-text {
+  color: $welcome-text;
+  padding-top: 15px;
+
+  &:hover {
+    color: $welcome-hover-text;
+  }
+}
+
