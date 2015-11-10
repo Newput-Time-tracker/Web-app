@@ -114,12 +114,19 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     var totalMins = 0;
     for (var i = 0; i < timesheetData.length; i++) {
       var hours = timesheetData[i].totalHour;
-      var perDayMins = fromatHours(hours);
-      totalMins = parseInt(perDayMins, 10) + parseInt(totalMins, 10);
+      if (hours != '') {
+        var perDayMins = fromatHours(hours);
+        totalMins = parseInt(perDayMins, 10) + parseInt(totalMins, 10);
+      }
     }
-    var perHrs = parseInt(totalMins / CONFIG.MIN_PER_HOUR, 10);
-    var perMins = parseInt(totalMins % CONFIG.MIN_PER_HOUR, 10);
-    totalMins = perHrs + '.' + perMins;
+    if (totalMins) {
+      var perHrs = parseInt(totalMins / CONFIG.MIN_PER_HOUR, 10);
+      var perMins = parseInt(totalMins % CONFIG.MIN_PER_HOUR, 10);
+      totalMins = perHrs + '.' + perMins;
+    } else {
+      totalMins = 0.0;
+    }
+
     return totalMins;
   }
 
@@ -130,13 +137,13 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     var perDayData = {
       'day': dDate,
       'dayName': dDay,
-      'in': '00:00',
-      'lunchIn': '00:00',
-      'lunchOut': '00:00',
-      'nightIn': '00:00',
-      'nightOut': '00:00',
-      'out': '00:00',
-      'totalHour': '00:00',
+      'in': '',
+      'lunchIn': '',
+      'lunchOut': '',
+      'nightIn': '',
+      'nightOut': '',
+      'out': '',
+      'totalHour': '',
       'workDate': workDate,
       'workDesc': ''
     };
@@ -186,13 +193,13 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
             oneDayData = {
               'day': dDate,
               'dayName': dDay,
-              'in': '00:00',
-              'lunchIn': '00:00',
-              'lunchOut': '00:00',
-              'nightIn': '00:00',
-              'nightOut': '00:00',
-              'out': '00:00',
-              'totalHour': '00:00',
+              'in': '',
+              'lunchIn': '',
+              'lunchOut': '',
+              'nightIn': '',
+              'nightOut': '',
+              'out': '',
+              'totalHour': '',
               'workDate': workDate,
               'workDesc': ''
             };
