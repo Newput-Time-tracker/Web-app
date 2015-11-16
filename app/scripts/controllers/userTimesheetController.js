@@ -118,6 +118,9 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
 
   function trimDesc(desc) {
     var trimmedString = desc.substr(0, CONFIG.MAX_LENGTH);
+    if (trimmedString.length != desc.length) {
+      trimmedString += '...';
+    }
     // trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
     return trimmedString;
   }
@@ -129,7 +132,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       var hours = timesheetData[i].totalHour;
       if (timesheetData[i].workDesc != '') {
         desc = trimDesc(timesheetData[i].workDesc);
-        timesheetData[i].description = desc + '...';
+        timesheetData[i].description = desc;
       }
       if (hours != '') {
         var perDayMins = fromatHours(hours);
