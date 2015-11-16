@@ -56,12 +56,12 @@
     <div class="col-sm-offset-8 help-icons" ng-if="icon">
       <div class="col-sm-1 col-xs-1">
         <a href="javascript:void(0)" type="button" ng-click="exportMe()" title="Export Timesheet">
-          <span class="glyphicon glyphicon-export"></span>
+          <i class="fa fa-download"></i>
         </a>
       </div>
       <div class="col-sm-1 col-xs-1">
         <a href="javascript:void(0)" type="button" data-toggle="modal" data-target="#emailBox" title="Email Timesheet">
-          <span class="glyphicon glyphicon-envelope"></span>
+          <i class="fa fa-envelope"></i>
         </a>
       </div>
     </div>
@@ -102,9 +102,9 @@
           <td>{{t.totalHour}}</td>
           <td>{{t.description}}</td>
           <td ng-hide = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
-            <center><a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><span class="glyphicon glyphicon-edit")></span></a></center> <a ng-if="false" href="javascript:void(0)" title="Copy Row"><span class="glyphicon glyphicon-copyright-mark"></span><a></a></td>
+            <center><a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><i class="fa fa-pencil-square-o"></i></a></center> <a ng-if="false" href="javascript:void(0)" title="Copy Row"><i class="fa fa-files-o"></i><a></a></td>
           <td ng-show = "(curMonth != monthsOptions.currentmonth.value) || (curYear != yearOptions.current.value)">
-            <center><a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><span class="glyphicon glyphicon-info-sign")></span></center></a></td>
+            <center><a href ="detailview/{{t.workDate}}" title="Edit Timesheet"><i class="fa fa-info-circle"></i></center></a></td>
         </tr>
         <tr>
           <td colspan="10" class="col-span">Total Hrs.</td>

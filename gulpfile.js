@@ -9,7 +9,8 @@ var inject = require('gulp-inject');
 // vendor files
 var vendorCSS = [
   'bower_components/open-sans-fontface/open-sans.css',
-  'bower_components/bootstrap/dist/css/bootstrap.min.css'
+  'bower_components/bootstrap/dist/css/bootstrap.min.css',
+  'bower_components/font-awesome/css/font-awesome.min.css'
 ];
 
 var vendorScripts = [
