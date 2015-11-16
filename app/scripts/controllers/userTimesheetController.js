@@ -162,7 +162,8 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       'out': '',
       'totalHour': '',
       'workDate': workDate,
-      'workDesc': ''
+      'workDesc': '',
+      'newEntry': true
     };
     return perDayData;
   }
@@ -194,6 +195,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           localDS.day = dDate;
           localDS.dayName = dDay;
           status = false;
+          localDS.newEntry = false;
         } else {
           status = true;
         }
@@ -218,7 +220,8 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
               'out': '',
               'totalHour': '',
               'workDate': workDate,
-              'workDesc': ''
+              'workDesc': '',
+              'newEntry': true
             };
             monthlyTimesheet.push(oneDayData);
             $rootScope.detailTimesheetByIndex[workDate] = oneDayData;
