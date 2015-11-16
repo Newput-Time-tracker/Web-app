@@ -30,11 +30,11 @@
     <div class="form-group">
       <label for="">Night</label>
       <div class="input-group">
-        <input ng-readonly = "{{isReadonly}}" type="text" name="nightin" ng-model="timesheet.nightIn" class="form-control" placeholder="00:00" mask='99:99' ng-change="getTotalhours(); getNightInStatus()">
+        <input ng-readonly = "{{isReadonly}}" type="text" name="nightin" ng-model="timesheet.nightIn" class="form-control" placeholder="00:00" mask='99:99' ng-change="getTotalhours(); getDayInStatus(); getNightInStatus()">
         <div class="input-group-addon">
           To
         </div>
-        <input ng-readonly = "{{isReadonly}}" type="text" name="nightout" ng-model="timesheet.nightOut" class="form-control"  placeholder="00:00" mask='99:99'  ng-change="getTotalhours(); getNightInStatus()">
+        <input ng-readonly = "{{isReadonly}}" type="text" name="nightout" ng-model="timesheet.nightOut" class="form-control"  placeholder="00:00" mask='99:99'  ng-change="getTotalhours(); getDayInStatus(); getNightInStatus()">
       </div>
       <span class="text-danger" ng-show="((detailview.$submitted && detailview.nightin.$invalid) || (detailview.nightin.$touched && detailview.nightin.$invalid)) || ((detailview.$submitted && detailview.nightout.$invalid) || (detailview.nightout.$touched && detailview.nightout.$invalid)) "> Please enter correct time format. </span>
       <span class="text-danger">{{nightErrorMessage}}</span>
