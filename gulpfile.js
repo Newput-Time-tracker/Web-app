@@ -103,7 +103,7 @@ gulp.task('prepareVendorScripts', function() {
 
 //copy web fonts into public
 gulp.task('copyFonts', function() {
-  return gulp.src(['bower_components/open-sans-fontface/fonts/*/*', 'bower_components/bootstrap/fonts/*' ])
+  return gulp.src(['bower_components/open-sans-fontface/fonts/*/*', 'bower_components/font-awesome/fonts/*' ])
     .pipe(gulp.dest('public/assets/styles/fonts/'));
 });
 
