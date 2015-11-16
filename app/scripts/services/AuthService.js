@@ -1,4 +1,5 @@
 /* global app: false */
+/* global moment: false */
 
 app.factory("AuthService", ['$http', '$q', 'CONFIG', '$cookies',
 function($http, $q, CONFIG, $cookies) {
@@ -14,16 +15,16 @@ function($http, $q, CONFIG, $cookies) {
     },
 
     setAccessToken: function(token, userObj) {
-      var expire = null;
-      if (token.expire) {
-        expire = token.expire;
-      } else {
-        expire = CONFIG.SESSION_COOKIE.EXPIRY;
-      }
       var now = new Date();
-      now.setDate(now.getDate() + expire); // set the cookie for 1 year from now.
-      $cookies.put('accessToken', JSON.stringify(token), {expires: now});
-      $cookies.put('UserObj', JSON.stringify(userObj), {expires: now});
+      var expiry = null;
+      if (token.expire) {
+        var newDate = moment(token.expire, ["DD-MM-YYYY hh:mm"]).add(CONFIG.CONVERT_HOURS, 'hours');
+        expiry = newDate.toDate();
+      } else {
+        expiry = now;
+      }
+      $cookies.put('accessToken', JSON.stringify(token), {expires: expiry});
+      $cookies.put('UserObj', JSON.stringify(userObj), {expires: expiry});
     },
     getAccessToken: function() {
       var accessToken = $cookies.get('accessToken');

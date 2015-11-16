@@ -27,7 +27,8 @@ app.constant('CONFIG', {
   MIN_AGE: 18,
   REDIRECT_TIMEOUT: 2000,
   FADE_OUT: 5000,
-  MAX_LENGTH: 50
+  MAX_LENGTH: 50,
+  CONVERT_HOURS: 5
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
