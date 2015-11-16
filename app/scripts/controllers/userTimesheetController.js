@@ -116,10 +116,21 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     return perDayMins;
   }
 
-  function calculatetime(timesheetData) {
+  function trimDesc(desc) {
+    var trimmedString = desc.substr(0, CONFIG.MAX_LENGTH);
+    // trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+    return trimmedString;
+  }
+
+  function calculateTimeAndDesc(timesheetData) {
     var totalMins = 0;
+    var desc = null;
     for (var i = 0; i < timesheetData.length; i++) {
       var hours = timesheetData[i].totalHour;
+      if (timesheetData[i].workDesc != '') {
+        desc = trimDesc(timesheetData[i].workDesc);
+        timesheetData[i].description = desc + '...';
+      }
       if (hours != '') {
         var perDayMins = fromatHours(hours);
         totalMins = parseInt(perDayMins, 10) + parseInt(totalMins, 10);
@@ -229,7 +240,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
         if (res.data.length > 0) {
           $scope.icon = true;
           timesheetArr = populateTimesheet(res.data);
-          totalhrs = calculatetime(timesheetArr);
+          totalhrs = calculateTimeAndDesc(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
           $scope.monthlyDataAvailablityStatus = false;
@@ -254,7 +265,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
         }
         if ($scope.monthlyDataAvailablityStatus != true) {
           timesheetArr = populateTimesheet(msg);
-          totalhrs = calculatetime(timesheetArr);
+          totalhrs = calculateTimeAndDesc(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = {};
           $scope.timesheetData = timesheetArr;
@@ -278,7 +289,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
         }
         $scope.timesheetData.length = i;
       }
-      var totalHours = calculatetime($scope.timesheetData);
+      var totalHours = calculateTimeAndDesc($scope.timesheetData);
       $scope.timesheetData.totalHours = totalHours;
     } else {
       $scope.weeksDateStr = '';
