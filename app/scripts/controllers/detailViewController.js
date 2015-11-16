@@ -149,13 +149,13 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
     var dayin = detailview.dayin.value;
     var dayout = detailview.dayout.value;
     if ($scope.timesheet.lunchIn && dayin) {
-      if ($scope.timesheet.lunchIn < dayin) {
+      if ($scope.timesheet.lunchIn < dayin || $scope.timesheet.lunchOut > dayout) {
         $scope.lunchErrorMessage = "Looks like you are having lunch before coming to office!";
         return;
       }
     }
     if ($scope.timesheet.lunchIn && dayout) {
-      if ($scope.timesheet.lunchIn > dayout) {
+      if ($scope.timesheet.lunchIn > dayout || $scope.timesheet.lunchOut > dayout) {
         $scope.lunchErrorMessage = "Looks like you are having lunch after leaving office!";
         return;
       }
