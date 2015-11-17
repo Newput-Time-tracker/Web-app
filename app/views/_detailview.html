@@ -48,7 +48,7 @@
     <div class="form-group">
       <label for="workdesc">Work Desc.</label>
       <div class="input-group">
-          <textarea ng-readonly = "{{isReadonly}}" class="work-description form-control" ng-required="true"  maxlength="100" name="workdesc"  id ="workdesc" ng-model="timesheet.workDesc" > </textarea>
+          <textarea ng-readonly = "{{isReadonly}}" class="work-description form-control" ng-required="true"  maxlength="45" name="workdesc"  id ="workdesc" ng-model="timesheet.workDesc" > </textarea>
       </div>
       <span class="text-danger" ng-show="((detailview.$submitted && detailview.workdesc.$invalid) || (detailview.workdesc.$touched && detailview.workdesc.$invalid))"> Please fill work description. </span>
     </div>

@@ -2,8 +2,8 @@
 /* global app: false */
 /* global detailview: false */
 
-app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService',
-function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
+app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService', 'CONFIG',
+function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CONFIG) {
   $scope.errorMessage = null;
   $scope.timesheet = {};
   // calculate total minutes of day work
@@ -45,6 +45,9 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService) {
         if (response.success) {
           $scope.successMessage = "Successfully Saved!";
           $('#submit-btn').text('Save').removeAttr("disabled");
+          $timeout(function() {
+            $location.path("/usertimesheet");
+          }, CONFIG.REDIRECT_TIMEOUT);
         }else {
           $scope.errorMessage = "Sorry ! You can fill data only for current week.";
           $('#submit-btn').text('Save').removeAttr("disabled");
