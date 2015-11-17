@@ -117,7 +117,13 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CON
     }
     if ($rootScope.detailTimesheetByIndex) {
       var monthlyDetailTimeSheet = $rootScope.detailTimesheetByIndex;
-      if (monthlyDetailTimeSheet[$scope.date]) {
+      var dayObject = monthlyDetailTimeSheet[$scope.date];
+      if(dayObject.newEntry) {
+        $scope.timesheet.workDate = $scope.date;
+        $scope.timesheet = {'in': '09:00', 'out': '18:30', 'lunchIn': '12:30', 'lunchOut': '13:00', 'nightIn': '22:00', 'nightOut': '23:30'};
+        $scope.totalHour = '0.0';
+      }
+      else if (monthlyDetailTimeSheet[$scope.date]) {
         $scope.timesheet.workDate = $scope.date;
         $scope.timesheet = monthlyDetailTimeSheet[$scope.date];
         $scope.totalHour = $scope.timesheet.totalHour;
