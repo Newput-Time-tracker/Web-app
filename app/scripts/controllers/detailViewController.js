@@ -121,7 +121,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CON
       if (dayObject.newEntry) {
         $scope.timesheet.workDate = $scope.date;
         $scope.timesheet = {'in': '09:00', 'out': '18:30', 'lunchIn': '12:30', 'lunchOut': '13:00', 'nightIn': '22:00', 'nightOut': '23:30'};
-        $scope.totalHour = '0.0';
+        $scope.totalHour = '10:30';
       }else if (monthlyDetailTimeSheet[$scope.date]) {
         $scope.timesheet.workDate = $scope.date;
         $scope.timesheet = monthlyDetailTimeSheet[$scope.date];
