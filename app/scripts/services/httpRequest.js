@@ -1,6 +1,6 @@
 /* global app: false */
 
-app.factory('HttpRequest', function($rootScope, CONFIG) {
+app.factory('HttpRequest', ['$rootScope', 'CONFIG', function($rootScope, CONFIG) {
   // var authToken = 'FB3AA4D6F393D0AEAEC5B3F65DBE3463';
   return {
     // 'request': function(config) {
@@ -10,9 +10,9 @@ app.factory('HttpRequest', function($rootScope, CONFIG) {
     // },
 
     'responseError': function(rejection) {
-      if (rejection.status == CONFIG.MISSING_PARAMETER && rejection.status == CONFIG.UNAUTHORIZE_ACCESS) {
+      if (rejection.status == CONFIG.MISSING_PARAMETER || rejection.status == CONFIG.UNAUTHORIZE_ACCESS) {
         $rootScope.$broadcast("authFailure");
       }
     }
   };
-});
+}]);
