@@ -18,7 +18,7 @@ function($http, $q, CONFIG, $cookies) {
       var now = new Date();
       var expiry = null;
       if (token.expire) {
-        var newDate = moment(token.expire, ["DD-MM-YYYY hh:mm"]).add(CONFIG.CONVERT_HOURS, 'hours');
+        var newDate = moment(token.expire, ["DD-MM-YYYY hh:mm"]).add(CONFIG.CONVERT_MINUTES, 'm');
         expiry = newDate.toDate();
       } else {
         expiry = now;
