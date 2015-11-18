@@ -18,7 +18,7 @@ function($http, $q, CONFIG, $cookies) {
       var now = new Date();
       var expiry = null;
       if (expiryTime) {
-        expiryTime = expiryTime / 60;
+        expiryTime /= CONFIG.MIN_PER_HOUR;
         var newDate = moment(now).add(expiryTime, 'm');
         expiry = newDate.toDate();
       } else {
