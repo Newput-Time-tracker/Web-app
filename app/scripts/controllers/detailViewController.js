@@ -132,7 +132,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CON
       dataPromise.then(function(response) {
         if (response.success) {
           var cookieObj = AuthService.getAccessToken();
-          if(cookieObj) {
+          if (cookieObj) {
             AuthService.setAccessToken(cookieObj.token, cookieObj.userObj, response.expire);
           }
           $scope.timesheet = response.data[0];
