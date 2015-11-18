@@ -242,6 +242,10 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     var monthlyData = UserService.timesheetData(perMonthObj);
     monthlyData.then(function(res) {
       if (res.success) {
+        var cookies = AuthService.getAccessToken();
+        if (cookies) {
+          AuthService.setAccessToken(cookies.token, cookies.userObj, res.expire);
+        }
         $scope.message = '';
         if (res.data.length > 0) {
           $scope.icon = true;

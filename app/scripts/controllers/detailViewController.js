@@ -2,8 +2,8 @@
 /* global app: false */
 /* global detailview: false */
 
-app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService', 'CONFIG',
-function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CONFIG) {
+app.controller('detailViewController', ['$scope', '$location', '$rootScope', '$timeout', '$routeParams', 'UserService', 'CONFIG', 'AuthService',
+function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CONFIG, AuthService) {
   $scope.errorMessage = null;
   $scope.timesheet = {};
   // calculate total minutes of day work
@@ -131,6 +131,10 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CON
       var dataPromise = UserService.getDayData($scope.date);
       dataPromise.then(function(response) {
         if (response.success) {
+          var cookieObj = AuthService.getAccessToken();
+          if(cookieObj) {
+            AuthService.setAccessToken(cookieObj.token, cookieObj.userObj, response.expire);
+          }
           $scope.timesheet = response.data[0];
           var nightOut = $scope.timesheet.nightOut;
           var num = 6;
