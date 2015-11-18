@@ -14,11 +14,12 @@ function($http, $q, CONFIG, $cookies) {
       return _userSession;
     },
 
-    setAccessToken: function(token, userObj) {
+    setAccessToken: function(token, userObj, expiryTime) {
       var now = new Date();
       var expiry = null;
-      if (token.expire) {
-        var newDate = moment(token.expire, ["DD-MM-YYYY hh:mm"]).add(CONFIG.CONVERT_MINUTES, 'm');
+      if (expiryTime) {
+        expiryTime = expiryTime / 60;
+        var newDate = moment(now).add(expiryTime, 'm');
         expiry = newDate.toDate();
       } else {
         expiry = now;

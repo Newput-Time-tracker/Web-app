@@ -15,12 +15,14 @@ function($http, $q, CONFIG, AuthService, $cookies) {
       }).success(function(response) {
         userJsonData = response;
         var employees = response.data;
+
         if (employees.length) {
+          var expiryTime = response.expire;
           var userObj = employees[0];
           var token = employees[1];
           if (userObj != null && token != null) {
             AuthService.setUser(token, userObj);
-            AuthService.setAccessToken(token, userObj);
+            AuthService.setAccessToken(token, userObj, expiryTime);
           }
         }
         q.resolve(response);
