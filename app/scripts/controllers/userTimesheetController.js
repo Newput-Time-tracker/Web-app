@@ -447,7 +447,11 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
         'token': $scope.token.token
       };
       var emailPromise = UserService.emailMe(emailTimesheetObj);
-      emailPromise.then(function() {
+      emailPromise.then(function(response) {
+        var cookiesObj = AuthService.getAccessToken();
+        if (cookiesObj) {
+          AuthService.setAccessToken(cookiesObj.token, cookiesObj.userObj, response.expire);
+        }
         $scope.emailStatus = true; // no need to check status
         $('#submit-btn').text('Yes').removeAttr("disabled");
         $('#emailBox').on('hide.bs.modal', function() {

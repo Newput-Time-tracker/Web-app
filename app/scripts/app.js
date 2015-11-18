@@ -28,7 +28,9 @@ app.constant('CONFIG', {
   REDIRECT_TIMEOUT: 2000,
   FADE_OUT: 5000,
   CONVERT_MINUTES: 330,
-  MAX_LENGTH: 45
+  MAX_LENGTH: 45,
+  MISSING_PARAMETER: 400,
+  UNAUTHORIZE_ACCESS: 401
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
@@ -79,7 +81,19 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   });
 }]);
 
-app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', function($rootScope, $location, $cookies, AuthService, CONFIG) {
+app.run(['$rootScope', 'UserService', '$location', '$cookies', 'AuthService', 'CONFIG',
+function($rootScope, UserService, $location, $cookies, AuthService, CONFIG) {
+  // check response status;
+  $rootScope.$on('authFailure', function() {
+    var status = UserService.endSession();
+    if (status) {
+      $rootScope.userName = '';
+      $rootScope.userStatus = false;
+      $location.path('/login');
+    }
+    return;
+  });
+
   var prepareRoute = function(routeObj) {
     var route = routeObj.originalPath;
     for (var key in routeObj['pathParams']) {
@@ -89,7 +103,6 @@ app.run(['$rootScope', '$location', '$cookies', 'AuthService', 'CONFIG', functio
     }
     return route;
   };
-
   // Check the authentication required url and navigate to login
   $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
     if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication) {
