@@ -151,7 +151,13 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CON
           $scope.totalHour = $scope.timesheet.totalHour;
         }else {
           $scope.timesheet.workDate = $scope.date;
-          $scope.errorMessage = response.error;
+          if (response.error === 'DATA_NOT_FOUND') {
+            $scope.timesheet = {'in': '09:00', 'out': '18:30', 'lunchIn': '12:30', 'lunchOut': '13:00',
+            'nightIn': '22:00', 'nightOut': '23:30', 'workDate': $scope.date};
+            $scope.totalHour = '10:30';
+          }else {
+            $scope.errorMessage = response.error;
+          }
         }
       }, function() {
         $scope.timesheet.workDate = $scope.date;
