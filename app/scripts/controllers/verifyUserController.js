@@ -7,7 +7,7 @@ function($scope, $location, $timeout, AuthService) {
     var dataPromise = AuthService.verifyUser($scope.verifyUser);
     dataPromise.then(function(response) {
       if (response.success) {
-        $scope.successMessage = "Verify Successfully!";
+        $scope.successMessage = "Verified Successfully!";
       } else {
         $scope.errorMessage = "Your account is already verified";
       }
