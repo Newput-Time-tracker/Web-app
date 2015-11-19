@@ -38,6 +38,24 @@
     <div class="form-group">
       <div class="row">
         <div class="col-sm-6">
+          <label for="password">Password:*</label>
+          <input type="password" class="form-control" ng-required="true" ng-model="user.password" id="password" name="password"  placeholder="Enter password">
+          <div ng-show="signup.$submitted || signup.password.$touched" >
+            <span ng-cloak class="text-danger" ng-show="signup.password.$error.required">Tell us Your Password</span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="confirmpassword">Confirm Password:*</label>
+          <input type="password" class="form-control" ng-required="true" ng-model="user.confirmpassword" id="confirmpassword" name="confirmpassword"  pw-check="user.password" placeholder="Enter password">
+          <div ng-show="signup.$submitted">
+            <span ng-cloak class="text-danger" ng-show="signup.confirmpassword.$error.pwCheck">Passwords are not equal!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-6">
           <label for="gender">Gender:*</label>
            <div ng-show="signup.$submitted || signup.dateofbirth.$touched" >
             <span ng-cloak class="text-danger" ng-show="signup.gender.$error.required">Tell us your gender</span>
@@ -103,24 +121,7 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-sm-6">
-          <label for="password">Password:*</label>
-          <input type="password" class="form-control" ng-required="true" ng-model="user.password" id="password" name="password"  placeholder="Enter password">
-          <div ng-show="signup.$submitted || signup.password.$touched" >
-            <span ng-cloak class="text-danger" ng-show="signup.password.$error.required">Tell us Your Password</span>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label for="confirmpassword">Confirm Password:*</label>
-          <input type="password" class="form-control" ng-required="true" ng-model="user.confirmpassword" id="confirmpassword" name="confirmpassword"  pw-check="user.password" placeholder="Enter password">
-          <div ng-show="signup.$submitted">
-            <span ng-cloak class="text-danger" ng-show="signup.confirmpassword.$error.pwCheck">Passwords are not equal!</span>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <span class="text-success">{{successMessage}}</span>
     <span ng-cloak class="text-danger">{{errorMessage}}</span>
     <div class="border btom-mrgn"></div>
