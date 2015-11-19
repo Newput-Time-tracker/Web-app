@@ -38,7 +38,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   var perMonthEmpObj = {};
   $scope.yearText = $scope.curYear;
   // store the day corresponding to the timesheet
-  var weekList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'];
+  var weekList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   $rootScope.detailTimesheetByIndex = {};
   var startYear = null;
   $scope.monthlyDataAvailablityStatus = false;
@@ -70,7 +70,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
     if (flag == 1) {
       dDay = momentObj.date();
     } else if (flag == 2) {
-      dDay = weekList[momentObj.day()];
+      dDay = weekList[momentObj.day()].substring(0, CONFIG.TRIM_CHARACTERS);
     }
     return dDay;
   }
@@ -92,7 +92,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
       var weeklyStartDay = formateDate(weeklyStartDate, 2);
       weeklyEndDate = end + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getFullYear();
       var weeklyEndDay = formateDate(weeklyEndDate, 2);
-      var upto = weekSuffix(count) + ' Week, ' + weeklyStartDay + ',' + weekSuffix(start) + ' to ' + weeklyEndDay + ',' + weekSuffix(end);
+      var upto = weeklyStartDay + ' ' + weekSuffix(start) + ' to ' + weeklyEndDay + ' ' + weekSuffix(end) + ' (' + weekSuffix(count) + ' Week) ';
       weeks.push({
         'key': upto,
         'start': start,

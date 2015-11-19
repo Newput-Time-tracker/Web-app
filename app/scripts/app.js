@@ -30,7 +30,8 @@ app.constant('CONFIG', {
   CONVERT_MINUTES: 330,
   MAX_LENGTH: 45,
   MISSING_PARAMETER: 400,
-  UNAUTHORIZE_ACCESS: 401
+  UNAUTHORIZE_ACCESS: 401,
+  TRIM_CHARACTERS: 3
 });
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
