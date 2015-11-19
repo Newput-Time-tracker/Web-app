@@ -59,9 +59,9 @@
           <label for="contact">Contact:*</label>
           <input type="text" ng-minlength="10" ng-maxlength="10"  class="form-control" ng-required="true" ng-model="user.contact" numbers-only="numbers-only" name="contact"   placeholder="Enter Contact">
           <div ng-show="signup.$submitted || signup.contact.$touched ">
-            <span ng-cloak class="text-danger" ng-show="signup.contact.$error.required">Tell us your contact.</span>
-            <span ng-cloak class="text-danger" ng-show="signup.contact.$error.number">Invalid contact no.</span>
-            <span ng-cloak class="text-danger" ng-show="(signup.contact.$error.minlength || signup.contact.$error.maxlength) ">Contact nu. should be 10 digits</span>
+            <span ng-cloak class="text-danger" ng-show="signup.contact.$error.required">Tell us your contact Number.</span>
+            <span ng-cloak class="text-danger" ng-show="signup.contact.$error.number">Invalid contact Number.</span>
+            <span ng-cloak class="text-danger" ng-show="(signup.contact.$error.minlength || signup.contact.$error.maxlength) ">Invalid Number Please enter valid 10 digit number</span>
           </div>
         </div>
         <div class="col-sm-6">
