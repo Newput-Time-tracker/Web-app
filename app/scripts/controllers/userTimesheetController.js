@@ -1,8 +1,8 @@
 /* global moment: false */
 /* global app: false */
 
-app.controller('userTimesheetController', ['$scope', 'CONFIG', '$rootScope', '$location', 'UserService', 'AuthService',
-function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
+app.controller('userTimesheetController', ['$scope', 'CONFIG', '$rootScope', '$location', 'UserService', 'AuthService', '$routeParams',
+function($scope, CONFIG, $rootScope, $location, UserService, AuthService, $routeParams) {
   $scope.employees = null;
   $scope.token = null;
   var cookieObj = AuthService.getAccessToken();
@@ -239,6 +239,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
   $scope.showTimesheet = function(perMonthObj) {
     var totalhrs = 0;
     timesheetArr = {};
+    $scope.activeDay = $routeParams.day;
     var monthlyData = UserService.timesheetData(perMonthObj);
     monthlyData.then(function(res) {
       if (res.success) {
@@ -253,6 +254,7 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService) {
           totalhrs = calculateTimeAndDesc(timesheetArr);
           timesheetArr.totalHours = totalhrs;
           $scope.timesheetData = timesheetArr;
+          // $scope.timesheetData.activeDay = $scope.activeDay;
           $scope.monthlyDataAvailablityStatus = false;
           $scope.disabledAttr = false;
         }

@@ -67,6 +67,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controllerAs: 'timesheet',
     access: { requiredAuthentication: true }
   })
+  .when('/usertimesheet/:day', {
+    templateUrl: viewsDir + '_usertimesheet.html',
+    controller: 'userTimesheetController',
+    controllerAs: 'timesheet',
+    access: { requiredAuthentication: true }
+  })
   .when('/verifyuser', {
     templateUrl: viewsDir + '_verifyuser.html',
     controller: 'verifyUserController',
