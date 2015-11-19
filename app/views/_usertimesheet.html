@@ -90,7 +90,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="t in timesheetData">
+        <tr data-ng-repeat="t in timesheetData" ng-class = "{danger: {{t.day}}==activeDay}">
           <td>{{t.day}}</td>
           <td class="hidden-xs">{{t.dayName}}</td>
           <td>{{t.in}}</td>

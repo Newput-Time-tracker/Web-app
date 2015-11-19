@@ -1,8 +1,9 @@
 /* global moment: false */
 /* global app: false */
 
-app.controller('userTimesheetController', ['$scope', 'CONFIG', '$rootScope', '$location', 'UserService', 'AuthService', '$routeParams',
-function($scope, CONFIG, $rootScope, $location, UserService, AuthService, $routeParams) {
+app.controller('userTimesheetController', ['$scope', '$routeParams', 'CONFIG', '$rootScope', '$location', 'UserService', 'AuthService',
+function($scope, $routeParams, CONFIG, $rootScope, $location, UserService, AuthService) {
+
   $scope.employees = null;
   $scope.token = null;
   var cookieObj = AuthService.getAccessToken();
@@ -239,7 +240,13 @@ function($scope, CONFIG, $rootScope, $location, UserService, AuthService, $route
   $scope.showTimesheet = function(perMonthObj) {
     var totalhrs = 0;
     timesheetArr = {};
+<<<<<<< HEAD
     $scope.activeDay = $routeParams.day;
+=======
+    if ($routeParams.day) {
+      $scope.activeDay = formateDate($routeParams.day, 1);
+    }
+>>>>>>> highlighted edited row
     var monthlyData = UserService.timesheetData(perMonthObj);
     monthlyData.then(function(res) {
       if (res.success) {

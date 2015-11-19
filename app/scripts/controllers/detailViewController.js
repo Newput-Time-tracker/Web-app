@@ -46,7 +46,7 @@ function($scope, $location, $rootScope, $timeout, $routeParams, UserService, CON
           $scope.successMessage = "Successfully Saved!";
           $('#submit-btn').text('Save').removeAttr("disabled");
           $timeout(function() {
-            $location.path("/usertimesheet");
+            $location.path("/usertimesheet/" + $scope.date);
           }, CONFIG.REDIRECT_TIMEOUT);
         }else {
           $scope.errorMessage = "Sorry ! You can fill data only for current week.";
