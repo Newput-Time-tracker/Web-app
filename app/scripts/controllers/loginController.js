@@ -1,7 +1,7 @@
 /* global app: false */
 
-app.controller('loginController', ['$scope', '$location', '$cookies', 'UserService', 'AuthService',
-function($scope, $location, $cookies, UserService, AuthService) {
+app.controller('loginController', ['$scope', '$window', '$location', '$cookies', 'UserService', 'AuthService',
+function($scope, $window, $location, $cookies, UserService, AuthService) {
   // check cookie exist or not
   var cookieObj = AuthService.getAccessToken();
   if (cookieObj) {
@@ -25,9 +25,13 @@ function($scope, $location, $cookies, UserService, AuthService) {
           $location.path(path.redirectUrl);
           AuthService.clearUrlTracker();
         } else {
-          $location.path('usertimesheet');
+          // $location.path('usertimesheet');
+          var host = location.host;
+          window.location = "http://" + host + "/usertimesheet";
         }
       } else {
+        var hostname = location.host;
+        window.location = "http://" + hostname + "/login";
         $scope.errorMessage = 'Looks like wrong email or password';
         $('#submit-btn').text('Sign In').removeAttr("disabled");
       }
