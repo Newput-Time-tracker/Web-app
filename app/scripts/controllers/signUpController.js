@@ -25,7 +25,7 @@ function($scope, CONFIG, UserService) {
         $scope.successMessage = "Successfully Registered ! A verification email is sent to your email id, Please verify to login.";
         $('#submit-btn').text('Register').removeAttr("disabled");
       } else {
-        $scope.errorMessage = "Email id already exist!";
+        $scope.errorMessage = response.error;
         $('#submit-btn').text('Register').removeAttr("disabled");
       }
     }, function() {

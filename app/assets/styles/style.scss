@@ -130,6 +130,12 @@ table {
     tr:nth-child(even) {
       background-color: #fff;
     }
+
+    tr {
+      &.edit {
+        background-color: $shandy-shade;
+      }
+    }
   }
 
 }
