@@ -30,8 +30,6 @@ function($scope, $window, $location, $cookies, UserService, AuthService) {
           window.location = "http://" + host + "/usertimesheet";
         }
       } else {
-        var hostname = location.host;
-        window.location = "http://" + hostname + "/login";
         $scope.errorMessage = 'Looks like wrong email or password';
         $('#submit-btn').text('Sign In').removeAttr("disabled");
       }
